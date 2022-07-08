@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('contract_items', function (Blueprint $table) {
             $table->id();
+            $table->string('number');
+            $table->text('title');
+            $table->integer('value');
             $table->timestamps();
         });
     }

@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('air_conditioner_id')->constrained()->restrictOnDelete();
+            $table->text('problem');
+            $table->date('opened_at');
             $table->timestamps();
         });
     }

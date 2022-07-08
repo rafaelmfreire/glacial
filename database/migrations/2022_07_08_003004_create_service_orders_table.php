@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('service_orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('air_conditioner_id')->constrained()->restrictOnDelete();
+            $table->dateTime('done_at');
+            $table->string('technicians')->nullable();
+            $table->text('services')->nullable();
+            $table->text('observation')->nullable();
             $table->timestamps();
         });
     }

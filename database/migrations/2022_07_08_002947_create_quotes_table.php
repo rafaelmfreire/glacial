@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('quotes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('air_conditioner_id')->constrained()->restrictOnDelete();
+            $table->string('number');
+            $table->date('date');
+            $table->foreignId('contract_item_id')->constrained()->restrictOnDelete();
+            $table->integer('quantity');
             $table->timestamps();
         });
     }
