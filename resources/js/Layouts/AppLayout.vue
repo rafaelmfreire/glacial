@@ -10,7 +10,11 @@ import JetNavLink from '@/Jetstream/NavLink.vue';
 import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink.vue';
 
 defineProps({
-    title: String,
+  title: String,
+  maximize: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const showingNavigationDropdown = ref(false);
@@ -41,7 +45,7 @@ const logout = () => {
     <div class="min-h-screen bg-gray-50">
       <nav class="bg-white border-b border-gray-100">
         <!-- Primary Navigation Menu -->
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div :class="[maximize ? 'max-w-full w-auto' : 'max-w-7xl w-auto']" class="mx-auto px-4 sm:px-6 lg:px-8 transition-all duration-300">
           <div class="flex justify-between h-16">
             <div class="flex">
               <!-- Logo -->
@@ -150,6 +154,12 @@ const logout = () => {
                   </template>
                 </JetDropdown>
               </div>
+
+              <button @click="maximize = !maximize" class="border border-gray-100 hover:bg-gray-50 group rounded-md p-1 ml-2">
+                <svg class="w-6 h-6 text-gray-400 group-hover:text-gray-700 cursor-pointer transition" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
+                </svg>
+              </button>
             </div>
 
             <!-- Hamburger -->
@@ -260,14 +270,18 @@ const logout = () => {
 
       <!-- Page Heading -->
       <header v-if="$slots.header" class="bg-white">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div :class="[maximize ? 'max-w-full w-auto' : 'max-w-7xl w-auto']" class="mx-auto py-6 px-4 sm:px-6 lg:px-8 transition-all duration-300">
           <slot name="header" />
         </div>
       </header>
 
       <!-- Page Content -->
       <main>
-                <slot />
+        <div class="py-6">
+          <div :class="[maximize ? 'max-w-full w-auto' : 'max-w-7xl w-auto']" class="mx-auto sm:px-6 lg:px-8 transition-all duration-300">
+            <slot />
+          </div>
+        </div>
       </main>
     </div>
   </div>
