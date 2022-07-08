@@ -9,4 +9,13 @@ class ContractItem extends Model
 {
     use HasFactory;
 
+    public function quotes()
+    {
+        return $this->hasMany(quotes::class);
+    }
+
+    public function requisitions()
+    {
+        return $this->hasMany(Requisition::class);
+    }
 }

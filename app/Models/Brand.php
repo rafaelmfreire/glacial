@@ -9,4 +9,9 @@ class Brand extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function airConditioners()
+    {
+        return $this->hasMany(AirConditioner::class);
+    }
 }

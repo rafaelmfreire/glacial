@@ -10,4 +10,8 @@ class ServiceOrder extends Model
     use HasFactory;
     protected $guarded = [];
 
+    public function airConditioner()
+    {
+        return $this->belongsTo(AirConditioner::class);
+    }
 }
