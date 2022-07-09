@@ -55,6 +55,7 @@ const logout = () => {
               <!-- Navigation Links -->
               <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                 <JetNavLink :href="route('dashboard')" :active="route().current('dashboard')"> Dashboard </JetNavLink>
+                <JetNavLink :href="route('brands.index')" :active="route().current('brands.index')"> Marcas </JetNavLink>
               </div>
             </div>
 
@@ -218,6 +219,7 @@ const logout = () => {
         >
           <div class="pt-2 pb-3 space-y-1">
             <JetResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')"> Dashboard </JetResponsiveNavLink>
+            <JetResponsiveNavLink :href="route('brands.index')" :active="route().current('brands.index')"> Marcas </JetResponsiveNavLink>
           </div>
 
           <!-- Responsive Settings Options -->

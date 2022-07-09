@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class BrandController extends Controller
 {
@@ -37,7 +38,13 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+        ]);
+
+        Brand::create($validated);
+
+        return Redirect::route('brands.index');
     }
 
     /**
@@ -71,7 +78,15 @@ class BrandController extends Controller
      */
     public function update(Request $request, Brand $brand)
     {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+        ]);
+
+        $brand->name = $validated['name'];
+
+        $brand->save();
+
+        return Redirect::route('brands.index');
     }
 
     /**
