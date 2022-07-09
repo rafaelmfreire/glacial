@@ -11,12 +11,9 @@ import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink.vue';
 
 defineProps({
   title: String,
-  maximize: {
-    type: Boolean,
-    default: false,
-  },
 });
 
+const maximize = ref(false);
 const showingNavigationDropdown = ref(false);
 
 const switchToTeam = (team) => {
@@ -45,7 +42,7 @@ const logout = () => {
     <div class="min-h-screen bg-gray-50">
       <nav class="bg-white border-b border-gray-100">
         <!-- Primary Navigation Menu -->
-        <div :class="[maximize ? 'max-w-full w-auto' : 'max-w-7xl w-auto']" class="mx-auto px-4 sm:px-6 lg:px-8 transition-all duration-300">
+        <div :class="[maximize ? 'max-w-full w-auto' : 'max-w-5xl w-auto']" class="mx-auto px-4 sm:px-6 lg:px-8 transition-all duration-300">
           <div class="flex justify-between h-16">
             <div class="flex">
               <!-- Logo -->
@@ -69,7 +66,23 @@ const logout = () => {
                     <span class="inline-flex rounded-md">
                       <button
                         type="button"
-                        class="inline-flex items-center px-3 py-2 border border-gray-100 text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition"
+                        class="
+                          inline-flex
+                          items-center
+                          px-3
+                          py-2
+                          border border-gray-100
+                          text-sm
+                          leading-4
+                          font-medium
+                          rounded-md
+                          text-gray-500
+                          bg-white
+                          hover:bg-gray-50 hover:text-gray-700
+                          focus:outline-none focus:bg-gray-50
+                          active:bg-gray-50
+                          transition
+                        "
                       >
                         {{ $page.props.user.current_team.name }}
 
@@ -270,7 +283,7 @@ const logout = () => {
 
       <!-- Page Heading -->
       <header v-if="$slots.header" class="bg-white">
-        <div :class="[maximize ? 'max-w-full w-auto' : 'max-w-7xl w-auto']" class="mx-auto py-6 px-4 sm:px-6 lg:px-8 transition-all duration-300">
+        <div :class="[maximize ? 'max-w-full w-auto' : 'max-w-5xl w-auto']" class="mx-auto py-6 px-4 sm:px-6 lg:px-8 transition-all duration-300">
           <slot name="header" />
         </div>
       </header>
@@ -278,7 +291,7 @@ const logout = () => {
       <!-- Page Content -->
       <main>
         <div class="py-6">
-          <div :class="[maximize ? 'max-w-full w-auto' : 'max-w-7xl w-auto']" class="mx-auto sm:px-6 lg:px-8 transition-all duration-300">
+          <div :class="[maximize ? 'max-w-full w-auto' : 'max-w-5xl w-auto']" class="mx-auto sm:px-6 lg:px-8 transition-all duration-300">
             <slot />
           </div>
         </div>
