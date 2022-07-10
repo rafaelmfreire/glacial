@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\ContractItemController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -36,3 +37,4 @@ Route::middleware([
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->resource('brands', BrandController::class);
+Route::middleware(['auth:sanctum', 'verified'])->resource('contract_items', ContractItemController::class);

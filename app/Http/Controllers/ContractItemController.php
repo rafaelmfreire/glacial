@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ContractItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class ContractItemController extends Controller
 {
@@ -14,7 +15,9 @@ class ContractItemController extends Controller
      */
     public function index()
     {
-        //
+        $contractItems = ContractItem::all();
+
+        return inertia('ContractItems/Index', ['contractItems' => $contractItems]);
     }
 
     /**
@@ -35,7 +38,15 @@ class ContractItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'title' => ['required', 'string'],
+            'number' => ['required', 'string'],
+            'item_value' => ['required', 'numeric'],
+        ]);
+
+        ContractItem::create($validated);
+
+        return Redirect::route('contract_items.index');
     }
 
     /**
@@ -69,7 +80,19 @@ class ContractItemController extends Controller
      */
     public function update(Request $request, ContractItem $contractItem)
     {
-        //
+        $validated = $request->validate([
+            'title' => ['required', 'string'],
+            'number' => ['required', 'string'],
+            'item_value' => ['required', 'numeric'],
+        ]);
+
+        $contractItem->title = $validated['title'];
+        $contractItem->number = $validated['number'];
+        $contractItem->item_value = $validated['item_value'];
+
+        $contractItem->save();
+
+        return Redirect::route('contract_items.index');
     }
 
     /**

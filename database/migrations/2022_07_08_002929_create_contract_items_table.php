@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('number');
             $table->text('title');
-            $table->integer('value');
+            $table->integer('item_value');
             $table->timestamps();
         });
     }
