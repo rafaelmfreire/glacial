@@ -21,10 +21,7 @@
                     </button>
                   </th>
                   <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-right">
-                    <button
-                      @click="sort('item_value')"
-                      class="text-xs font-medium text-gray-500 uppercase tracking-wider inline-flex items-center justify-end justify-items-end place-content-end justify-self-end place-self-end content-end self-end space-x-2"
-                    >
+                    <button @click="sort('item_value')" class="text-xs font-medium text-gray-500 uppercase tracking-wider inline-flex items-center space-x-2">
                       <span>Valor</span>
                       <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'item_value'" class="h-4 w-4" aria-hidden="true" />
                       <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'item_value'" class="h-4 w-4" aria-hidden="true" />
