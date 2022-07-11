@@ -8,11 +8,11 @@
 
     <div class="flex flex-col">
       <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-        <div class="py-2 align-middle grid grid-cols-1 lg:grid-cols-3 gap-4 min-w-full sm:px-6 lg:px-8">
-          <div class="lg:col-span-2 bg-white shadow overflow-hidden sm:rounded-lg">
+        <div class="py-2 align-middle flex flex-col lg:flex-row gap-4 min-w-full sm:px-6 lg:px-8">
+          <div class="lg:col-span-2 flex-1 bg-white shadow overflow-hidden sm:rounded-lg">
             <div class=""></div>
           </div>
-          <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+          <div class="bg-white shadow overflow-hidden sm:rounded-lg min-w-[295px]">
             <div class="px-4 py-5 sm:px-6">
               <dl>
                 <div class="py-5">
@@ -24,11 +24,11 @@
                     </dd>
                   </div>
                 </div>
-                <div class="px-4 sm:px-6">
+                <div>
                   <dt class="text-sm text-gray-500 sr-only">Marca e BTU</dt>
-                  <dd class="mt-1 text-gray-900 sm:mt-0"><span class="font-bold uppercase">{{ airConditioner.brand }}</span><span v-if="airConditioner.btu"> de <strong class="font-bold px-3 py-1 bg-blue-100 rounded-full text-blue-700">{{ airConditioner.btu }}</strong> BTUs</span></dd>
+                  <dd class="mt-1 text-gray-900 sm:mt-0 space-x-2"><span class="font-bold uppercase">{{ airConditioner.brand }}</span><span v-if="airConditioner.btu" class="px-3 py-1 font-bold bg-blue-100 rounded-full text-blue-700">{{ airConditioner.btu }} <label class="text-xs font-normal">BTUs</label></span></dd>
                 </div>
-                <div v-if="airConditioner.cpf" class="px-4 py-5 flex items-center sm:gap-4 sm:px-6">
+                <div v-if="airConditioner.cpf" class="py-5 flex items-center sm:gap-4">
                   <dt class="text-sm text-gray-400">CPF</dt>
                   <dd class="mt-1 text-sm text-gray-900 sm:mt-0">{{ airConditioner.cpf }}</dd>
                 </div>
