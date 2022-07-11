@@ -16,18 +16,22 @@ class AirConditionerController extends Controller
      */
     public function index()
     {
-        // $airConditioners = AirConditioner::with('brand')->get();
+        $brands = Brand::all();
 
-        return inertia('AirConditioners/Index', ['airConditioners' => AirConditioner::with('brand')->get()->map(function ($airConditioner) {
-            return [
-                'id' => $airConditioner->id,
-                'room' => $airConditioner->room,
-                'btu' => $airConditioner->btu,
-                'identifier' => $airConditioner->identifier,
-                'cpf' => $airConditioner->cpf,
-                'brand' => $airConditioner->brand->name,
-            ];
-        })]);
+        return inertia('AirConditioners/Index', [
+            'airConditioners' => AirConditioner::with('brand')->get()->map(function ($airConditioner) {
+                return [
+                    'id' => $airConditioner->id,
+                    'room' => $airConditioner->room,
+                    'btu' => $airConditioner->btu,
+                    'identifier' => $airConditioner->identifier,
+                    'cpf' => $airConditioner->cpf,
+                    'brand' => $airConditioner->brand->name,
+                    'brand_id' => $airConditioner->brand->id,
+                ];
+            }),
+            'brands' => $brands
+        ]);
     }
 
     /**
@@ -70,7 +74,17 @@ class AirConditionerController extends Controller
      */
     public function show(AirConditioner $airConditioner)
     {
-        //
+        return inertia('AirConditioners/Show', [
+            'airConditioner' => [
+                'id' => $airConditioner->id,
+                'room' => $airConditioner->room,
+                'btu' => $airConditioner->btu,
+                'identifier' => $airConditioner->identifier,
+                'cpf' => $airConditioner->cpf,
+                'brand' => $airConditioner->brand->name,
+                'brand_id' => $airConditioner->brand->id,
+            ]
+        ]);
     }
 
     /**
@@ -81,7 +95,19 @@ class AirConditionerController extends Controller
      */
     public function edit(AirConditioner $airConditioner)
     {
-        //
+        $brands = Brand::all();
+
+        return inertia('AirConditioners/Edit', [
+            'airConditioner' => [
+                'id' => $airConditioner->id,
+                'room' => $airConditioner->room,
+                'btu' => $airConditioner->btu,
+                'identifier' => $airConditioner->identifier,
+                'cpf' => $airConditioner->cpf,
+                'brand_id' => $airConditioner->brand->id,
+            ],
+            'brands' => $brands
+        ]);
     }
 
     /**
@@ -93,7 +119,23 @@ class AirConditionerController extends Controller
      */
     public function update(Request $request, AirConditioner $airConditioner)
     {
-        //
+        $validated = $request->validate([
+            'room' => ['required', 'string'],
+            'btu' => ['nullable', 'numeric'],
+            'identifier' => ['nullable', 'numeric'],
+            'cpf' => ['nullable', 'string'],
+            'brand_id' => ['required', 'exists:App\Models\Brand,id']
+        ]);
+
+        $airConditioner->room = $validated['room'];
+        $airConditioner->btu = $validated['btu'];
+        $airConditioner->identifier = $validated['identifier'];
+        $airConditioner->cpf = $validated['cpf'];
+        $airConditioner->brand_id = $validated['brand_id'];
+
+        $airConditioner->save();
+
+        return Redirect::route('air_conditioners.index');
     }
 
     /**
