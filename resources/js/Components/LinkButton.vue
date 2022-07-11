@@ -28,7 +28,7 @@ export default {
       case 'create':
         label = this.$slots.default ? this.$slots.default() : 'Novo';
         classes =
-          'inline-flex items-center px-5 py-2 border border-indigo-300 hover:border-indigo-400 text-sm leading-5 font-medium rounded-md text-indigo-700 bg-indigo-50 hover:text-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-100 active:bg-indigo-50 transition duration-150 ease-in-out';
+          'inline-flex items-center px-5 py-2 border border-blue-300 hover:border-blue-400 text-sm leading-5 font-medium rounded-md text-blue-700 bg-blue-50 hover:text-blue-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-100 active:bg-blue-50 transition duration-150 ease-in-out';
         break;
       case 'cancel':
         label = this.$slots.default ? this.$slots.default() : 'Alterar';
@@ -47,7 +47,7 @@ export default {
         // save
         label = this.$slots.default ? this.$slots.default() : 'Salvar';
         classes =
-          'inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white hover:text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700 transition duration-150 ease-in-out';
+          'inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white hover:text-white bg-blue-600 hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-700 active:bg-blue-700 transition duration-150 ease-in-out';
     }
     return h(
       props.tag,
