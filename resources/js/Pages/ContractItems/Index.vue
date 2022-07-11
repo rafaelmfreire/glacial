@@ -1,9 +1,6 @@
 <template>
   <AppLayout title="Itens do Contrato">
     <template #header>
-      <div class="flex items-center justify-between">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">Itens do Contrato</h2>
-      </div>
     </template>
 
     <div class="flex flex-col">

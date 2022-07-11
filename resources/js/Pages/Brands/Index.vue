@@ -1,10 +1,6 @@
 <template>
   <AppLayout title="Marcas">
-    <template #header>
-      <div class="flex items-center justify-between">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">Marcas</h2>
-      </div>
-    </template>
+    <template #header></template>
 
     <div class="flex flex-col">
       <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
