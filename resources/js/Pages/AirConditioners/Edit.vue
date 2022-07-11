@@ -31,11 +31,11 @@
                       </template>
                     </CompSelect>
 
-                    <CompInput name="btu" autofocus v-model="form.btu" :message="errors.btu" @keydown="errors.btu = null">BTU</CompInput>
+                    <CompInput name="btu" maxlength="5" autofocus v-model="form.btu" :message="errors.btu" @keydown="errors.btu = null">BTU</CompInput>
                   </div>
 
                   <div class="block sm:grid grid-cols-2">
-                    <CompInput name="identifier" autofocus v-model="form.identifier" :message="errors.identifier" @keydown="errors.identifier = null">Tombamento</CompInput>
+                    <CompInput name="identifier" maxlength="10" autofocus v-model="form.identifier" :message="errors.identifier" @keydown="errors.identifier = null">Tombamento</CompInput>
                     <CompInput name="cpf" autofocus v-model="form.cpf" :message="errors.cpf" @keydown="errors.cpf = null">CPF</CompInput>
                   </div>
                 </div>

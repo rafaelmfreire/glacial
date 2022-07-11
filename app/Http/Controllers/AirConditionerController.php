@@ -56,7 +56,7 @@ class AirConditionerController extends Controller
         $validated = $request->validate([
             'room' => ['required', 'string'],
             'btu' => ['nullable', 'numeric'],
-            'identifier' => ['nullable', 'numeric'],
+            'identifier' => ['nullable', 'digits_between:4,10', 'numeric'],
             'cpf' => ['nullable', 'string'],
             'brand_id' => ['required', 'exists:App\Models\Brand,id']
         ]);
@@ -135,7 +135,7 @@ class AirConditionerController extends Controller
 
         $airConditioner->save();
 
-        return Redirect::route('air_conditioners.index');
+        return Redirect::route('air_conditioners.show', $airConditioner);
     }
 
     /**

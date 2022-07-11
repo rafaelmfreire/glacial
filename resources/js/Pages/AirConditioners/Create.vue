@@ -1,10 +1,7 @@
 <template>
   <AppLayout title="Ares Condionados">
     <template #header>
-      <div class="flex items-center justify-between">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">Adicionar Ar Condicionado</h2>
-        <LinkButton tag="button" @click="submit()">Adicionar</LinkButton>
-      </div>
+      <LinkButton tag="button" @click="submit()">Adicionar</LinkButton>
     </template>
 
     <div class="flex flex-col">
@@ -29,11 +26,11 @@
                       </template>
                     </CompSelect>
 
-                    <CompInput name="btu" autofocus v-model="form.btu" :message="errors.btu" @keydown="errors.btu = null">BTU</CompInput>
+                    <CompInput name="btu" maxlength="5" autofocus v-model="form.btu" :message="errors.btu" @keydown="errors.btu = null">BTU</CompInput>
                   </div>
 
                   <div class="block sm:grid grid-cols-2">
-                    <CompInput name="identifier" autofocus v-model="form.identifier" :message="errors.identifier" @keydown="errors.identifier = null">Tombamento</CompInput>
+                    <CompInput name="identifier" maxlength="10" autofocus v-model="form.identifier" :message="errors.identifier" @keydown="errors.identifier = null">Tombamento</CompInput>
                     <CompInput name="cpf" autofocus v-model="form.cpf" :message="errors.cpf" @keydown="errors.cpf = null">CPF</CompInput>
                   </div>
                 </div>
