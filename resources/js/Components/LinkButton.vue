@@ -30,10 +30,13 @@ export default {
         classes =
           'inline-flex items-center px-5 py-2 border border-indigo-300 hover:border-indigo-400 text-sm leading-5 font-medium rounded-md text-indigo-700 bg-indigo-50 hover:text-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-100 active:bg-indigo-50 transition duration-150 ease-in-out';
         break;
+      case 'cancel':
+        label = this.$slots.default ? this.$slots.default() : 'Alterar';
+        classes = 'inline-flex items-center px-4 py-3 sm:py-2 border border-gray-300 hover:border-gray-400 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out';
+        break;
       case 'edit':
         label = this.$slots.default ? this.$slots.default() : 'Alterar';
-        classes =
-          'inline-flex items-center px-4 py-3 sm:py-2 border border-gray-300 hover:border-gray-400 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out';
+        classes = 'inline-flex items-center px-4 py-3 sm:py-2 border border-gray-200 bg-gray-100 hover:bg-gray-200 text-sm leading-5 font-medium rounded-md text-gray-700 hover:text-gray-900 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 active:text-gray-800 active:bg-gray-50 transition duration-150 ease-in-out';
         break;
       case 'delete':
         label = this.$slots.default ? this.$slots.default() : 'Excluir';
