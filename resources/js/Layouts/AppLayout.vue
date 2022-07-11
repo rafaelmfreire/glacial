@@ -12,6 +12,10 @@ import { store } from '@/store.js';
 
 defineProps({
   title: String,
+  smallTitle: {
+    type: Boolean,
+    default: true
+  }
 });
 
 // const maximize = ref(false);
@@ -289,7 +293,10 @@ const logout = () => {
       <!-- Page Heading -->
       <header v-if="$slots.header" class="bg-white">
         <div :class="[store.maximize ? 'max-w-full w-auto' : 'max-w-5xl w-auto']" class="mx-auto py-6 px-4 sm:px-6 lg:px-8 transition-all duration-300">
-          <slot name="header" />
+          <div class="flex items-center justify-between">
+            <h2 :class="[smallTitle ? 'text-md' : 'font-semibold text-xl']" class="text-gray-800 leading-tight">{{ title }}</h2>
+            <slot name="header" />
+          </div>
         </div>
       </header>
 
