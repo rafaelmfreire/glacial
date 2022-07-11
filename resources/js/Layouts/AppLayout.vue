@@ -57,6 +57,7 @@ const logout = () => {
               <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                 <JetNavLink :href="route('brands.index')" :active="route().current('brands.index')"> Marcas </JetNavLink>
                 <JetNavLink :href="route('contract_items.index')" :active="route().current('contract_items.index')"> Itens do Contrato </JetNavLink>
+                <JetNavLink :href="route('air_conditioners.index')" :active="route().current('air_conditioners.index')"> Ares </JetNavLink>
               </div>
             </div>
 
@@ -221,6 +222,7 @@ const logout = () => {
           <div class="pt-2 pb-3 space-y-1">
             <JetResponsiveNavLink :href="route('brands.index')" :active="route().current('brands.index')"> Marcas </JetResponsiveNavLink>
             <JetResponsiveNavLink :href="route('contract_items.index')" :active="route().current('contract_items.index')"> Itens do Contrato </JetResponsiveNavLink>
+            <JetResponsiveNavLink :href="route('air_conditioners.index')" :active="route().current('air_conditioners.index')"> Ares </JetResponsiveNavLink>
           </div>
 
           <!-- Responsive Settings Options -->

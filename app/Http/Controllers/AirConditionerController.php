@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\AirConditioner;
+use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class AirConditionerController extends Controller
 {
@@ -14,7 +16,18 @@ class AirConditionerController extends Controller
      */
     public function index()
     {
-        //
+        // $airConditioners = AirConditioner::with('brand')->get();
+
+        return inertia('AirConditioners/Index', ['airConditioners' => AirConditioner::with('brand')->get()->map(function ($airConditioner) {
+            return [
+                'id' => $airConditioner->id,
+                'room' => $airConditioner->room,
+                'btu' => $airConditioner->btu,
+                'identifier' => $airConditioner->identifier,
+                'cpf' => $airConditioner->cpf,
+                'brand' => $airConditioner->brand->name,
+            ];
+        })]);
     }
 
     /**
@@ -24,7 +37,8 @@ class AirConditionerController extends Controller
      */
     public function create()
     {
-        //
+        $brands = Brand::all();
+        return inertia('AirConditioners/Create', ['brands' => $brands]);
     }
 
     /**
@@ -35,7 +49,17 @@ class AirConditionerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'room' => ['required', 'string'],
+            'btu' => ['nullable', 'numeric'],
+            'identifier' => ['nullable', 'numeric'],
+            'cpf' => ['nullable', 'string'],
+            'brand_id' => ['required', 'exists:App\Models\Brand,id']
+        ]);
+
+        AirConditioner::create($validated);
+
+        return Redirect::route('air_conditioners.index');
     }
 
     /**

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AirConditionerController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ContractItemController;
 use Illuminate\Foundation\Application;
@@ -38,3 +39,4 @@ Route::middleware([
 
 Route::middleware(['auth:sanctum', 'verified'])->resource('brands', BrandController::class);
 Route::middleware(['auth:sanctum', 'verified'])->resource('contract_items', ContractItemController::class);
+Route::middleware(['auth:sanctum', 'verified'])->resource('air_conditioners', AirConditionerController::class);
