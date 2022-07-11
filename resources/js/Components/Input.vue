@@ -11,9 +11,10 @@
 				:autofocus="autofocus"
 				:min="min"
 				:max="max"
-				class="w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm font-medium text-black"
+				class="w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm font-medium text-black placeholder:text-gray-400 placeholder:font-normal"
 				:class="{ 'border-red-500': message }"
 				ref="input"
+				:placeholder="placeholder"
 				:value="modelValue"
 				@input="$emit('update:modelValue', $event.target.value)"
 				@keydown="message = null"
@@ -34,6 +35,10 @@ export default {
 			default: "text",
 		},
 		title: {
+			type: String,
+			default: "",
+		},
+		placeholder: {
 			type: String,
 			default: "",
 		},
