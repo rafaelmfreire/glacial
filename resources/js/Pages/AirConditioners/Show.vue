@@ -52,6 +52,54 @@
                 </div>
               </Tab>
 
+
+              <Tab title="Ordens de Serviço">
+                <div class="grid grid-cols-1 gap-4">
+                  <CompTextarea :withPadding="false" name="services" rows="3" v-model="formServiceOrder.services" :message="errors.services" @keydown="errors.services = null">Descreva os serviços</CompTextarea>
+                  <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    <CompInput :withPadding="false" type="date" name="done_at" v-model="formServiceOrder.done_at" :message="errors.done_at" @keydown="errors.done_at = null">Realizado em</CompInput>
+                    <CompInput :withPadding="false" name="technicians" v-model="formServiceOrder.technicians" :message="errors.technicians" @keydown="errors.technicians = null">Pela equipe</CompInput>
+                    <CompSelect :withPadding="false" name="status" v-model="formServiceOrder.status" :message="errors.status" @change="errors.status = null" >Status
+                      <template #options>
+                        <CompOption v-for="(index, item) in statuses" :key="index" :value="index">
+                          {{ item.toUpperCase() }}
+                        </CompOption>
+                      </template>
+                    </CompSelect>
+                  </div>
+                  <div>
+                    <LinkButton tag="button" @click="submitServiceOrder()">Adicionar</LinkButton>
+                  </div>
+                </div>
+
+                <div class="mt-8">
+                  <h2 class="font-medium text-gray-700 text-xl pt-4">Histórico</h2>
+
+                  <ul class="mt-6">
+                    <li v-for="serviceOrder in airConditioner.serviceOrders" :key="serviceOrder.id" class="flex items-start relative group">
+                      <div class="absolute right-full top-[2.5rem] bottom-0 w-px bg-slate-200 block -mr-5"></div>
+                      <DocumentTextIcon class="w-10 h-10 text-slate-300 bg-slate-50 border border-slate-200 p-2 mr-5 rounded-full z-10" />
+                      <div>
+                        <div class="flex items-center space-x-3 mb-2 mt-1">
+                          <h3 class="font-bold text-lg">
+                            {{ serviceOrder.technicians }}
+                          </h3>
+                          <time class="font-medium text-xs text-blue-700 bg-blue-50 ml-2 px-2 py-1 inline-flex items-center rounded-full">
+                            <CalendarIcon class="h-4 w-4 mr-1 text-blue-400/60 inline"/>
+                            <span>{{ serviceOrder.date_diff }}</span>
+                          </time>
+                          <time class="text-xs text-white group-hover:text-gray-400">{{ serviceOrder.done_date }}</time>
+                        </div>
+                        <p class="text-slate-500 text-sm mb-12 whitespace-pre-line">{{ serviceOrder.services }}</p>
+                      </div>
+                      <div class="text-slate-100 group-hover:text-gray-400">
+                        <BtnDelete :id="serviceOrder.id" :route="`/air_conditioners/${airConditioner.id}/service_orders/`" />
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </Tab>
+
             </TabsWrapper>
           </div>
 
@@ -90,11 +138,13 @@ import AppLayout from '@/Layouts/AppLayout.vue';
 import { Inertia } from '@inertiajs/inertia';
 import LinkButton from '@/Components/LinkButton.vue';
 import CompInput from '@/Components/Input.vue';
+import CompSelect from '@/Components/Select.vue';
+import CompOption from '@/Components/Option.vue';
 import CompTextarea from '@/Components/Textarea.vue';
 import BtnDelete from '@/Components/Delete.vue';
 import TabsWrapper from '@/Components/TabsWrapper.vue';
 import Tab from '@/Components/Tab.vue';
-import { CalendarIcon, SpeakerphoneIcon, TrashIcon  } from '@heroicons/vue/outline';
+import { CalendarIcon, SpeakerphoneIcon, DocumentTextIcon, TrashIcon  } from '@heroicons/vue/outline';
 import { reactive, onMounted } from 'vue';
 
 const formTicket = reactive({
@@ -103,15 +153,30 @@ const formTicket = reactive({
   informed_by: props.user.name,
 });
 
+const formServiceOrder = reactive({
+  services: null,
+  done_at: (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate()),
+  techinicians: '',
+});
+
 const props = defineProps({
   user: Object,
   airConditioner: Object,
+  statuses: Object,
   errors: Object,
 });
 
 async function submitTicket() {
   this.loading = true;
   Inertia.post(route('air_conditioners.tickets.store', props.airConditioner.id), this.formTicket, {
+    preserveState: (page) => Object.keys(page.props.errors).length,
+  });
+  this.loading = false;
+}
+
+async function submitServiceOrder() {
+  this.loading = true;
+  Inertia.post(route('air_conditioners.service_orders.store', props.airConditioner.id), this.formServiceOrder, {
     preserveState: (page) => Object.keys(page.props.errors).length,
   });
   this.loading = false;

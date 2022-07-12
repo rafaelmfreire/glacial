@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ServiceOrderStatus;
 use App\Models\AirConditioner;
 use App\Models\Brand;
+use App\Models\ServiceOrder;
 use App\Models\Ticket;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -82,6 +84,17 @@ class AirConditionerController extends Controller
             $ticket->opened_date = $ticket->opened_at->format('d/m/Y');
         });
 
+        $serviceOrders = ServiceOrder::where('air_conditioner_id', $airConditioner->id)->orderBy('done_at', 'desc')->get()->each(function ($serviceOrder) {
+            $difference = $serviceOrder->done_at->diffInDays();
+            $serviceOrder->date_diff = $difference == 0 ? 'hoje' : ($difference == 1 ? 'ontem' : 'há '.$difference.' dias');
+            $serviceOrder->done_date = $serviceOrder->done_at->format('d/m/Y H:i');
+        });
+
+        $statusArray = [];
+        foreach (ServiceOrderStatus::cases() as $key => $value) {
+            $statusArray[$value->name] = $value->value;
+        }
+
         return inertia('AirConditioners/Show', [
             'airConditioner' => [
                 'id' => $airConditioner->id,
@@ -91,8 +104,10 @@ class AirConditionerController extends Controller
                 'cpf' => $airConditioner->cpf,
                 'brand' => $airConditioner->brand->name,
                 'brand_id' => $airConditioner->brand->id,
-                'tickets' => $tickets
+                'tickets' => $tickets,
+                'serviceOrders' => $serviceOrders
             ],
+            'statuses' => $statusArray
         ]);
     }
 

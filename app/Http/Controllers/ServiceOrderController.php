@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ServiceOrderStatus;
+use App\Models\AirConditioner;
 use App\Models\ServiceOrder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rules\Enum;
 
 class ServiceOrderController extends Controller
 {
@@ -33,9 +37,20 @@ class ServiceOrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, AirConditioner $airConditioner)
     {
-        //
+        $validated = $request->validate([
+            'services' => ['required', 'string'],
+            'technicians' => ['nullable', 'string'],
+            'done_at' => ['nullable', 'date'],
+            'status' => ['required', new Enum(ServiceOrderStatus::class)]
+        ]);
+
+        $validated['air_conditioner_id'] = $airConditioner->id;
+
+        ServiceOrder::create($validated);
+
+        return Redirect::route('air_conditioners.show', $airConditioner);
     }
 
     /**

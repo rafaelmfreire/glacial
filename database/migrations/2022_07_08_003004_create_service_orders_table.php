@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\ServiceOrderStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,7 +20,7 @@ return new class extends Migration
             $table->dateTime('done_at');
             $table->string('technicians')->nullable();
             $table->text('services')->nullable();
-            $table->text('observation')->nullable();
+            $table->unsignedInteger('status')->default(ServiceOrderStatus::Concluido->value);
             $table->timestamps();
         });
     }
