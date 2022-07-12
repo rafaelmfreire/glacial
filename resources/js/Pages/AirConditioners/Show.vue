@@ -40,7 +40,7 @@
                             <CalendarIcon class="h-4 w-4 mr-1 text-blue-400/60 inline"/>
                             <span>{{ ticket.date_diff }}</span>
                           </time>
-                          <time class="text-xs text-white group-hover:text-gray-400">{{ ticket.date_opened }}</time>
+                          <time class="text-xs text-white group-hover:text-gray-400">{{ ticket.opened_date }}</time>
                         </div>
                         <p class="text-slate-500 text-sm mb-12 whitespace-pre-line">{{ ticket.problem }}</p>
                       </div>

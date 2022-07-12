@@ -79,7 +79,7 @@ class AirConditionerController extends Controller
         $tickets = Ticket::where('air_conditioner_id', $airConditioner->id)->orderBy('opened_at', 'desc')->get()->each(function ($ticket) {
             $difference = $ticket->opened_at->diffInDays();
             $ticket->date_diff = $difference == 0 ? 'hoje' : ($difference == 1 ? 'ontem' : 'há '.$difference.' dias');
-            $ticket->date_opened = $ticket->opened_at->format('d/m/Y');
+            $ticket->opened_date = $ticket->opened_at->format('d/m/Y');
         });
 
         return inertia('AirConditioners/Show', [
