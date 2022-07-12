@@ -7,7 +7,7 @@
 				:id="name"
 				:name="name"
 				:autofocus="autofocus"
-				class="w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm font-medium"
+				class="w-full border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 rounded-md shadow-sm font-medium"
 				:class="{ 'border-red-500': message }"
 				:value="modelValue"
 				@input="$emit('update:modelValue', $event.target.value)"

@@ -7,11 +7,11 @@
           class="
             flex items-center gap-2
             px-5 py-2
-            border border-indigo-300
-            hover:border-indigo-400
-            text-sm leading-5 font-medium text-indigo-700 hover:text-indigo-500
+            border border-blue-300
+            hover:border-blue-400
+            text-sm leading-5 font-medium text-blue-700 hover:text-blue-500
             rounded-md
-            bg-indigo-50 active:bg-indigo-50 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-100
+            bg-blue-50 active:bg-blue-50 focus:outline-none focus:shadow-outline-blue focus:border-blue-100
             transition duration-150 ease-in-out
           "
           :href="route('air_conditioners.create')"
