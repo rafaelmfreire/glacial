@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AirConditioner;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class TicketController extends Controller
 {
@@ -33,9 +35,19 @@ class TicketController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, AirConditioner $airConditioner)
     {
-        //
+        $validated = $request->validate([
+            'problem' => ['required', 'string'],
+            'informed_by' => ['nullable', 'string'],
+            'opened_at' => ['nullable', 'date'],
+        ]);
+
+        $validated['air_conditioner_id'] = $airConditioner->id;
+
+        Ticket::create($validated);
+
+        return Redirect::route('air_conditioners.show', $airConditioner);
     }
 
     /**
@@ -78,8 +90,9 @@ class TicketController extends Controller
      * @param  \App\Models\Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ticket $ticket)
+    public function destroy(AirConditioner $airConditioner, Ticket $ticket)
     {
-        //
+        $ticket->delete();
+        return Redirect::route('air_conditioners.show', $airConditioner);
     }
 }

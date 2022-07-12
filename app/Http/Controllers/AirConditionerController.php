@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AirConditioner;
 use App\Models\Brand;
 use App\Models\Ticket;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -75,8 +76,10 @@ class AirConditionerController extends Controller
      */
     public function show(AirConditioner $airConditioner)
     {
-        $tickets = Ticket::where('air_conditioner_id', $airConditioner->id)->get()->each(function ($ticket) {
-            $ticket->date_diff = $ticket->opened_at->diffForHumans();
+        $tickets = Ticket::where('air_conditioner_id', $airConditioner->id)->orderBy('opened_at', 'desc')->get()->each(function ($ticket) {
+            $difference = $ticket->opened_at->diffInDays();
+            $ticket->date_diff = $difference == 0 ? 'hoje' : ($difference == 1 ? 'ontem' : 'há '.$difference.' dias');
+            $ticket->date_opened = $ticket->opened_at->format('d/m/Y');
         });
 
         return inertia('AirConditioners/Show', [

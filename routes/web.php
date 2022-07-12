@@ -3,6 +3,7 @@
 use App\Http\Controllers\AirConditionerController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ContractItemController;
+use App\Http\Controllers\TicketController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -40,3 +41,4 @@ Route::middleware([
 Route::middleware(['auth:sanctum', 'verified'])->resource('brands', BrandController::class);
 Route::middleware(['auth:sanctum', 'verified'])->resource('contract_items', ContractItemController::class);
 Route::middleware(['auth:sanctum', 'verified'])->resource('air_conditioners', AirConditionerController::class);
+Route::middleware(['auth:sanctum', 'verified'])->resource('air_conditioners.tickets', TicketController::class);
