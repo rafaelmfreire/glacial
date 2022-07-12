@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('air_conditioner_id')->constrained()->restrictOnDelete();
             $table->text('problem');
-            $table->date('opened_at');
+            $table->string('informed_by')->nullable();
+            $table->date('opened_at')->nullable();
             $table->timestamps();
         });
     }
