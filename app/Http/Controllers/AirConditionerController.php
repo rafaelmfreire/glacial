@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AirConditioner;
 use App\Models\Brand;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -74,6 +75,10 @@ class AirConditionerController extends Controller
      */
     public function show(AirConditioner $airConditioner)
     {
+        $tickets = Ticket::where('air_conditioner_id', $airConditioner->id)->get()->each(function ($ticket) {
+            $ticket->date_diff = $ticket->opened_at->diffForHumans();
+        });
+
         return inertia('AirConditioners/Show', [
             'airConditioner' => [
                 'id' => $airConditioner->id,
@@ -83,7 +88,8 @@ class AirConditionerController extends Controller
                 'cpf' => $airConditioner->cpf,
                 'brand' => $airConditioner->brand->name,
                 'brand_id' => $airConditioner->brand->id,
-            ]
+                'tickets' => $tickets
+            ],
         ]);
     }
 

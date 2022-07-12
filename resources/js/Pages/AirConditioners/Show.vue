@@ -10,8 +10,50 @@
       <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-2 align-middle flex flex-col lg:flex-row gap-4 min-w-full sm:px-6 lg:px-8">
           <div class="lg:col-span-2 flex-1 bg-white shadow overflow-hidden sm:rounded-lg">
-            <div class=""></div>
+            <TabsWrapper>
+
+              <Tab title="Chamados">
+                <div class="grid grid-cols-1 gap-4">
+                  <CompTextarea :withPadding="false" name="problem" v-model="form.problem" :message="errors.problem" @keydown="errors.problem = null">Problema</CompTextarea>
+                  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <CompInput :withPadding="false" name="informed_by" v-model="form.informed_by" :message="errors.informed_by" @keydown="errors.informed_by = null">Informado por</CompInput>
+                    <CompInput :withPadding="false" type="date" name="opened_at" v-model="form.opened_at" :message="errors.opened_at" @keydown="errors.opened_at = null">Aberto em</CompInput>
+                  </div>
+                  <div>
+                    <LinkButton tag="button" @click="submit()">Adicionar</LinkButton>
+                  </div>
+                </div>
+
+                <div class="mt-8">
+                  <h2 class="font-medium text-gray-700 text-xl pt-4">Histórico</h2>
+
+                  <ul class="divide-y divide-slate-100">
+                    <li v-for="ticket in airConditioner.tickets" :key="ticket.id" class="py-6">
+                      <h3 class="font-bold mb-2">{{ ticket.informed_by }} <time class="font-normal text-gray-500">{{ ticket.date_diff }}</time></h3>
+                      <p>{{ ticket.problem }}</p>
+                    </li>
+                  </ul>
+                </div>
+              </Tab>
+
+              <Tab title="Ordens de Serviço">
+                <div class="grid grid-cols-1 gap-4">
+                  <!-- <CompTextarea :withPadding="false" name="problem" v-model="form.problem" :message="errors.problem" @keydown="errors.problem = null">Serviços</CompTextarea>
+                  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <CompInput :withPadding="false" type="date" name="opened_at" v-model="form.opened_at" :message="errors.opened_at" @keydown="errors.opened_at = null">Feito em</CompInput>
+                    <CompInput :withPadding="false" name="informed_by" v-model="form.informed_by" :message="errors.informed_by" @keydown="errors.informed_by = null">Equipe</CompInput>
+                  </div>
+                  <div>
+                    <LinkButton tag="button" @click="submit()">Adicionar</LinkButton>
+                  </div> -->
+                </div>
+              </Tab>
+
+            </TabsWrapper>
+
           </div>
+
+          <!-- Panel Right -->
           <div class="bg-white shadow overflow-hidden sm:rounded-lg min-w-[295px]">
             <div class="px-4 py-5 sm:px-6">
               <dl>
@@ -45,8 +87,25 @@
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { Inertia } from '@inertiajs/inertia';
 import LinkButton from '@/Components/LinkButton.vue';
+import CompInput from '@/Components/Input.vue';
+import CompTextarea from '@/Components/Textarea.vue';
+import TabsWrapper from '@/Components/TabsWrapper.vue';
+import Tab from '@/Components/Tab.vue';
+import { reactive, onMounted } from 'vue';
+
+const form = reactive({
+  problem: null,
+  opened_at: (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate()),
+  informed_by: props.user.name,
+});
 
 const props = defineProps({
+  user: Object,
   airConditioner: Object,
+  errors: Object,
 });
+
+onMounted(() => {
+  document.getElementById("problem")?.focus()
+})
 </script>
