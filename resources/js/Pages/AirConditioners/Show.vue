@@ -334,7 +334,6 @@ async function submitQuote() {
   Inertia.post(route('air_conditioners.quotes.store', props.airConditioner.id), this.formQuote, {
     preserveState: true,
     onSuccess: (page) => {
-      formQuote.number = null
       formQuote.date = (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate())
       formQuote.contract_item_id = null
       formQuote.quantity = 1
