@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('quote_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('quote_id')->constrained()->restrictOnDelete();
+            $table->foreignId('quote_id')->constrained()->cascadeOnDelete();
             $table->foreignId('air_conditioner_id')->constrained()->restrictOnDelete();
             $table->foreignId('contract_item_id')->constrained()->restrictOnDelete();
             $table->integer('quantity');
