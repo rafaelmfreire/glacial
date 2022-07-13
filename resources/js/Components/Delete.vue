@@ -1,6 +1,6 @@
 <template>
 	<a @click="confirmingDeletion = true">
-        <TrashIcon class="w-8 h-8 cursor-pointer p-1 hover:text-red-400 rounded-lg absolute left-full -ml-6" />
+		<slot />
 	</a>
 	<jet-confirmation-modal :show="confirmingDeletion" @close="confirmingDeletion = false">
 		<template #title> Apagar </template>
@@ -46,7 +46,6 @@ export default {
 	props: ['id', 'route'],
 	methods: {
 		deleteItem() {
-            console.log(this.routeP+this.idP);
 			Inertia.delete(this.routeP+this.idP,
 				{
 					preserveScroll: (page) => true,
