@@ -49,7 +49,7 @@ const close = () => {
                 </div>
 
                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                    <h3 class="text-lg">
+                    <h3 class="text-lg font-semibold">
                         <slot name="title" />
                     </h3>
 

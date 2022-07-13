@@ -3,7 +3,7 @@
 		<slot />
 	</a>
 	<jet-confirmation-modal :show="confirmingDeletion" @close="confirmingDeletion = false">
-		<template #title> Apagar </template>
+		<template #title> <slot name="title">Apagar</slot> </template>
 
 		<template #content>
 			Tem certeza que deseja apagar? Essa ação não pode ser desfeita. Os dados serão perdidos.
