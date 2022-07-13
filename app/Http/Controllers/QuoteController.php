@@ -108,8 +108,9 @@ class QuoteController extends Controller
      * @param  \App\Models\Quote  $quote
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Quote $quote)
+    public function destroy(AirConditioner $airConditioner, Quote $quote)
     {
-        //
+        $quote->delete();
+        return Redirect::route('air_conditioners.show', $airConditioner);
     }
 }

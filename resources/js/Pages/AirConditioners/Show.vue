@@ -129,9 +129,9 @@
                   <div class="divide-y">
                     <div v-for="quote in airConditioner.quotes" :key="quote.id" class="space-y-2 py-10 first:pt-6 last:pb-0">
                       <div class="flex items-center justify-between">
-                          <h3>
-                            Orçamento Nº: <span class="font-bold ml-2">{{ quote.number }}</span>
-                          </h3>
+                        <h3>
+                          Orçamento Nº: <span class="font-bold ml-2">{{ quote.number }}</span>
+                        </h3>
                         <div class="flex items-center">
                           <div class="text-sm">
                             Total: 
@@ -143,6 +143,14 @@
                             <CalendarIcon class="h-4 w-4 mr-1 text-blue-400/60 inline"/>
                             <span>{{ quote.date_formatted }}</span>
                           </time>
+                          <div class="text-slate-200 group">
+                            <div class="group-hover:text-slate-500">
+                              <BtnDelete :id="quote.id" :route="`/air_conditioners/${airConditioner.id}/quotes/`">
+                                <template #title>Apagar Orçamento nº {{ quote.number }}</template>
+                                <TrashIcon class="w-8 h-8 cursor-pointer p-1 rounded-lg hover:text-red-400" />
+                              </BtnDelete>
+                            </div>
+                          </div>
                         </div>
                       </div>
                       <div class="shadow overflow-x-auto border border-gray-200 sm:rounded-lg mt-2">
@@ -194,6 +202,7 @@
                               <td class="text-slate-200 group">
                                 <div class="group-hover:text-slate-500">
                                   <BtnDelete :id="quoteItem.id" :route="`/air_conditioners/${airConditioner.id}/quotes/${quote.id}/quote_items/`">
+                                    <template #title>Apagar Item nº {{ quoteItem.contract_item.number }}</template>
                                     <TrashIcon class="w-8 h-8 cursor-pointer p-1 rounded-lg hover:text-red-400" />
                                   </BtnDelete>
                                 </div>
