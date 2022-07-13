@@ -25,9 +25,9 @@
                 </div>
 
                 <div class="mt-8">
-                  <h2 class="font-medium text-gray-700 text-xl pt-4">Histórico</h2>
+                  <h2 class="font-medium text-gray-700 text-xl pt-4 mb-4">Histórico</h2>
 
-                  <ul class="mt-6">
+                  <ul v-if="airConditioner.tickets.length > 0" class="mt-6">
                     <li v-for="ticket in airConditioner.tickets" :key="ticket.id" class="flex items-start relative group">
                       <div class="absolute right-full top-[2.5rem] bottom-0 w-px bg-slate-200 block -mr-5"></div>
                       <SpeakerphoneIcon class="w-10 h-10 text-slate-300 bg-slate-50 border border-slate-200 p-2 mr-5 rounded-full z-10" />
@@ -49,6 +49,9 @@
                       </div>
                     </li>
                   </ul>
+
+                  <div v-else class="text-slate-500 text-sm">Ainda não foram cadastrados Chamados para este aparelho.</div>
+
                 </div>
               </Tab>
 
@@ -74,12 +77,11 @@
                 </div>
 
                 <div class="mt-8">
-                  <h2 class="font-medium text-gray-700 text-xl pt-4">Histórico</h2>
+                  <h2 class="font-medium text-gray-700 text-xl pt-4 mb-4">Histórico</h2>
 
-                  <ul class="mt-6">
+                  <ul v-if="airConditioner.serviceOrders.length > 0" class="mt-6">
                     <li v-for="serviceOrder in airConditioner.serviceOrders" :key="serviceOrder.id" class="flex items-start relative group">
                       <div class="absolute right-full top-[2.5rem] bottom-0 w-px bg-slate-200 block -mr-5"></div>
-                      <!-- <DocumentTextIcon class="w-10 h-10 text-slate-300 bg-slate-50 border border-slate-200 p-2 mr-5 rounded-full z-10" /> -->
                       <div class="w-10 h-10 text-sm text-slate-400 uppercase font-bold bg-slate-50 border border-slate-200 p-2 mr-5 flex items-center justify-center rounded-full z-10">{{ serviceOrder.status_abbr }}</div>
                       <div>
                         <div class="flex items-center space-x-3 mb-2 mt-1">
@@ -100,6 +102,7 @@
                       </div>
                     </li>
                   </ul>
+                  <div v-else class="text-slate-500 text-sm">Ainda não foram cadastradas Ordens de Serviço para este aparelho.</div>
                 </div>
               </Tab>
 
