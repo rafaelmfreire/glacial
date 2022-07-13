@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Enums\ServiceOrderStatus;
 use App\Models\AirConditioner;
 use App\Models\Brand;
+use App\Models\Quote;
 use App\Models\ServiceOrder;
 use App\Models\Ticket;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 
 class AirConditionerController extends Controller
@@ -92,6 +95,28 @@ class AirConditionerController extends Controller
             $serviceOrder->status_abbr = $serviceOrder->statusAbbr;
         });
 
+        $quotes = Quote::
+            with([
+                'quoteItems' => function ($query) use ($airConditioner) {
+                        $query->where('air_conditioner_id', $airConditioner->id);
+                    },
+                'quoteItems.contractItem'
+            ])
+            ->whereHas('quoteItems', function (Builder $query) use ($airConditioner) {
+                    $query->where('air_conditioner_id', $airConditioner->id);
+                })
+            ->orderBy('date', 'desc')
+            ->get()
+            ->each(function ($quote) use ($airConditioner) {
+                $quote->date_formatted = $quote->date->format('d/m/Y');
+                $quote->total = DB::table('quote_items')
+                    ->join('contract_items', 'contract_items.id', '=', 'quote_items.contract_item_id')
+                    ->select(DB::raw('sum(item_value * quantity) as total'))
+                    ->where('quote_id', $quote->id)
+                    ->where('air_conditioner_id', $airConditioner->id)
+                    ->first()->total / 100;
+        });
+
         $statusArray = [];
         foreach (ServiceOrderStatus::cases() as $key => $status) {
             $statusArray[__('messages.status.'.$status->name)] = $status->value;
@@ -99,15 +124,16 @@ class AirConditionerController extends Controller
 
         return inertia('AirConditioners/Show', [
             'airConditioner' => [
-                'id' => $airConditioner->id,
-                'room' => $airConditioner->room,
-                'btu' => $airConditioner->btu,
-                'identifier' => $airConditioner->identifier,
-                'cpf' => $airConditioner->cpf,
-                'brand' => $airConditioner->brand->name,
-                'brand_id' => $airConditioner->brand->id,
-                'tickets' => $tickets,
-                'serviceOrders' => $serviceOrders
+                'id'            => $airConditioner->id,
+                'room'          => $airConditioner->room,
+                'btu'           => $airConditioner->btu,
+                'identifier'    => $airConditioner->identifier,
+                'cpf'           => $airConditioner->cpf,
+                'brand'         => $airConditioner->brand->name,
+                'brand_id'      => $airConditioner->brand->id,
+                'tickets'       => $tickets,
+                'serviceOrders' => $serviceOrders,
+                'quotes'        => $quotes
             ],
             'statuses' => $statusArray
         ]);

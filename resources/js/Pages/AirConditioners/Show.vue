@@ -44,8 +44,10 @@
                         </div>
                         <p class="text-slate-500 text-sm mb-12 whitespace-pre-line">{{ ticket.problem }}</p>
                       </div>
-                      <div class="text-slate-100 group-hover:text-gray-400">
-                        <BtnDelete :id="ticket.id" :route="`/air_conditioners/${airConditioner.id}/tickets/`" />
+                      <div class="text-slate-100 group-hover:text-gray-400 absolute left-full -ml-6">
+                        <BtnDelete :id="ticket.id" :route="`/air_conditioners/${airConditioner.id}/tickets/`">
+                          <TrashIcon class="w-8 h-8 cursor-pointer p-1 rounded-lg hover:text-red-400" />
+                        </BtnDelete>
                       </div>
                     </li>
                   </ul>
@@ -88,7 +90,6 @@
                           <h3 class="font-bold text-lg">
                             {{ serviceOrder.technicians }}
                           </h3>
-                          <!-- <div class="text-xs bg-slate-100 text-slate-500 px-2 py-1 rounded-full inline-flex">{{ serviceOrder.status_name }}</div> -->
                           <time class="font-medium text-xs text-blue-700 bg-blue-50 ml-2 px-2 py-1 inline-flex items-center rounded-full">
                             <CalendarIcon class="h-4 w-4 mr-1 text-blue-400/60 inline"/>
                             <span>{{ serviceOrder.date_diff }}</span>
@@ -97,12 +98,137 @@
                         </div>
                         <p class="text-slate-500 text-sm mb-12 whitespace-pre-line">{{ serviceOrder.services }}</p>
                       </div>
-                      <div class="text-slate-100 group-hover:text-gray-400">
-                        <BtnDelete :id="serviceOrder.id" :route="`/air_conditioners/${airConditioner.id}/service_orders/`" />
+                      <div class="text-slate-100 group-hover:text-gray-400 absolute left-full -ml-6">
+                        <BtnDelete :id="serviceOrder.id" :route="`/air_conditioners/${airConditioner.id}/service_orders/`">
+                          <TrashIcon class="w-8 h-8 cursor-pointer p-1 rounded-lg hover:text-red-400" />
+                        </BtnDelete>
                       </div>
                     </li>
                   </ul>
                   <div v-else class="text-slate-500 text-sm">Ainda não foram cadastradas Ordens de Serviço para este aparelho.</div>
+                </div>
+              </Tab>
+
+              <Tab title="Orçamentos">
+                <div class="grid grid-cols-1 gap-4">
+                  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <CompInput :withPadding="false" name="number" v-model="formQuote.number" :message="errors.number" @keydown="errors.number = null">Orçamento Nº</CompInput>
+                    <CompInput :withPadding="false" type="date" name="date" v-model="formQuote.date" :message="errors.date" @keydown="errors.date = null">Data</CompInput>
+                  </div>
+                  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <CompInput :withPadding="false" name="contract_item_id" v-model="formQuote.contract_item_id" :message="errors.contract_item_id" @keydown="errors.contract_item_id = null">Item</CompInput>
+                    <CompInput :withPadding="false" name="quantity" type="number" v-model="formQuote.quantity" :message="errors.quantity" @keydown="errors.quantity = null">Quantidade</CompInput>
+                  </div>
+                  <div>
+                    <LinkButton tag="button" @click="submitQuote()">Adicionar</LinkButton>
+                  </div>
+                </div>
+
+                <div class="mt-8">
+                  <h2 class="font-medium text-gray-700 text-xl pt-4">Histórico</h2>
+                  <div class="divide-y">
+                    <div v-for="quote in airConditioner.quotes" :key="quote.id" class="space-y-2 py-10 first:pt-6 last:pb-0">
+                      <div class="flex items-center justify-between">
+                          <h3>
+                            Orçamento Nº: <span class="font-bold ml-2">{{ quote.number }}</span>
+                          </h3>
+                        <div class="flex items-center">
+                          <div class="text-sm">
+                            Total: 
+                            <span class="font-bold">
+                              {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(quote.total) }}
+                            </span>
+                          </div>
+                          <time class="font-medium text-xs text-blue-700 bg-blue-50 ml-2 px-2 py-1 inline-flex items-center rounded-full">
+                            <CalendarIcon class="h-4 w-4 mr-1 text-blue-400/60 inline"/>
+                            <span>{{ quote.date_formatted }}</span>
+                          </time>
+                        </div>
+                      </div>
+                      <div class="shadow overflow-x-auto border border-gray-200 sm:rounded-lg mt-2">
+                        <table class="min-w-full divide-y divide-gray-200">
+                          <thead class="bg-white">
+                            <tr class="divide-x">
+
+                              <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              </th>
+                              <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <!-- <button @click="sort('identifier')" class="text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center space-x-2"> -->
+                                  <span>Item</span>
+                                  <!-- <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
+                                  <!-- <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
+                                <!-- </button> -->
+                              </th>
+                              <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <!-- <button @click="sort('identifier')" class="text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center space-x-2"> -->
+                                  <span>QTD</span>
+                                  <!-- <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
+                                  <!-- <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
+                                <!-- </button> -->
+                              </th>
+                              <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[115px]">
+                                <!-- <button @click="sort('identifier')" class="text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center space-x-2"> -->
+                                  <span>Valor</span>
+                                  <!-- <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
+                                  <!-- <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
+                                <!-- </button> -->
+                              </th>
+                              <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[115px]">
+                                <!-- <button @click="sort('identifier')" class="text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center space-x-2"> -->
+                                  <span>Total</span>
+                                  <!-- <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
+                                  <!-- <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
+                                <!-- </button> -->
+                              </th>
+                              <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-full">
+                                <!-- <button @click="sort('identifier')" class="text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center space-x-2"> -->
+                                  <span>Descrição</span>
+                                  <!-- <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
+                                  <!-- <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
+                                <!-- </button> -->
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody class="bg-white divide-y divide-gray-200">
+                            <tr v-for="quoteItem in resort(quote.quote_items, 'contract_item.number', 'asc')" :key="quoteItem.id" class="hover:bg-yellow-50 odd:bg-gray-100 divide-x group">
+                              <td class="text-slate-200 group">
+                                <div class="group-hover:text-slate-500">
+                                  <BtnDelete :id="quoteItem.id" :route="`/air_conditioners/${airConditioner.id}/quotes/${quote.id}/quote_items/`">
+                                    <TrashIcon class="w-8 h-8 cursor-pointer p-1 rounded-lg hover:text-red-400" />
+                                  </BtnDelete>
+                                </div>
+                              </td>
+                              <td class="px-4 py-2 whitespace-nowrap tabular-nums text-right">
+                                <div class="text-sm text-slate-800">
+                                  {{ quoteItem.contract_item.number }}
+                                </div>
+                              </td>
+                              <td class="px-4 py-2 whitespace-nowrap tabular-nums text-right">
+                                <div class="text-sm text-slate-800">
+                                  {{ quoteItem.quantity }}
+                                </div>
+                              </td>
+                              <td class="px-4 py-2 whitespace-nowrap tabular-nums text-right">
+                                <div class="text-sm text-slate-800 tracking-tight">
+                                  {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(quoteItem.contract_item.item_value) }}
+                                </div>
+                              </td>
+                              <td class="px-4 py-2 whitespace-nowrap tabular-nums text-right">
+                                <div class="text-sm text-slate-800 font-semibold tracking-tight">
+                                  {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(quoteItem.contract_item.item_value * quoteItem.quantity) }}
+                                </div>
+                              </td>
+                              <td class="px-4 py-2 whitespace-nowrap tabular-nums">
+                                <div class="text-sm text-slate-800">
+                                  {{ quoteItem.contract_item.title }}
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </Tab>
 
@@ -151,7 +277,7 @@ import BtnDelete from '@/Components/Delete.vue';
 import TabsWrapper from '@/Components/TabsWrapper.vue';
 import Tab from '@/Components/Tab.vue';
 import { CalendarIcon, SpeakerphoneIcon, DocumentTextIcon, TrashIcon  } from '@heroicons/vue/outline';
-import { reactive, onMounted } from 'vue';
+import { reactive, computed, onMounted, watch } from 'vue';
 
 const formTicket = reactive({
   problem: null,
@@ -161,10 +287,23 @@ const formTicket = reactive({
 
 const formServiceOrder = reactive({
   services: null,
-  done_at: (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate()+' '+new Date().getHours()+':'+(new Date().getMinutes()).toString().padStart(2, '0')),
+  done_at: (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate()+' '+(new Date().getHours()).toString().padStart(2, '0')+':'+(new Date().getMinutes()).toString().padStart(2, '0')),
   technicians: '',
   status: null
 });
+
+const formQuote = reactive({
+  number: null,
+  date: (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate()),
+  contract_item_id: '000',
+  quantity: 1
+});
+
+watch(formQuote, async (newNumber, oldNumber) => {
+  if(parseInt(oldNumber.contract_item_id, 10) != 0 && !isNaN(parseInt(oldNumber.contract_item_id, 10))) {
+    formQuote.contract_item_id = parseInt(oldNumber.contract_item_id, 10).toString().padStart(3, '0')
+  }
+})
 
 const props = defineProps({
   user: Object,
@@ -181,6 +320,20 @@ async function submitTicket() {
   this.loading = false;
 }
 
+async function submitQuote() {
+  this.loading = true;
+  Inertia.post(route('air_conditioners.quotes.store', props.airConditioner.id), this.formQuote, {
+    preserveState: true,
+    onSuccess: (page) => {
+      formQuote.number = null
+      formQuote.date = (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate())
+      formQuote.contract_item_id = null
+      formQuote.quantity = 1
+    }
+  });
+  this.loading = false;
+}
+
 async function submitServiceOrder() {
   this.loading = true;
   Inertia.post(route('air_conditioners.service_orders.store', props.airConditioner.id), this.formServiceOrder, {
@@ -193,6 +346,10 @@ async function submitServiceOrder() {
     }
   });
   this.loading = false;
+}
+
+function resort(list, property, direction) {
+  return _.orderBy(list, property, direction);
 }
 
 onMounted(() => {

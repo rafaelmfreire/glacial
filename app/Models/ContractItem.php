@@ -27,9 +27,9 @@ class ContractItem extends Model
         );
     }
 
-    public function quotes()
+    public function quoteItems()
     {
-        return $this->hasMany(quotes::class);
+        return $this->hasMany(QuoteItem::class);
     }
 
     public function requisitions()

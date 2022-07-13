@@ -25,9 +25,9 @@ class AirConditioner extends Model
         return $this->hasMany(ServiceOrder::class);
     }
 
-    public function quotes()
+    public function quoteItems()
     {
-        return $this->hasMany(Quote::class);
+        return $this->hasMany(QuoteItem::class);
     }
 
     public function requisitions()

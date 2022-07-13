@@ -3,6 +3,8 @@
 use App\Http\Controllers\AirConditionerController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ContractItemController;
+use App\Http\Controllers\QuoteController;
+use App\Http\Controllers\QuoteItemController;
 use App\Http\Controllers\ServiceOrderController;
 use App\Http\Controllers\TicketController;
 use Illuminate\Foundation\Application;
@@ -44,3 +46,5 @@ Route::middleware(['auth:sanctum', 'verified'])->resource('contract_items', Cont
 Route::middleware(['auth:sanctum', 'verified'])->resource('air_conditioners', AirConditionerController::class);
 Route::middleware(['auth:sanctum', 'verified'])->resource('air_conditioners.tickets', TicketController::class);
 Route::middleware(['auth:sanctum', 'verified'])->resource('air_conditioners.service_orders', ServiceOrderController::class);
+Route::middleware(['auth:sanctum', 'verified'])->resource('air_conditioners.quotes', QuoteController::class);
+Route::middleware(['auth:sanctum', 'verified'])->resource('air_conditioners.quotes.quote_items', QuoteItemController::class);

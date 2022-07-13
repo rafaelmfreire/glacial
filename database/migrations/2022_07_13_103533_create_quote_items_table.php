@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('quotes', function (Blueprint $table) {
+        Schema::create('quote_items', function (Blueprint $table) {
             $table->id();
-            $table->string('number');
-            $table->date('date');
+            $table->foreignId('quote_id')->constrained()->restrictOnDelete();
+            $table->foreignId('air_conditioner_id')->constrained()->restrictOnDelete();
+            $table->foreignId('contract_item_id')->constrained()->restrictOnDelete();
+            $table->integer('quantity');
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('quotes');
+        Schema::dropIfExists('quote_items');
     }
 };
