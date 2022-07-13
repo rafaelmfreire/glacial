@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('air_conditioner_id')->constrained()->restrictOnDelete();
             $table->dateTime('done_at');
-            $table->string('technicians')->nullable();
+            $table->string('technicians')->nullable()->default('Instrucon');
             $table->text('services')->nullable();
             $table->unsignedInteger('status')->default(ServiceOrderStatus::Concluido->value);
             $table->timestamps();

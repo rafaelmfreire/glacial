@@ -42,7 +42,7 @@ class ServiceOrderController extends Controller
         $validated = $request->validate([
             'services' => ['required', 'string'],
             'technicians' => ['nullable', 'string'],
-            'done_at' => ['nullable', 'date'],
+            'done_at' => ['required', 'date'],
             'status' => ['required', new Enum(ServiceOrderStatus::class)]
         ]);
 
@@ -93,8 +93,9 @@ class ServiceOrderController extends Controller
      * @param  \App\Models\ServiceOrder  $serviceOrder
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ServiceOrder $serviceOrder)
+    public function destroy(AirConditioner $airConditioner, ServiceOrder $serviceOrder)
     {
-        //
+        $serviceOrder->delete();
+        return Redirect::route('air_conditioners.show', $airConditioner);
     }
 }

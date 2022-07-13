@@ -52,13 +52,11 @@
                 </div>
               </Tab>
 
-
               <Tab title="Ordens de Serviço">
                 <div class="grid grid-cols-1 gap-4">
                   <CompTextarea :withPadding="false" name="services" rows="3" v-model="formServiceOrder.services" :message="errors.services" @keydown="errors.services = null">Descreva os serviços</CompTextarea>
-                  <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                    <CompInput :withPadding="false" type="date" name="done_at" v-model="formServiceOrder.done_at" :message="errors.done_at" @keydown="errors.done_at = null">Realizado em</CompInput>
-                    <CompInput :withPadding="false" name="technicians" v-model="formServiceOrder.technicians" :message="errors.technicians" @keydown="errors.technicians = null">Pela equipe</CompInput>
+                  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <CompInput :withPadding="false" name="technicians" v-model="formServiceOrder.technicians" :message="errors.technicians" @keydown="errors.technicians = null">Equipe</CompInput>
                     <CompSelect :withPadding="false" name="status" v-model="formServiceOrder.status" :message="errors.status" @change="errors.status = null" >Status
                       <template #options>
                         <CompOption v-for="(index, item) in statuses" :key="index" :value="index">
@@ -66,6 +64,9 @@
                         </CompOption>
                       </template>
                     </CompSelect>
+                  </div>
+                  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <CompInput :withPadding="false" type="datetime-local" name="done_at" v-model="formServiceOrder.done_at" :message="errors.done_at" @keydown="errors.done_at = null">Realizado em</CompInput>
                   </div>
                   <div>
                     <LinkButton tag="button" @click="submitServiceOrder()">Adicionar</LinkButton>
@@ -78,12 +79,14 @@
                   <ul class="mt-6">
                     <li v-for="serviceOrder in airConditioner.serviceOrders" :key="serviceOrder.id" class="flex items-start relative group">
                       <div class="absolute right-full top-[2.5rem] bottom-0 w-px bg-slate-200 block -mr-5"></div>
-                      <DocumentTextIcon class="w-10 h-10 text-slate-300 bg-slate-50 border border-slate-200 p-2 mr-5 rounded-full z-10" />
+                      <!-- <DocumentTextIcon class="w-10 h-10 text-slate-300 bg-slate-50 border border-slate-200 p-2 mr-5 rounded-full z-10" /> -->
+                      <div class="w-10 h-10 text-sm text-slate-400 uppercase font-bold bg-slate-50 border border-slate-200 p-2 mr-5 flex items-center justify-center rounded-full z-10">{{ serviceOrder.status_abbr }}</div>
                       <div>
                         <div class="flex items-center space-x-3 mb-2 mt-1">
                           <h3 class="font-bold text-lg">
                             {{ serviceOrder.technicians }}
                           </h3>
+                          <!-- <div class="text-xs bg-slate-100 text-slate-500 px-2 py-1 rounded-full inline-flex">{{ serviceOrder.status_name }}</div> -->
                           <time class="font-medium text-xs text-blue-700 bg-blue-50 ml-2 px-2 py-1 inline-flex items-center rounded-full">
                             <CalendarIcon class="h-4 w-4 mr-1 text-blue-400/60 inline"/>
                             <span>{{ serviceOrder.date_diff }}</span>
@@ -155,8 +158,9 @@ const formTicket = reactive({
 
 const formServiceOrder = reactive({
   services: null,
-  done_at: (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate()),
-  techinicians: '',
+  done_at: (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate()+' '+new Date().getHours()+':'+(new Date().getMinutes()).toString().padStart(2, '0')),
+  technicians: '',
+  status: null
 });
 
 const props = defineProps({
@@ -177,7 +181,13 @@ async function submitTicket() {
 async function submitServiceOrder() {
   this.loading = true;
   Inertia.post(route('air_conditioners.service_orders.store', props.airConditioner.id), this.formServiceOrder, {
-    preserveState: (page) => Object.keys(page.props.errors).length,
+    preserveState: true,
+    onSuccess: (page) => {
+      formServiceOrder.services = null
+      formServiceOrder.done_at = (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate()+' '+new Date().getHours()+':'+(new Date().getMinutes()).toString().padStart(2, '0'))
+      formServiceOrder.technicians = null 
+      formServiceOrder.status = null
+    }
   });
   this.loading = false;
 }

@@ -88,11 +88,13 @@ class AirConditionerController extends Controller
             $difference = $serviceOrder->done_at->diffInDays();
             $serviceOrder->date_diff = $difference == 0 ? 'hoje' : ($difference == 1 ? 'ontem' : 'há '.$difference.' dias');
             $serviceOrder->done_date = $serviceOrder->done_at->format('d/m/Y H:i');
+            $serviceOrder->status_name = $serviceOrder->statusName;
+            $serviceOrder->status_abbr = $serviceOrder->statusAbbr;
         });
 
         $statusArray = [];
-        foreach (ServiceOrderStatus::cases() as $key => $value) {
-            $statusArray[$value->name] = $value->value;
+        foreach (ServiceOrderStatus::cases() as $key => $status) {
+            $statusArray[__('messages.status.'.$status->name)] = $status->value;
         }
 
         return inertia('AirConditioners/Show', [
