@@ -116,7 +116,7 @@
                 <div class="py-5">
                   <div class="bg-slate-100 p-2 max-w-[250px]">
                     <dt class="text-sm text-gray-500 sr-only">Tombamento</dt>
-                    <dd class="text-2xl rounded-lg text-center border border-blue-800 bg-slate-100 py-4 px-2 font-semibold">
+                    <dd class="text-2xl rounded-lg text-center border border-blue-800 bg-gradient-to-tr from-slate-200 to-slate-200 via-slate-50 py-4 px-2 font-semibold">
                       <span v-if="airConditioner.identifier" class="font-mono flex items-center justify-between text-slate-500 tracking-wider after:content-[''] after:w-5 after:h-5 after:rounded-full after:bg-gray-500 after:border-[6px] after:border-gray-300 after:inline-block before:content-[''] before:w-5 before:h-5 before:rounded-full before:bg-gray-500 before:border-[6px] before:border-gray-300 before:inline-block">{{ airConditioner.identifier }}</span>
                       <span v-else class="font-mono text-sm flex items-center justify-between text-red-400 tracking-wider after:content-[''] after:w-5 after:h-5 after:rounded-full after:bg-gray-500 after:border-[6px] after:border-gray-300 after:inline-block before:content-[''] before:w-5 before:h-5 before:rounded-full before:bg-gray-500 before:border-[6px] before:border-gray-300 before:inline-block">Sem tombamento</span>
                     </dd>
