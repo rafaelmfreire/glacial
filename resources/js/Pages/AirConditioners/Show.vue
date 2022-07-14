@@ -113,11 +113,12 @@
                 <div class="grid grid-cols-1 gap-4">
                   <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     <CompInput :withPadding="false" name="number" v-model="formQuote.number" :message="errors.number" @keydown="errors.number = null">Orçamento Nº</CompInput>
-                    <CompInput :withPadding="false" type="date" name="date" v-model="formQuote.date" :message="errors.date" @keydown="errors.date = null">Data</CompInput>
+                    <CompInput :withPadding="false" type="date" name="date" v-model="formQuote.date" :message="errors.date" @keydown="errors.date = null">Data do Orçamento</CompInput>
                   </div>
-                  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
                     <CompInput :withPadding="false" name="contract_item_id" v-model="formQuote.contract_item_id" :message="errors.contract_item_id" @keydown="errors.contract_item_id = null">Item</CompInput>
                     <CompInput :withPadding="false" name="quantity" type="number" v-model="formQuote.quantity" :message="errors.quantity" @keydown="errors.quantity = null">Quantidade</CompInput>
+                    <CompInput :withPadding="false" type="date" name="service_date" v-model="formQuote.service_date" :message="errors.service_date" @keydown="errors.service_date = null">Data do Serviço</CompInput>
                   </div>
                   <div>
                     <LinkButton tag="button" @click="submitQuote()">Adicionar</LinkButton>
@@ -190,6 +191,13 @@
                               </th>
                               <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-full">
                                 <!-- <button @click="sort('identifier')" class="text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center space-x-2"> -->
+                                  <span>Data</span>
+                                  <!-- <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
+                                  <!-- <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
+                                <!-- </button> -->
+                              </th>
+                              <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-full">
+                                <!-- <button @click="sort('identifier')" class="text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center space-x-2"> -->
                                   <span>Descrição</span>
                                   <!-- <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
                                   <!-- <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
@@ -225,6 +233,11 @@
                               <td class="px-4 py-2 whitespace-nowrap tabular-nums text-right">
                                 <div class="text-sm text-slate-800 font-semibold tracking-tight">
                                   {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(quoteItem.contract_item.item_value * quoteItem.quantity) }}
+                                </div>
+                              </td>
+                              <td class="px-4 py-2 whitespace-nowrap tabular-nums text-right">
+                                <div class="text-sm text-slate-800">
+                                  {{ quoteItem.service_date_formatted }}
                                 </div>
                               </td>
                               <td class="px-4 py-2 whitespace-nowrap tabular-nums">
@@ -305,7 +318,8 @@ const formQuote = reactive({
   number: null,
   date: (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate()),
   contract_item_id: '000',
-  quantity: 1
+  quantity: 1,
+  service_date: (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate()),
 });
 
 watch(formQuote, async (newNumber, oldNumber) => {

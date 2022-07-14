@@ -43,7 +43,8 @@ class QuoteController extends Controller
             'number' => ['required', 'numeric'],
             'date' => ['required', 'date'],
             'contract_item_id' => ['required', 'exists:App\Models\ContractItem,number'],
-            'quantity' => ['required', 'numeric']
+            'quantity' => ['required', 'numeric'],
+            'service_date' => ['required', 'date']
         ]);
 
         $quote = Quote::where('number', '=', $validated['number'])->firstOrCreate(
@@ -59,7 +60,8 @@ class QuoteController extends Controller
             'quote_id' => $quote->id,
             'air_conditioner_id' => $airConditioner->id,
             'contract_item_id' => ContractItem::where('number', $validated['contract_item_id'])->first()->id,
-            'quantity' => $validated['quantity']
+            'quantity' => $validated['quantity'],
+            'service_date' => $validated['service_date']
         ]);
         
         // $validated['air_conditioner_id'] = $airConditioner->id;
