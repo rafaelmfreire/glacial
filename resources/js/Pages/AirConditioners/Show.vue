@@ -117,7 +117,7 @@
                   </div>
                   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
                     <CompInput :withPadding="false" name="contract_item_id" v-model="formQuote.contract_item_id" :message="errors.contract_item_id" @keydown="errors.contract_item_id = null">Item</CompInput>
-                    <CompInput :withPadding="false" name="quantity" type="number" v-model="formQuote.quantity" :message="errors.quantity" @keydown="errors.quantity = null">Quantidade</CompInput>
+                    <CompInput :withPadding="false" name="quantity" min="1" type="number" v-model="formQuote.quantity" :message="errors.quantity" @keydown="errors.quantity = null">Quantidade</CompInput>
                     <CompInput :withPadding="false" type="date" name="service_date" v-model="formQuote.service_date" :message="errors.service_date" @keydown="errors.service_date = null">Data do Serviço</CompInput>
                   </div>
                   <div>
@@ -262,7 +262,7 @@
                   </div>
                   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
                     <CompInput :withPadding="false" name="contract_item_id" v-model="formRequisition.contract_item_id" :message="errors.contract_item_id" @keydown="errors.contract_item_id = null">Item</CompInput>
-                    <CompInput :withPadding="false" name="quantity" type="number" v-model="formRequisition.quantity" :message="errors.quantity" @keydown="errors.quantity = null">Quantidade</CompInput>
+                    <CompInput :withPadding="false" name="quantity" type="number" min="1" v-model="formRequisition.quantity" :message="errors.quantity" @keydown="errors.quantity = null">Quantidade</CompInput>
                     <CompInput :withPadding="false" name="quote_number" v-model="formRequisition.quote_number" :message="errors.quote_number" @keydown="errors.quote_number = null">Nº do orçamento</CompInput>
                   </div>
                   <div>

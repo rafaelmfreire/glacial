@@ -43,7 +43,7 @@ class QuoteController extends Controller
             'number' => ['required', 'numeric'],
             'date' => ['required', 'date'],
             'contract_item_id' => ['required', 'exists:App\Models\ContractItem,number'],
-            'quantity' => ['required', 'numeric'],
+            'quantity' => ['required', 'numeric', 'min:1'],
             'service_date' => ['required', 'date']
         ]);
 

@@ -41,10 +41,10 @@ class RequisitionController extends Controller
     public function store(AirConditioner $airConditioner, Request $request)
     {
         $validated = $request->validate([
-            'number' => ['required', 'numeric'],
-            'year' => ['required', 'numeric'],
+            'number' => ['required', 'numeric', 'min:1'],
+            'year' => ['required', 'numeric', 'min:1'],
             'contract_item_id' => ['required', 'exists:App\Models\ContractItem,number'],
-            'quantity' => ['required', 'numeric'],
+            'quantity' => ['required', 'numeric', 'min:1'],
             'quote_number' => ['required', 'exists:App\Models\Quote,number']
         ]);
 

@@ -40,7 +40,7 @@ class TicketController extends Controller
         $validated = $request->validate([
             'problem' => ['required', 'string'],
             'informed_by' => ['nullable', 'string'],
-            'opened_at' => ['nullable', 'date'],
+            'opened_at' => ['required', 'date'],
         ]);
 
         $validated['air_conditioner_id'] = $airConditioner->id;
