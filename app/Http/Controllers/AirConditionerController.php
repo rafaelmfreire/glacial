@@ -6,6 +6,7 @@ use App\Enums\ServiceOrderStatus;
 use App\Models\AirConditioner;
 use App\Models\Brand;
 use App\Models\Quote;
+use App\Models\Requisition;
 use App\Models\ServiceOrder;
 use App\Models\Ticket;
 use Carbon\Carbon;
@@ -102,10 +103,8 @@ class AirConditionerController extends Controller
                     },
                 'quoteItems.contractItem'
             ])
-            // ->whereHas('quoteItems', function (Builder $query) use ($airConditioner) {
-            //         $query->where('air_conditioner_id', $airConditioner->id);
-            //     })
             ->orderBy('date', 'desc')
+            ->orderBy('number', 'desc')
             ->get()
             ->each(function ($quote) use ($airConditioner) {
                 $quote->date_formatted = $quote->date->format('d/m/Y');
@@ -116,6 +115,26 @@ class AirConditionerController extends Controller
                     ->where('air_conditioner_id', $airConditioner->id)
                     ->first()->total / 100;
         });
+
+        $requisitions = Requisition::
+            with([
+                'requisitionItems' => function ($query) use ($airConditioner) {
+                        $query->where('air_conditioner_id', $airConditioner->id);
+                    },
+                'requisitionItems.contractItem',
+                'requisitionItems.quote'
+            ])
+            ->orderBy('year', 'desc')
+            ->orderBy('number', 'desc')
+            ->get()
+            ->each(function ($requisition) use ($airConditioner) {
+                $requisition->total = DB::table('requisition_items')
+                    ->join('contract_items', 'contract_items.id', '=', 'requisition_items.contract_item_id')
+                    ->select(DB::raw('sum(item_value * quantity) as total'))
+                    ->where('requisition_id', $requisition->id)
+                    ->where('air_conditioner_id', $airConditioner->id)
+                    ->first()->total / 100;
+            });
 
         $statusArray = [];
         foreach (ServiceOrderStatus::cases() as $key => $status) {
@@ -133,7 +152,8 @@ class AirConditionerController extends Controller
                 'brand_id'      => $airConditioner->brand->id,
                 'tickets'       => $tickets,
                 'serviceOrders' => $serviceOrders,
-                'quotes'        => $quotes
+                'quotes'        => $quotes,
+                'requisitions'  => $requisitions
             ],
             'statuses' => $statusArray
         ]);

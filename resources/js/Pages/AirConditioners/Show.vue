@@ -254,6 +254,147 @@
                 </div>
               </Tab>
 
+              <Tab title="Requisições">
+                <div class="grid grid-cols-1 gap-4">
+                  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <CompInput :withPadding="false" name="number" v-model="formRequisition.number" :message="errors.number" @keydown="errors.number = null">Requisição Nº</CompInput>
+                    <CompInput :withPadding="false" type="number" name="year" v-model="formRequisition.year" :message="errors.year" @keydown="errors.year = null">Ano</CompInput>
+                  </div>
+                  <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    <CompInput :withPadding="false" name="contract_item_id" v-model="formRequisition.contract_item_id" :message="errors.contract_item_id" @keydown="errors.contract_item_id = null">Item</CompInput>
+                    <CompInput :withPadding="false" name="quantity" type="number" v-model="formRequisition.quantity" :message="errors.quantity" @keydown="errors.quantity = null">Quantidade</CompInput>
+                    <CompInput :withPadding="false" name="quote_number" v-model="formRequisition.quote_number" :message="errors.quote_number" @keydown="errors.quote_number = null">Nº do orçamento</CompInput>
+                  </div>
+                  <div>
+                    <LinkButton tag="button" @click="submitRequisition()">Adicionar</LinkButton>
+                  </div>
+                </div>
+
+                <div class="mt-8">
+                  <h2 class="font-medium text-gray-700 text-xl pt-4">Histórico</h2>
+                  <div class="divide-y">
+                    <div v-for="requisition in airConditioner.requisitions" :key="requisition.id" class="space-y-2 py-10 first:pt-6 last:pb-0">
+                      <div class="flex items-center justify-between">
+                        <h3>
+                          Requisição Nº: <span class="font-bold ml-2">{{ requisition.number }}/{{ requisition.year }}</span>
+                        </h3>
+                        <div class="flex items-center">
+                          <div class="text-sm">
+                            Total: 
+                            <span class="font-bold">
+                              {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(requisition.total) }}
+                            </span>
+                          </div>
+                          <div class="text-slate-200 group">
+                            <div class="group-hover:text-slate-500">
+                              <BtnDelete :id="requisition.id" :route="`/air_conditioners/${airConditioner.id}/requisitions/`">
+                                <template #title>Apagar Requisição nº {{ requisition.number }}/{{ requisition.year }}</template>
+                                <TrashIcon class="w-8 h-8 cursor-pointer p-1 rounded-lg hover:text-red-400" />
+                              </BtnDelete>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="shadow overflow-x-auto border border-gray-200 sm:rounded-lg mt-2">
+                        <table class="min-w-full divide-y divide-gray-200">
+                          <thead class="bg-white">
+                            <tr class="divide-x">
+
+                              <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                              </th>
+                              <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <!-- <button @click="sort('identifier')" class="text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center space-x-2"> -->
+                                  <span>Item</span>
+                                  <!-- <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
+                                  <!-- <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
+                                <!-- </button> -->
+                              </th>
+                              <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <!-- <button @click="sort('identifier')" class="text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center space-x-2"> -->
+                                  <span>QTD</span>
+                                  <!-- <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
+                                  <!-- <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
+                                <!-- </button> -->
+                              </th>
+                              <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[115px]">
+                                <!-- <button @click="sort('identifier')" class="text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center space-x-2"> -->
+                                  <span>Valor</span>
+                                  <!-- <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
+                                  <!-- <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
+                                <!-- </button> -->
+                              </th>
+                              <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider min-w-[115px]">
+                                <!-- <button @click="sort('identifier')" class="text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center space-x-2"> -->
+                                  <span>Total</span>
+                                  <!-- <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
+                                  <!-- <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
+                                <!-- </button> -->
+                              </th>
+                              <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <!-- <button @click="sort('identifier')" class="text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center space-x-2"> -->
+                                  <span>Orç.</span>
+                                  <!-- <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
+                                  <!-- <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
+                                <!-- </button> -->
+                              </th>
+                              <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-full">
+                                <!-- <button @click="sort('identifier')" class="text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center space-x-2"> -->
+                                  <span>Descrição</span>
+                                  <!-- <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
+                                  <!-- <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" /> -->
+                                <!-- </button> -->
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody class="bg-white divide-y divide-gray-200">
+                            <tr v-for="requisitionItem in resort(requisition.requisition_items, 'contract_item.number', 'asc')" :key="requisitionItem.id" class="hover:bg-yellow-50 odd:bg-gray-100 divide-x group">
+                              <td class="text-slate-200 group">
+                                <div class="group-hover:text-slate-500">
+                                  <BtnDelete :id="requisitionItem.id" :route="`/air_conditioners/${airConditioner.id}/requisitions/${requisition.id}/requisition_items/`">
+                                    <template #title>Apagar Item nº {{ requisitionItem.contract_item.number }}</template>
+                                    <TrashIcon class="w-8 h-8 cursor-pointer p-1 rounded-lg hover:text-red-400" />
+                                  </BtnDelete>
+                                </div>
+                              </td>
+                              <td class="px-4 py-2 whitespace-nowrap tabular-nums text-right">
+                                <div class="text-sm text-slate-800">
+                                  {{ requisitionItem.contract_item.number }}
+                                </div>
+                              </td>
+                              <td class="px-4 py-2 whitespace-nowrap tabular-nums text-right">
+                                <div class="text-sm text-slate-800">
+                                  {{ requisitionItem.quantity }}
+                                </div>
+                              </td>
+                              <td class="px-4 py-2 whitespace-nowrap tabular-nums text-right">
+                                <div class="text-sm text-slate-800 tracking-tight">
+                                  {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(requisitionItem.contract_item.item_value) }}
+                                </div>
+                              </td>
+                              <td class="px-4 py-2 whitespace-nowrap tabular-nums text-right">
+                                <div class="text-sm text-slate-800 font-semibold tracking-tight">
+                                  {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(requisitionItem.contract_item.item_value * requisitionItem.quantity) }}
+                                </div>
+                              </td>
+                              <td class="px-4 py-2 whitespace-nowrap tabular-nums text-right">
+                                <div class="text-sm text-slate-800">
+                                  {{ requisitionItem.quote.number }}
+                                </div>
+                              </td>
+                              <td class="px-4 py-2 whitespace-nowrap tabular-nums">
+                                <div class="text-sm text-slate-800">
+                                  {{ requisitionItem.contract_item.title }}
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Tab>
+
             </TabsWrapper>
           </div>
 
@@ -322,9 +463,23 @@ const formQuote = reactive({
   service_date: (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate()),
 });
 
+const formRequisition = reactive({
+  number: null,
+  year: new Date().getFullYear(),
+  contract_item_id: '000',
+  quantity: 1,
+  quote_number: null
+});
+
 watch(formQuote, async (newNumber, oldNumber) => {
   if(parseInt(oldNumber.contract_item_id, 10) != 0 && !isNaN(parseInt(oldNumber.contract_item_id, 10))) {
     formQuote.contract_item_id = parseInt(oldNumber.contract_item_id, 10).toString().padStart(3, '0')
+  }
+})
+
+watch(formRequisition, async (newNumber, oldNumber) => {
+  if(parseInt(oldNumber.contract_item_id, 10) != 0 && !isNaN(parseInt(oldNumber.contract_item_id, 10))) {
+    formRequisition.contract_item_id = parseInt(oldNumber.contract_item_id, 10).toString().padStart(3, '0')
   }
 })
 
@@ -351,6 +506,19 @@ async function submitQuote() {
       formQuote.date = (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate())
       formQuote.contract_item_id = null
       formQuote.quantity = 1
+    }
+  });
+  this.loading = false;
+}
+
+async function submitRequisition() {
+  this.loading = true;
+  Inertia.post(route('air_conditioners.requisitions.store', props.airConditioner.id), this.formRequisition, {
+    preserveState: true,
+    onSuccess: (page) => {
+      formRequisition.year = new Date().getFullYear()
+      formRequisition.contract_item_id = null
+      formRequisition.quantity = 1
     }
   });
   this.loading = false;

@@ -15,12 +15,8 @@ return new class extends Migration
     {
         Schema::create('requisitions', function (Blueprint $table) {
             $table->id();
-            $table->string('number');
+            $table->unsignedInteger('number');
             $table->year('year');
-            $table->foreignId('air_conditioner_id')->constrained()->restrictOnDelete();
-            $table->foreignId('quote_id')->constrained()->restrictOnDelete();
-            $table->foreignId('contract_item_id')->constrained()->restrictOnDelete();
-            $table->integer('quantity');
             $table->timestamps();
         });
     }

@@ -32,8 +32,8 @@ class ContractItem extends Model
         return $this->hasMany(QuoteItem::class);
     }
 
-    public function requisitions()
+    public function requisitionItems()
     {
-        return $this->hasMany(Requisition::class);
+        return $this->hasMany(RequisitionItem::class);
     }
 }

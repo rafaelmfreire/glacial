@@ -10,18 +10,8 @@ class Requisition extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function airConditioner()
+    public function requisitionItems()
     {
-        return $this->belongsTo(AirConditioner::class);
-    }
-
-    public function quote()
-    {
-        return $this->belongsTo(Quote::class);
-    }
-
-    public function contractItem()
-    {
-        return $this->belongsTo(ContractItem::class);
+        return $this->hasMany(RequisitionItem::class);
     }
 }
