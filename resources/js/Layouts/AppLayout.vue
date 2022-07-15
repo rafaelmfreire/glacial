@@ -78,7 +78,7 @@ const logout = () => {
                       <!-- <div class="block px-4 py-2 text-xs text-gray-400">Manage Account</div> -->
                       <JetDropdownLink :href="route('reports.tickets')"> Chamados </JetDropdownLink>
                       <JetDropdownLink :href="route('reports.service_orders')"> Ordens de Serviço </JetDropdownLink>
-                      <!-- <JetDropdownLink :href="route('brands.index')"> Orçamentos </JetDropdownLink> -->
+                      <JetDropdownLink :href="route('reports.quotes')"> Orçamentos </JetDropdownLink>
                       <!-- <JetDropdownLink :href="route('brands.index')"> Requisições </JetDropdownLink> -->
                       <!-- <div class="border-t border-gray-100" /> -->
                     </template>

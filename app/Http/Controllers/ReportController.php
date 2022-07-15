@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Enums\ServiceOrderStatus;
 use App\Models\Brand;
+use App\Models\Quote;
 use App\Models\ServiceOrder;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
@@ -46,7 +48,11 @@ class ReportController extends Controller
         }
 
         return inertia('Reports/ServiceOrders', [
-            'service_orders' => ServiceOrder::with('airConditioner', 'airConditioner.brand')->get()->map(function ($service_order) {
+            'service_orders' => ServiceOrder::with('airConditioner', 'airConditioner.brand')->get()
+            
+
+            
+            ->map(function ($service_order) {
                 return [
                     'id' => $service_order->id,
                     'identifier' => $service_order->airConditioner->identifier,
@@ -67,6 +73,29 @@ class ReportController extends Controller
             }),
             'brands' => $brands,
             'statuses' => $statusArray
+        ]);
+    }
+
+    public function quotes()
+    {
+        return inertia('Reports/Quotes', [
+            'quotes' => Quote::all()
+            ->each(function ($quote) {
+                $quote->items = DB::table('quote_items')
+                    ->select(DB::raw('count(quote_items.id) as items'))
+                    ->where('quote_id', $quote->id)
+                    ->first()->items;
+            })
+            ->map(function ($quote) {
+                return [
+                    'id' => $quote->id,
+                    'number' => $quote->number,
+                    'date' => $quote->date,
+                    'date_search' => $quote->date->format('Y-m-d'),
+                    'date_formatted' => $quote->date->format('d/m/Y'),
+                    'items' => $quote->items
+                ];
+            }),
         ]);
     }
 }
