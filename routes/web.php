@@ -9,6 +9,7 @@ use App\Http\Controllers\RequisitionController;
 use App\Http\Controllers\RequisitionItemController;
 use App\Http\Controllers\ServiceOrderController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -52,3 +53,5 @@ Route::middleware(['auth:sanctum', 'verified'])->resource('air_conditioners.quot
 Route::middleware(['auth:sanctum', 'verified'])->resource('air_conditioners.quotes.quote_items', QuoteItemController::class);
 Route::middleware(['auth:sanctum', 'verified'])->resource('air_conditioners.requisitions', RequisitionController::class);
 Route::middleware(['auth:sanctum', 'verified'])->resource('air_conditioners.requisitions.requisition_items', RequisitionItemController::class);
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/reports/tickets', [ReportController::class, 'tickets'])->name('reports.tickets');
