@@ -25,7 +25,7 @@
                   </CompOption>
                 </template>
               </CompSelect>
-              <CompInput name="technicians" type="search" v-model="technicians" :withPadding="false" class="flex-grow w-full" placeholder="Equipe...">Equipe</CompInput>
+              <CompInput name="technicians" type="search" v-model="technicians" :withPadding="false" class="flex-grow w-full" placeholder="Buscar...">Serviços ou Equipe</CompInput>
 
               <span class="sm:ml-3 shadow-sm rounded-md">
                 <button
@@ -183,6 +183,7 @@ const serviceOrdersList = computed(() => {
   filtered = filtered.filter((service_order) => {
     return (
       service_order.technicians?.toLowerCase().indexOf(technicians.value.toLowerCase()) > -1 
+      || service_order.services?.toLowerCase().indexOf(technicians.value.toLowerCase()) > -1 
     );
   });
 
