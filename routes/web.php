@@ -55,3 +55,4 @@ Route::middleware(['auth:sanctum', 'verified'])->resource('air_conditioners.requ
 Route::middleware(['auth:sanctum', 'verified'])->resource('air_conditioners.requisitions.requisition_items', RequisitionItemController::class);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/reports/tickets', [ReportController::class, 'tickets'])->name('reports.tickets');
+Route::middleware(['auth:sanctum', 'verified'])->get('/reports/service_orders', [ReportController::class, 'service_orders'])->name('reports.service_orders');
