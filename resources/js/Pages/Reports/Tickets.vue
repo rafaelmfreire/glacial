@@ -87,10 +87,12 @@
               <tbody class="bg-white divide-y divide-gray-200">
                 <tr v-for="(item, index) in ticketsList" :key="index" class="hover:bg-yellow-50 odd:bg-gray-100">
                   <td class="px-6 py-4 whitespace-nowrap text-left">
-                    <div class="text-lg">
-                      <div class=" tabular-nums">{{ item.identifier }}</div>
-                      <div class="text-sm text-slate-500">{{ item.room }}</div>
-                    </div>
+                    <Link :href="route('air_conditioners.show', item.air_conditioner_id)">
+                      <div class="text-lg group">
+                        <div class="tabular-nums group-hover:text-blue-700">{{ item.identifier }}</div>
+                        <div class="text-sm text-slate-500 group-hover:text-slate-700">{{ item.room }}</div>
+                      </div>
+                    </Link>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap tabular-nums text-right">
                     <div class="text-sm">
@@ -130,6 +132,7 @@ import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/vue/outline';
 import CompInput from '@/Components/Input.vue';
 import CompSelect from '@/Components/Select.vue';
 import CompOption from '@/Components/Option.vue';
+import { Link } from '@inertiajs/inertia-vue3';
 
 const props = defineProps({
   tickets: Object,
