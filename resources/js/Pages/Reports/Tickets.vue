@@ -12,7 +12,7 @@
               <CompSelect class="min-w-[200px]" name="brand" :withPadding="false" v-model="brand">
                 Marca
                 <template #options>
-                  <CompOption v-for="brand in brands" :key="brand.id" :value="brand.id">
+                  <CompOption v-for="brand in brands" :key="brand.id.toString()" :value="brand.id.toString()">
                     {{ brand.name.toUpperCase() }}
                   </CompOption>
                 </template>
@@ -49,14 +49,14 @@
                 <tr>
                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     <button @click="sort('identifier')" class="text-xs font-medium text-gray-500 uppercase tracking-wider inline-flex items-center space-x-2">
-                      <span>Tombamento</span>
+                      <span>Aparelho</span>
                       <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" />
                       <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" />
                     </button>
                   </th>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    <button @click="sort('btu')" class="text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center space-x-2">
-                      <span>Marca/BTU</span>
+                  <th scope="col" class="px-6 py-3 text-xs text-right font-medium text-gray-500 uppercase tracking-wider">
+                    <button @click="sort('btu')" class="text-xs font-medium text-gray-500 uppercase tracking-wider inline-flex items-center mr-2 space-x-2">
+                      <span>Modelo</span>
                       <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'btu'" class="h-4 w-4" aria-hidden="true" />
                       <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'btu'" class="h-4 w-4" aria-hidden="true" />
                     </button>
@@ -106,7 +106,7 @@
                     </div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm">
+                    <div class="text-sm font-semibold text-gray-900">
                       <span>{{ item.problem }}</span>
                     </div>
                   </td>
