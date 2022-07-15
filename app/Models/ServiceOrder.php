@@ -14,6 +14,7 @@ class ServiceOrder extends Model
     protected $guarded  = [];
     protected $casts    = ['status' => ServiceOrderStatus::class];
     protected $dates    = ['done_at'];
+    protected $appends  = array('status_abbr');
 
     public function getStatusNameAttribute()
     {
