@@ -89,7 +89,7 @@
                   <td class="px-6 py-4 whitespace-nowrap text-left">
                     <Link :href="route('air_conditioners.show', item.air_conditioner_id)">
                       <div class="text-lg group">
-                        <div class="tabular-nums group-hover:text-blue-700">{{ item.identifier }}</div>
+                        <div class="tabular-nums font-semibold group-hover:text-blue-700">{{ item.identifier }}</div>
                         <div class="text-sm text-slate-500 group-hover:text-slate-700">{{ item.room }}</div>
                       </div>
                     </Link>

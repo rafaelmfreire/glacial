@@ -134,7 +134,7 @@
                     </div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap w-full">
-                    <div class="text-sm tabular-nums">
+                    <div class="font-medium tabular-nums">
                       {{ item.room }}
                     </div>
                   </td>
