@@ -56,6 +56,11 @@ class ContractItemsSeeder extends Seeder
             'item_value' => '556',
         ]);
         DB::table('contract_items')->insert([
+            'number'     => '069',
+            'title'      => 'SERVIÇO DE MANUTENÇÃO CORRETIVA EM SPLIT DE 15.000 A 24.000 BTU/H FORNECIMENTO E SUBSTITUIÇÃO GABINETE',
+            'item_value' => '13355',
+        ]);
+        DB::table('contract_items')->insert([
             'number'     => '189',
             'title'      => 'SERVIÇO DE MANUTENÇÃO CORRETIVA EM SPLIT DE 28.000 A 40.000 BTU/H, CARGA DE GÁS REFRIGERANTE COM CORREÇÃO DE VAZAMENTO(S)',
             'item_value' => '13355',

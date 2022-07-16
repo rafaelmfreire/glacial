@@ -15,11 +15,16 @@ class BrandSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('brands')->insert(['name' => 'LG']);
-        DB::table('brands')->insert(['name' => 'Samsung']);
-        DB::table('brands')->insert(['name' => 'Elgin']);
-        DB::table('brands')->insert(['name' => 'Midea']);
-        DB::table('brands')->insert(['name' => 'Carrier']);
-        DB::table('brands')->insert(['name' => 'Electrolux']);
+        DB::table('brands')->insert(['name' => 'LG']); //1
+        DB::table('brands')->insert(['name' => 'Samsung']); //2
+        DB::table('brands')->insert(['name' => 'Elgin']); //3
+        DB::table('brands')->insert(['name' => 'Midea']); //4
+        DB::table('brands')->insert(['name' => 'Carrier']); //5
+        DB::table('brands')->insert(['name' => 'Electrolux']); //6
+        DB::table('brands')->insert(['name' => 'Hitachi']); //7
+        DB::table('brands')->insert(['name' => 'Komeco']); //8
+        DB::table('brands')->insert(['name' => 'Coolix']); //9
+        DB::table('brands')->insert(['name' => 'Tempstar']); //10
+        DB::table('brands')->insert(['name' => 'Agratto']); //11
     }
 }
