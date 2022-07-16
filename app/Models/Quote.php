@@ -13,6 +13,15 @@ class Quote extends Model
 
     protected $guarded = [];
     protected $dates = ['date'];
+    protected $appends = array('date_formatted');
+
+    protected function dateFormatted(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value, $attributes) =>
+                Carbon::createFromFormat('Y-m-d', $attributes['date'])->format('d/m/Y')
+        );
+    }
 
     public function quoteItems()
     {
