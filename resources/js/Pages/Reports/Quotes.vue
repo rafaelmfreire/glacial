@@ -77,9 +77,7 @@
                     </div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap tabular-nums text-right">
-                    <div class="text-sm">
-                      <div class="text-xs tabular-nums">{{ item.items }}</div>
-                    </div>
+                    <div class="text-sm tabular-nums">{{ item.items }}</div>
                   </td>
                   <td class="w-full"></td>
                 </tr>
