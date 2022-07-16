@@ -46,7 +46,7 @@ export default {
 	props: ['id', 'route'],
 	methods: {
 		deleteItem() {
-			Inertia.delete(this.routeP+this.idP,
+			Inertia.delete(this.routeP,
 				{
 					preserveScroll: (page) => true,
 				}

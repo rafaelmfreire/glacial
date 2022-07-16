@@ -20,7 +20,7 @@
               <CompInput name="search_date" type="date" v-model="search_date" :withPadding="false" class="flex-grow w-full">Data</CompInput>
               <CompSelect class="min-w-[150px]" :withPadding="false" name="status" v-model="status">Status
                 <template #options>
-                  <CompOption v-for="(index, item) in statuses" :key="index" :value="index">
+                  <CompOption v-for="(index, item) in statuses" :key="index.toString()" :value="index.toString()">
                     {{ item.toUpperCase() }}
                   </CompOption>
                 </template>

@@ -45,7 +45,7 @@
                         <p class="text-slate-500 text-sm mb-12 whitespace-pre-line">{{ ticket.problem }}</p>
                       </div>
                       <div class="text-slate-100 group-hover:text-gray-400 absolute left-full -ml-6">
-                        <BtnDelete :id="ticket.id" :route="`/air_conditioners/${airConditioner.id}/tickets/`">
+                        <BtnDelete :id="ticket.id" :route="`/air_conditioners/${airConditioner.id}/tickets/${ticket.id}`">
                           <TrashIcon class="w-8 h-8 cursor-pointer p-1 rounded-lg hover:text-red-400" />
                         </BtnDelete>
                       </div>
@@ -64,7 +64,7 @@
                     <CompInput :withPadding="false" name="technicians" v-model="formServiceOrder.technicians" :message="errors.technicians" @keydown="errors.technicians = null">Equipe</CompInput>
                     <CompSelect :withPadding="false" name="status" v-model="formServiceOrder.status" :message="errors.status" @change="errors.status = null" >Status
                       <template #options>
-                        <CompOption v-for="(index, item) in statuses" :key="index" :value="index">
+                        <CompOption v-for="(index, item) in statuses" :key="index.toString()" :value="index.toString()">
                           {{ item.toUpperCase() }}
                         </CompOption>
                       </template>
@@ -99,7 +99,7 @@
                         <p class="text-slate-500 text-sm mb-12 whitespace-pre-line">{{ serviceOrder.services }}</p>
                       </div>
                       <div class="text-slate-100 group-hover:text-gray-400 absolute left-full -ml-6">
-                        <BtnDelete :id="serviceOrder.id" :route="`/air_conditioners/${airConditioner.id}/service_orders/`">
+                        <BtnDelete :id="serviceOrder.id" :route="`/air_conditioners/${airConditioner.id}/service_orders/${serviceOrder.id}`">
                           <TrashIcon class="w-8 h-8 cursor-pointer p-1 rounded-lg hover:text-red-400" />
                         </BtnDelete>
                       </div>
@@ -117,7 +117,7 @@
                   </div>
                   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
                     <CompInput :withPadding="false" name="contract_item_id" v-model="formQuote.contract_item_id" :message="errors.contract_item_id" @keydown="errors.contract_item_id = null">Item</CompInput>
-                    <CompInput :withPadding="false" name="quantity" min="1" type="number" v-model="formQuote.quantity" :message="errors.quantity" @keydown="errors.quantity = null">Quantidade</CompInput>
+                    <CompInput :withPadding="false" name="quantity" :min="1" type="number" v-model="formQuote.quantity" :message="errors.quantity" @keydown="errors.quantity = null">Quantidade</CompInput>
                     <CompInput :withPadding="false" type="date" name="service_date" v-model="formQuote.service_date" :message="errors.service_date" @keydown="errors.service_date = null">Data do Serviço</CompInput>
                   </div>
                   <div>
@@ -146,7 +146,7 @@
                           </time>
                           <div class="text-slate-200 group">
                             <div class="group-hover:text-slate-500">
-                              <BtnDelete :id="quote.id" :route="`/air_conditioners/${airConditioner.id}/quotes/`">
+                              <BtnDelete :id="quote.id" :route="`/air_conditioners/${airConditioner.id}/quotes/${quote.id}`">
                                 <template #title>Apagar Orçamento nº {{ quote.number }}</template>
                                 <TrashIcon class="w-8 h-8 cursor-pointer p-1 rounded-lg hover:text-red-400" />
                               </BtnDelete>
@@ -209,7 +209,7 @@
                             <tr v-for="quoteItem in resort(quote.quote_items, 'contract_item.number', 'asc')" :key="quoteItem.id" class="hover:bg-yellow-50 odd:bg-gray-100 divide-x group">
                               <td class="text-slate-200 group">
                                 <div class="group-hover:text-slate-500">
-                                  <BtnDelete :id="quoteItem.id" :route="`/air_conditioners/${airConditioner.id}/quotes/${quote.id}/quote_items/`">
+                                  <BtnDelete :id="quoteItem.id" :route="`/air_conditioners/${airConditioner.id}/quotes/${quote.id}/quote_items/${quoteItem.id}`">
                                     <template #title>Apagar Item nº {{ quoteItem.contract_item.number }}</template>
                                     <TrashIcon class="w-8 h-8 cursor-pointer p-1 rounded-lg hover:text-red-400" />
                                   </BtnDelete>
@@ -262,7 +262,7 @@
                   </div>
                   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
                     <CompInput :withPadding="false" name="contract_item_id" v-model="formRequisition.contract_item_id" :message="errors.contract_item_id" @keydown="errors.contract_item_id = null">Item</CompInput>
-                    <CompInput :withPadding="false" name="quantity" type="number" min="1" v-model="formRequisition.quantity" :message="errors.quantity" @keydown="errors.quantity = null">Quantidade</CompInput>
+                    <CompInput :withPadding="false" name="quantity" type="number" :min="1" v-model="formRequisition.quantity" :message="errors.quantity" @keydown="errors.quantity = null">Quantidade</CompInput>
                     <CompInput :withPadding="false" name="quote_number" v-model="formRequisition.quote_number" :message="errors.quote_number" @keydown="errors.quote_number = null">Nº do orçamento</CompInput>
                   </div>
                   <div>
@@ -287,7 +287,7 @@
                           </div>
                           <div class="text-slate-200 group">
                             <div class="group-hover:text-slate-500">
-                              <BtnDelete :id="requisition.id" :route="`/air_conditioners/${airConditioner.id}/requisitions/`">
+                              <BtnDelete :id="requisition.id" :route="`/air_conditioners/${airConditioner.id}/requisitions/${requisition.id}`">
                                 <template #title>Apagar Requisição nº {{ requisition.number }}/{{ requisition.year }}</template>
                                 <TrashIcon class="w-8 h-8 cursor-pointer p-1 rounded-lg hover:text-red-400" />
                               </BtnDelete>
@@ -350,7 +350,7 @@
                             <tr v-for="requisitionItem in resort(requisition.requisition_items, 'contract_item.number', 'asc')" :key="requisitionItem.id" class="hover:bg-yellow-50 odd:bg-gray-100 divide-x group">
                               <td class="text-slate-200 group">
                                 <div class="group-hover:text-slate-500">
-                                  <BtnDelete :id="requisitionItem.id" :route="`/air_conditioners/${airConditioner.id}/requisitions/${requisition.id}/requisition_items/`">
+                                  <BtnDelete :id="requisitionItem.id" :route="`/air_conditioners/${airConditioner.id}/requisitions/${requisition.id}/requisition_items/${requisitionItem.id}`">
                                     <template #title>Apagar Item nº {{ requisitionItem.contract_item.number }}</template>
                                     <TrashIcon class="w-8 h-8 cursor-pointer p-1 rounded-lg hover:text-red-400" />
                                   </BtnDelete>

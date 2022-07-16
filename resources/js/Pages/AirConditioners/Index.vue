@@ -35,7 +35,7 @@
               <CompSelect class="min-w-[200px]" name="brand" :withPadding="false" v-model="brand">
                 Marca
                 <template #options>
-                  <CompOption v-for="brand in brands" :key="brand.id" :value="brand.id">
+                  <CompOption v-for="brand in brands" :key="brand.id.toString()" :value="brand.id.toString()">
                     {{ brand.name.toUpperCase() }}
                   </CompOption>
                 </template>
