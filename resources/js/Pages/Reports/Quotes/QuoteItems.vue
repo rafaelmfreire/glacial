@@ -1,6 +1,9 @@
 <template>
-  <AppLayout :title="`Itens do Orçamento nº ${quote_items[0].quote.number}`">
+  <AppLayout :smallTitle="false" :title="`Itens do Orçamento nº ${quote.number}`">
     <template #header>
+      <time class="font-medium text-blue-700 bg-blue-50 ml-2 px-4 py-1 inline-flex items-center rounded-full">
+        {{ quote.date_formatted}}
+      </time>
     </template>
 
     <div class="flex flex-col">
@@ -37,83 +40,85 @@
           <div class="shadow overflow-hidden border border-gray-200 sm:rounded-lg">
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-white">
-                <tr>
-                  <th scope="col" class="px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <tr class="divide-x">
+                  <th scope="col" class="px-3 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     <button @click="sort('room')" class="text-xs font-medium text-gray-500 uppercase tracking-wider inline-flex items-center space-x-2">
                       <span>Sala</span>
-                      <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'room'" class="h-4 w-4" aria-hidden="true" />
-                      <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'room'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronUpIcon v-if="sortDirection == 'desc' && sortProperty == 'room'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronDownIcon v-if="sortDirection == 'asc' && sortProperty == 'room'" class="h-4 w-4" aria-hidden="true" />
                     </button>
                   </th>
-                  <th scope="col" class="px-6 py-4 text-xs text-left font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" class="px-3 py-4 text-xs text-left font-medium text-gray-500 uppercase tracking-wider">
                     <button @click="sort('brand')" class="text-xs font-medium text-gray-500 uppercase tracking-wider inline-flex items-center mr-2 space-x-2">
                       <span>Marca</span>
-                      <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'brand'" class="h-4 w-4" aria-hidden="true" />
-                      <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'brand'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronUpIcon v-if="sortDirection == 'desc' && sortProperty == 'brand'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronDownIcon v-if="sortDirection == 'asc' && sortProperty == 'brand'" class="h-4 w-4" aria-hidden="true" />
                     </button>
                   </th>
-                  <th scope="col" class="px-6 py-4 text-xs text-right font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" class="px-3 py-4 text-xs text-right font-medium text-gray-500 uppercase tracking-wider">
                     <button @click="sort('btu')" class="text-xs font-medium text-gray-500 uppercase tracking-wider inline-flex items-center space-x-2 whitespace-nowrap">
                       <span>BTU</span>
-                      <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'btu'" class="h-4 w-4" aria-hidden="true" />
-                      <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'btu'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronUpIcon v-if="sortDirection == 'desc' && sortProperty == 'btu'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronDownIcon v-if="sortDirection == 'asc' && sortProperty == 'btu'" class="h-4 w-4" aria-hidden="true" />
                     </button>
                   </th>
-                  <th scope="col" class="px-6 py-4 text-xs text-right font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" class="px-3 py-4 text-xs text-left font-medium text-gray-500 uppercase tracking-wider">
                     <button @click="sort('identifier')" class="text-xs font-medium text-gray-500 uppercase tracking-wider inline-flex items-center space-x-2 whitespace-nowrap">
                       <span>Tombamento</span>
-                      <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" />
-                      <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronUpIcon v-if="sortDirection == 'desc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronDownIcon v-if="sortDirection == 'asc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" />
                     </button>
                   </th>
-                  <th scope="col" class="px-6 py-4 text-xs text-right font-medium text-gray-500 uppercase tracking-wider">
-                    <button @click="sort('service_date_search')" class="text-xs font-medium text-gray-500 uppercase tracking-wider inline-flex items-center space-x-2 whitespace-nowrap">
+                  <th scope="col" class="px-3 py-4 text-xs text-left font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                    <!-- <button @click="sort('service_date_search')" class="text-xs font-medium text-gray-500 uppercase tracking-wider inline-flex items-center space-x-2 whitespace-nowrap"> -->
                       <span>Data do Serviço</span>
-                      <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'service_date_search'" class="h-4 w-4" aria-hidden="true" />
-                      <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'service_date_search'" class="h-4 w-4" aria-hidden="true" />
-                    </button>
+                      <!-- <ChevronUpIcon v-if="sortDirection == 'desc' && sortProperty == 'service_date_search'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronDownIcon v-if="sortDirection == 'asc' && sortProperty == 'service_date_search'" class="h-4 w-4" aria-hidden="true" />
+                    </button> -->
                   </th>
-                  <th scope="col" class="px-6 py-4 text-xs text-right font-medium text-gray-500 uppercase tracking-wider">
-                    <button @click="sort('contract_item_number')" class="text-xs font-medium text-gray-500 uppercase tracking-wider inline-flex items-center space-x-2 whitespace-nowrap">
-                      <span>Item do Contrato</span>
-                      <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'contract_item_number'" class="h-4 w-4" aria-hidden="true" />
-                      <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'contract_item_number'" class="h-4 w-4" aria-hidden="true" />
-                    </button>
+                  <th scope="col" class="px-3 py-4 text-xs text-left font-medium text-gray-500 uppercase tracking-wider w-full">
+                    <span>Itens do Contrato</span>
                   </th>
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
-                <tr v-for="(item, index) in quotesList" :key="index" class="hover:bg-yellow-50 odd:bg-gray-100">
-                  <td class="px-6 py-4 whitespace-nowrap text-left">
-                    <!-- <Link :href="route('reports.quotes.quote_items', item.id)"> -->
-                      <div class="text-sm">
-                        <div>{{ item.room }}</div>
-                      </div>
-                    <!-- </Link> -->
+                <tr v-for="(item, index) in airConditionersList" :key="index" class="hover:bg-yellow-50 odd:bg-gray-100 divide-x">
+                  <td class="px-3 py-2 whitespace-nowrap text-left">
+                    <div class="text-sm font-semibold text-slate-700">
+                      <div>{{ item.room }}</div>
+                    </div>
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
+                  <td class="px-3 py-2 whitespace-nowrap">
                     <div class="text-sm">
                       <span>{{ item.brand }}</span>
                     </div>
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap tabular-nums text-right">
+                  <td class="px-3 py-2 whitespace-nowrap tabular-nums text-right">
                     <div class="text-sm">
                       <div class="tabular-nums">{{ item.btu }}</div>
                     </div>
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap tabular-nums text-right">
+                  <td class="px-3 py-2 whitespace-nowrap tabular-nums text-left">
+                    <Link :href="route('air_conditioners.show', item.id)">
+                      <div class="text-sm font-semibold text-blue-900 tabular-nums">{{ item.identifier }}</div>
+                    </Link>
+                  </td>
+                  <td class="px-3 py-2 whitespace-nowrap tabular-nums text-left">
                     <div class="text-sm">
-                      <div class="text-sm tabular-nums">{{ item.identifier }}</div>
+                      <div class="text-sm tabular-nums">
+                        {{ item.quoteItems[0].service_date_formatted }}
+                        <!-- <span v-for="quoteItem in item.quoteItems" :key="quoteItem.id">{{ quoteItem.service_date_formatted }}</span> -->
+                      </div>
                     </div>
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap tabular-nums text-right">
-                    <div class="text-sm">
-                      <div class="text-sm tabular-nums">{{ item.service_date_formatted }}</div>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap tabular-nums text-right">
-                    <div class="text-sm">
-                      <div class="text-sm tabular-nums">{{ item.contract_item_number }} x {{ item.quantity }}</div>
+                  <td class="px-3 py-2 whitespace-nowrap tabular-nums text-left">
+                    <div 
+                      v-for="quoteItem in item.quoteItems" :key="quoteItem.id" 
+                      class="inline after:content-['+'] after:last:content-[''] after:px-2 after:last:px-0 after:text-blue-700 after:font-semibold text-base tabular-nums">
+                        {{ quoteItem.contract_item.number }}
+                        <span class="text-slate-500 text-sm">
+                          (<em class="not-italic">×</em>{{ quoteItem.quantity }})
+                        </span>
                     </div>
                   </td>
                 </tr>
@@ -134,12 +139,13 @@ import CompInput from '@/Components/Input.vue';
 import { Link } from '@inertiajs/inertia-vue3';
 
 const props = defineProps({
-  quote_items: Object,
+  air_conditioners: Object,
+  quote: Object
 });
 
 const search = ref('');
 const search_date = ref('');
-const sortProperty = ref('done_at');
+const sortProperty = ref('room');
 const sortDirection = ref('asc');
 
 function sort(property) {
@@ -153,10 +159,10 @@ function sort(property) {
   sortProperty.value = property;
 }
 
-const quotesList = computed(() => {
+const airConditionersList = computed(() => {
   let filtered;
 
-  filtered = props.quote_items;
+  filtered = props.air_conditioners;
   // filtered = props.quote_items.filter((quote) => {
   //   return (
   //     quote.number.toString().indexOf(search.value) > -1 
@@ -184,7 +190,7 @@ const quotesList = computed(() => {
         return i[sortProperty.value] ? i[sortProperty.value].toLowerCase() : '';
       },
     ],
-    sortDirection.value == 'asc' ? ['asc', 'desc'] : ['desc', 'asc']
+    sortDirection.value == 'desc' ? ['asc', 'desc'] : ['desc', 'asc']
   );
 });
 </script>

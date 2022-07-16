@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\ServiceOrderStatus;
+use App\Models\AirConditioner;
 use App\Models\Brand;
 use App\Models\Quote;
 use App\Models\QuoteItem;
@@ -11,6 +12,7 @@ use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
 
 class ReportController extends Controller
 {
@@ -100,24 +102,29 @@ class ReportController extends Controller
     public function quote_items(Quote $quote)
     {
         return inertia('Reports/Quotes/QuoteItems', [
-            'quote_items' => QuoteItem::with('quote', 'contractItem', 'airConditioner', 'airConditioner.brand')->where('quote_id', $quote->id)->get()->map(function ($quote_item) use ($quote) {
+            'air_conditioners' => AirConditioner::with([
+                'quoteItems' => function ($query) use ($quote) {
+                        $query->where('quote_id', $quote->id);
+                    },
+                'quoteItems.contractItem', 
+                'brand'
+            ])
+            ->wherehas('quoteItems', function (Builder $query) use ($quote) {
+                $query->where('quote_id', $quote->id);
+            })
+            ->get()
+            ->map(function ($air_conditioner) use ($quote) {
                 return [
-                    'id' => $quote_item->id,
-                    'contract_item_id' => $quote_item->contract_item_id,
-                    'service_date' => $quote_item->service_date,
-                    'service_date_search' => $quote_item->service_date->format('Y-m-d'),
-                    'service_date_formatted' => $quote_item->service_date->format('d/m/Y'),
-                    'quantity' => $quote_item->quantity,
-                    'quote' => $quote,
-                    'contract_item_number' => $quote_item->contractItem->number,
-                    'room' => $quote_item->airConditioner->room,
-                    'identifier' => $quote_item->airConditioner->identifier,
-                    'cpf' => $quote_item->airConditioner->cpf,
-                    'btu' => $quote_item->airConditioner->btu,
-                    'brand' => $quote_item->airConditioner->brand->name,
+                    'id' => $air_conditioner->id,
+                    'quoteItems' => $air_conditioner->quoteItems,
+                    'room' => $air_conditioner->room,
+                    'identifier' => $air_conditioner->identifier,
+                    'cpf' => $air_conditioner->cpf,
+                    'btu' => $air_conditioner->btu,
+                    'brand' => $air_conditioner->brand->name,
                 ];
             }),
+            'quote' => $quote,
         ]);
-        // dd($quote->quoteItems);
     }
 }
