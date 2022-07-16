@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
+use Inertia\Inertia;
 
 class ReportController extends Controller
 {
@@ -99,7 +100,7 @@ class ReportController extends Controller
         ]);
     }
 
-    public function quote_items(Quote $quote)
+    public function quote_items(Quote $quote, Request $request)
     {
         return inertia('Reports/Quotes/QuoteItems', [
             'air_conditioners' => AirConditioner::with([
@@ -125,6 +126,13 @@ class ReportController extends Controller
                 ];
             }),
             'quote' => $quote,
+            'service_orders' => Inertia::lazy(fn () => ServiceOrder::where('air_conditioner_id', $request->air_conditioner)->orderBy('done_at', 'desc')->get()->each(function ($serviceOrder) {
+                $difference = $serviceOrder->done_at->diffInDays();
+                $serviceOrder->date_diff = $difference == 0 ? 'hoje' : ($difference == 1 ? 'ontem' : 'há '.$difference.' dias');
+                $serviceOrder->done_date = $serviceOrder->done_at->format('d/m/Y H:i');
+                $serviceOrder->status_name = $serviceOrder->statusName;
+                $serviceOrder->status_abbr = $serviceOrder->statusAbbr;
+            }))
         ]);
     }
 }
