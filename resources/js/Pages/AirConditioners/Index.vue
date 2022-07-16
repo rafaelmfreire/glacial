@@ -119,8 +119,8 @@
               <tbody class="bg-white divide-y divide-gray-200">
                 <tr v-for="(item, index) in airConditionersList" :key="index" class="hover:bg-yellow-50 odd:bg-gray-100">
                   <td class="px-6 py-4 whitespace-nowrap tabular-nums text-right">
-                    <div class="text-base text-slate-800 font-mono tracking-wider">
-                      {{ item.identifier }}
+                    <div class="text-base text-slate-800 font-semibold">
+                      <Link :href="route('air_conditioners.show', item.id)" class="hover:text-blue-600">{{ item.identifier }}</Link>
                     </div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
@@ -135,7 +135,7 @@
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap w-full">
                     <div class="text-sm tabular-nums">
-                      <Link :href="route('air_conditioners.show', item.id)" class="hover:text-blue-600">{{ item.room }}</Link>
+                      {{ item.room }}
                     </div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
