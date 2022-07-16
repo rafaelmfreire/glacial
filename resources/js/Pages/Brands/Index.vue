@@ -12,8 +12,8 @@
                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     <button @click="sort('name')" class="text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center space-x-2">
                       <span>Marca</span>
-                      <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'name'" class="h-4 w-4" aria-hidden="true" />
-                      <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'name'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronUpIcon v-if="sortDirection == 'desc' && sortProperty == 'name'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronDownIcon v-if="sortDirection == 'asc' && sortProperty == 'name'" class="h-4 w-4" aria-hidden="true" />
                     </button>
                   </th>
                   <th scope="col" class="relative px-6 py-3">

@@ -79,36 +79,36 @@
                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     <button @click="sort('identifier')" class="text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center space-x-2">
                       <span>Tombamento</span>
-                      <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" />
-                      <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronUpIcon v-if="sortDirection == 'desc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronDownIcon v-if="sortDirection == 'asc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" />
                     </button>
                   </th>
                   <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                     <button @click="sort('brand')" class="text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center space-x-2">
                       <span>Marca</span>
-                      <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'brand'" class="h-4 w-4" aria-hidden="true" />
-                      <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'brand'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronUpIcon v-if="sortDirection == 'desc' && sortProperty == 'brand'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronDownIcon v-if="sortDirection == 'asc' && sortProperty == 'brand'" class="h-4 w-4" aria-hidden="true" />
                     </button>
                   </th>
                   <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-right">
                     <button @click="sort('btu')" class="text-xs font-medium text-gray-500 uppercase tracking-wider inline-flex items-center space-x-2">
                       <span>BTU</span>
-                      <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'btu'" class="h-4 w-4" aria-hidden="true" />
-                      <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'btu'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronUpIcon v-if="sortDirection == 'desc' && sortProperty == 'btu'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronDownIcon v-if="sortDirection == 'asc' && sortProperty == 'btu'" class="h-4 w-4" aria-hidden="true" />
                     </button>
                   </th>
                   <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                     <button @click="sort('room')" class="text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center space-x-2">
                       <span>Sala</span>
-                      <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'room'" class="h-4 w-4" aria-hidden="true" />
-                      <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'room'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronUpIcon v-if="sortDirection == 'desc' && sortProperty == 'room'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronDownIcon v-if="sortDirection == 'asc' && sortProperty == 'room'" class="h-4 w-4" aria-hidden="true" />
                     </button>
                   </th>
                   <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                     <button @click="sort('cpf')" class="text-xs font-medium text-gray-500 uppercase tracking-wider inline-flex items-center space-x-2">
                       <span>CPF</span>
-                      <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'cpf'" class="h-4 w-4" aria-hidden="true" />
-                      <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'cpf'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronUpIcon v-if="sortDirection == 'desc' && sortProperty == 'cpf'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronDownIcon v-if="sortDirection == 'asc' && sortProperty == 'cpf'" class="h-4 w-4" aria-hidden="true" />
                     </button>
                   </th>
                   <th scope="col" class="relative px-6 py-3">
@@ -260,7 +260,7 @@ const airConditionersList = computed(() => {
         return i[sortProperty.value] ? i[sortProperty.value].toLowerCase() : '';
       },
     ],
-    sortDirection.value == 'asc' ? ['asc', 'desc'] : ['desc', 'asc']
+    sortDirection.value == 'desc' ? ['asc', 'desc'] : ['desc', 'asc']
   );
 });
 </script>

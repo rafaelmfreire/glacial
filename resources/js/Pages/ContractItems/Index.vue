@@ -13,22 +13,22 @@
                   <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
                     <button @click="sort('number')" class="text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center space-x-2">
                       <span>Número</span>
-                      <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'number'" class="h-4 w-4" aria-hidden="true" />
-                      <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'number'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronUpIcon v-if="sortDirection == 'desc' && sortProperty == 'number'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronDownIcon v-if="sortDirection == 'asc' && sortProperty == 'number'" class="h-4 w-4" aria-hidden="true" />
                     </button>
                   </th>
                   <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-right">
                     <button @click="sort('item_value')" class="text-xs font-medium text-gray-500 uppercase tracking-wider inline-flex items-center space-x-2">
                       <span>Valor</span>
-                      <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'item_value'" class="h-4 w-4" aria-hidden="true" />
-                      <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'item_value'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronUpIcon v-if="sortDirection == 'desc' && sortProperty == 'item_value'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronDownIcon v-if="sortDirection == 'asc' && sortProperty == 'item_value'" class="h-4 w-4" aria-hidden="true" />
                     </button>
                   </th>
                   <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     <button @click="sort('title')" class="text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center space-x-2">
                       <span>Item</span>
-                      <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'title'" class="h-4 w-4" aria-hidden="true" />
-                      <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'title'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronUpIcon v-if="sortDirection == 'desc' && sortProperty == 'title'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronDownIcon v-if="sortDirection == 'asc' && sortProperty == 'title'" class="h-4 w-4" aria-hidden="true" />
                     </button>
                   </th>
                   <th scope="col" class="relative px-6 py-3">
