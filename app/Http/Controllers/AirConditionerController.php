@@ -127,6 +127,9 @@ class AirConditionerController extends Controller
                 'requisitionItems.contractItem',
                 'requisitionItems.quote'
             ])
+            ->whereHas('requisitionItems', function (Builder $query) use ($airConditioner) {
+                $query->where('air_conditioner_id', $airConditioner->id);
+            })
             ->orderBy('year', 'desc')
             ->orderBy('number', 'desc')
             ->get()
