@@ -78,7 +78,7 @@
                     <td @click="load(item.id, item.identifier)" class="px-3 py-2 whitespace-nowrap tabular-nums text-left cursor-default">
                       <div class="text-sm">
                         <div class="text-sm tabular-nums">
-                          {{ item.quoteItems[0].service_date_formatted }}
+                          {{ getServiceDates(item.quoteItems) }}
                         </div>
                       </div>
                     </td>
@@ -168,6 +168,16 @@ const search = ref('');
 const search_date = ref('');
 const sortProperty = ref('room');
 const sortDirection = ref('asc');
+
+function getServiceDates(items) {
+  let dates = [];
+  items.forEach(item => {
+    if(!dates.includes(item.service_date_formatted)) {
+      dates.push(item.service_date_formatted)
+    }
+  })
+  return dates.toString();
+}
 
 function calcTotal(items) {
   let total = 0;
