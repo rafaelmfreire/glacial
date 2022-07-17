@@ -48,6 +48,9 @@
                     <th scope="col" class="px-3 py-4 text-xs text-left font-medium text-gray-500 uppercase tracking-wider w-full">
                       <span>Itens do Contrato</span>
                     </th>
+                    <th scope="col" class="px-3 py-4 text-xs text-right font-medium text-gray-500 uppercase tracking-wider w-full">
+                      <span>Total</span>
+                    </th>
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -82,14 +85,26 @@
                     <td @click="load(item.id, item.identifier)" class="px-3 py-2 whitespace-nowrap tabular-nums text-left cursor-default">
                       <div
                         v-for="quoteItem in item.quoteItems" :key="quoteItem.id"
-                        class="inline after:content-['+'] after:last:content-[''] after:px-2 after:last:px-0 after:text-blue-700 after:font-semibold text-base tabular-nums">
+                        class="inline after:content-['+'] after:last:content-[''] after:px-2 after:last:px-0 after:text-blue-700 after:font-semibold text-base tabular-nums whitespace-pre-wrap">
                           <div class="inline group">
                             <span class="group-hover:text-blue-600 group-hover:cursor-default">{{ quoteItem.contract_item.number }}</span>
-                            <div class="hidden group-hover:flex items-start absolute text-xs font-medium border border-blue-100 bg-blue-50 text-blue-700 py-2 px-3 rounded-full -bottom-12 left-0 max-w-5xl whitespace-pre-wrap">{{ quoteItem.contract_item.title }}</div>
+                            <div class="hidden group-hover:flex items-center absolute -bottom-12 left-0 max-w-5xl border border-blue-300 rounded-full">
+                              <div class="text-xs font-medium bg-blue-50 text-blue-700 py-2 px-3 rounded-l-full whitespace-nowrap">
+                                {{ quoteItem.contract_item.title }}
+                              </div>
+                              <div class="text-xs font-semibold bg-blue-200 text-blue-900 py-2 px-3 rounded-r-full whitespace-nowrap">
+                                {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(quoteItem.contract_item.item_value) }}
+                              </div>
+                            </div>
                           </div>
                           <span class="text-slate-500 text-sm">
                             (<em class="not-italic">×</em>{{ quoteItem.quantity }})
                           </span>
+                      </div>
+                    </td>
+                    <td class="px-3 py-2 whitespace-nowrap tabular-nums text-right">
+                      <div class="text-sm font-semibold tabular-nums">
+                        {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(calcTotal(item.quoteItems)) }}
                       </div>
                     </td>
                   </tr>
@@ -153,6 +168,14 @@ const search = ref('');
 const search_date = ref('');
 const sortProperty = ref('room');
 const sortDirection = ref('asc');
+
+function calcTotal(items) {
+  let total = 0;
+  items.forEach(item => {
+    total += item.quantity * item.contract_item.item_value;
+  });
+  return total;
+}
 
 async function load(air_conditioner_id, air_conditioner_identifier) {
   Inertia.reload({
