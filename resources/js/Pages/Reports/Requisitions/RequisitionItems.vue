@@ -58,7 +58,7 @@
                   </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                  <tr v-for="(item, index) in airConditionersList" :key="index" class=" divide-x" :class="[number == item.requisitionItems[0].quote.number && air_conditioner_id == item.id ? 'bg-green-50' : 'odd:bg-gray-50']">
+                  <tr v-for="(item, index) in airConditionersList" :key="index" class=" divide-x" :class="[ air_conditioner_identifier == item.identifier ? 'bg-green-50' : 'odd:bg-gray-50']">
                     <td class="px-3 py-2 whitespace-nowrap text-left cursor-default">
                       <div class="text-sm font-semibold text-slate-700">
                         <div>{{ item.room }}</div>
@@ -114,14 +114,14 @@
           </div>
 
 
-          <div>
+          <div v-if="quote_items">
             <h2 class="font-medium text-gray-700 text-xl pt-4 mb-4">
               <span class="bg-green-100 border border-gray-200 text-green-900 px-4 py-2 rounded-full tabular-nums">
                 {{ air_conditioner_identifier }}
               </span> 
               Lista de itens do orçamento {{ number }}
             </h2>
-            <div class="shadow overflow-x-auto border border-gray-200 sm:rounded-lg mt-8">
+            <div v-if="quote_items.length > 0" class="shadow overflow-x-auto border border-gray-200 sm:rounded-lg mt-8">
               <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-white">
                   <tr class="divide-x">
@@ -181,6 +181,7 @@
                 </tbody>
               </table>
             </div>
+            <div v-else class="text-slate-500 text-sm mt-8 ml-4">Não foram encontrados itens de orçamento referentes à este aparelho.</div>
           </div>
 
 
