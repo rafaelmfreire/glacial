@@ -79,7 +79,7 @@ const logout = () => {
                       <JetDropdownLink :href="route('reports.tickets')"> Chamados </JetDropdownLink>
                       <JetDropdownLink :href="route('reports.service_orders')"> Ordens de Serviço </JetDropdownLink>
                       <JetDropdownLink :href="route('reports.quotes')"> Orçamentos </JetDropdownLink>
-                      <!-- <JetDropdownLink :href="route('brands.index')"> Requisições </JetDropdownLink> -->
+                      <JetDropdownLink :href="route('reports.requisitions')"> Requisições </JetDropdownLink>
                       <!-- <div class="border-t border-gray-100" /> -->
                     </template>
 

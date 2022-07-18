@@ -7,6 +7,7 @@ use App\Models\AirConditioner;
 use App\Models\Brand;
 use App\Models\Quote;
 use App\Models\QuoteItem;
+use App\Models\Requisition;
 use App\Models\ServiceOrder;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -133,6 +134,89 @@ class ReportController extends Controller
                 $serviceOrder->status_name = $serviceOrder->statusName;
                 $serviceOrder->status_abbr = $serviceOrder->statusAbbr;
             }))
+        ]);
+    }
+
+    public function requisitions()
+    {
+        return inertia('Reports/Requisitions', [
+            'requisitions' => Requisition::all()
+            ->each(function ($requisition) {
+                $requisition->items = DB::table('requisition_items')
+                    ->select(DB::raw('count(requisition_items.id) as items'))
+                    ->where('requisition_id', $requisition->id)
+                    ->first()->items;
+
+                $requisition->total = DB::table('requisition_items')
+                    ->join('contract_items', 'contract_items.id', '=', 'requisition_items.contract_item_id')
+                    ->select(DB::raw('sum(item_value * quantity) as total'))
+                    ->where('requisition_id', $requisition->id)
+                    ->first()->total / 100;
+            })
+            ->map(function ($requisition) {
+                return [
+                    'id' => $requisition->id,
+                    'number' => $requisition->number,
+                    'year' => $requisition->year,
+                    'items' => $requisition->items,
+                    'total' => $requisition->total
+                ];
+            }),
+        ]);
+    }
+
+    public function requisition_items(Requisition $requisition, Request $request)
+    {
+
+        $requisition->total = DB::table('requisition_items')
+            ->join('contract_items', 'contract_items.id', '=', 'requisition_items.contract_item_id')
+            ->select(DB::raw('sum(item_value * quantity) as total'))
+            ->where('requisition_id', $requisition->id)
+            ->first()->total / 100;
+
+        return inertia('Reports/Requisitions/RequisitionItems', [
+            'air_conditioners' => AirConditioner::with([
+                'requisitionItems' => function ($query) use ($requisition) {
+                        $query->where('requisition_id', $requisition->id);
+                    },
+                'requisitionItems.contractItem', 
+                'requisitionItems.quote',
+                'brand'
+            ])
+            ->wherehas('requisitionItems', function (Builder $query) use ($requisition) {
+                $query->where('requisition_id', $requisition->id);
+            })
+            ->get()
+            ->map(function ($air_conditioner) use ($requisition) {
+                return [
+                    'id' => $air_conditioner->id,
+                    'requisitionItems' => $air_conditioner->requisitionItems,
+                    'room' => $air_conditioner->room,
+                    'identifier' => $air_conditioner->identifier,
+                    'cpf' => $air_conditioner->cpf,
+                    'btu' => $air_conditioner->btu,
+                    'brand' => $air_conditioner->brand->name,
+                ];
+            }),
+            'requisition' => $requisition,
+            'quote_items' => Inertia::lazy(
+                fn () => QuoteItem::with(['contractItem'])->where(
+                    'air_conditioner_id', $request->air_conditioner_id
+                )->where(
+                    'quote_id', $request->quote_id
+                )->orderBy(
+                    'service_date', 'asc'
+                )->get()
+                // ->each(
+                //     function ($quoteItem) {
+                //         $difference = $quoteItem->done_at->diffInDays();
+                //         $quoteItem->date_diff = $difference == 0 ? 'hoje' : ($difference == 1 ? 'ontem' : 'há '.$difference.' dias');
+                //         $quoteItem->done_date = $quoteItem->done_at->format('d/m/Y H:i');
+                //         $quoteItem->status_name = $quoteItem->statusName;
+                //         $quoteItem->status_abbr = $quoteItem->statusAbbr;
+                //     }
+                // )
+            ),
         ]);
     }
 }
