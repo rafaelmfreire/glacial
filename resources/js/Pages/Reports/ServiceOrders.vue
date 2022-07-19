@@ -75,18 +75,18 @@
                       <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'done_at'" class="h-4 w-4" aria-hidden="true" />
                     </button>
                   </th>
-                  <th scope="col" class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-left w-full">
-                    <button @click="sort('services')" class="text-xs font-medium text-gray-500 uppercase tracking-wider inline-flex items-center space-x-2">
-                      <span>Serviços</span>
-                      <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'services'" class="h-4 w-4" aria-hidden="true" />
-                      <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'services'" class="h-4 w-4" aria-hidden="true" />
-                    </button>
-                  </th>
                   <th scope="col" class="px-4 py-3 text-xs text-left font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                     <button @click="sort('technicians')" class="text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center space-x-2">
                       <span>Equipe</span>
                       <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'technicians'" class="h-4 w-4" aria-hidden="true" />
                       <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'technicians'" class="h-4 w-4" aria-hidden="true" />
+                    </button>
+                  </th>
+                  <th scope="col" class="px-4 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-left w-full">
+                    <button @click="sort('services')" class="text-xs font-medium text-gray-500 uppercase tracking-wider inline-flex items-center space-x-2">
+                      <span>Serviços</span>
+                      <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'services'" class="h-4 w-4" aria-hidden="true" />
+                      <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'services'" class="h-4 w-4" aria-hidden="true" />
                     </button>
                   </th>
                 </tr>
@@ -112,17 +112,17 @@
                       <span>{{ item.done_at_formatted }}</span>
                     </div>
                   </td>
-                  <td class="px-4 py-3">
+                  <td class="px-4 py-4 whitespace-nowrap">
+                    <div class="text-sm">
+                      <span>{{ item.technicians }}</span>
+                    </div>
+                  </td>
+                  <td class="px-4 py-3 w-full">
                     <div class="text-sm font-semibold text-gray-900 flex items-center space-x-4">
                       <div class="w-10 h-10 text-sm text-slate-600 uppercase font-bold bg-slate-50 border border-slate-200 p-2 flex items-center justify-center rounded-full z-10">
                         <span>{{ item.status_abbr }}</span>
                       </div>
                       <span>{{ item.services }}</span>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap w-full">
-                    <div class="text-sm">
-                      <span>{{ item.technicians }}</span>
                     </div>
                   </td>
                 </tr>
