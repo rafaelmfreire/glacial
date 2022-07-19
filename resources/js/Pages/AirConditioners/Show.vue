@@ -131,7 +131,12 @@
                     <div v-for="quote in airConditioner.quotes" :key="quote.id" class="space-y-2 py-10 first:pt-6 last:pb-0">
                       <div class="flex items-center justify-between">
                         <h3>
-                          Orçamento Nº: <span class="font-bold ml-2">{{ quote.number }}</span>
+                          Orçamento Nº: 
+                          <span class="font-bold text-blue-700 hover:text-blue-600 ml-2">
+                            <Link :href="route('reports.quotes.quote_items', quote.id)">
+                              {{ quote.number }}
+                            </Link>
+                          </span>
                         </h3>
                         <div class="flex items-center">
                           <div class="text-sm">
@@ -276,7 +281,12 @@
                     <div v-for="requisition in airConditioner.requisitions" :key="requisition.id" class="space-y-2 py-10 first:pt-6 last:pb-0">
                       <div class="flex items-center justify-between">
                         <h3>
-                          Requisição Nº: <span class="font-bold ml-2">{{ requisition.number }}/{{ requisition.year }}</span>
+                          Requisição Nº: 
+                          <span class="font-bold text-blue-700 hover:text-blue-600 ml-2">
+                            <Link :href="route('reports.requisitions.requisition_items', requisition.id)">
+                            {{ requisition.number }}/{{ requisition.year }}
+                            </Link>
+                          </span>
                         </h3>
                         <div class="flex items-center">
                           <div class="text-sm">
@@ -441,6 +451,7 @@ import TabsWrapper from '@/Components/TabsWrapper.vue';
 import Tab from '@/Components/Tab.vue';
 import { CalendarIcon, SpeakerphoneIcon, DocumentTextIcon, TrashIcon  } from '@heroicons/vue/outline';
 import { reactive, computed, onMounted, watch } from 'vue';
+import { Link } from '@inertiajs/inertia-vue3';
 
 const formTicket = reactive({
   problem: null,

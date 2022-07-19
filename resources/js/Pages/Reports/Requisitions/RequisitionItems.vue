@@ -119,7 +119,7 @@
               <span class="bg-green-100 border border-gray-200 text-green-900 px-4 py-2 rounded-full tabular-nums">
                 {{ air_conditioner_identifier }}
               </span> 
-              Lista de itens do orçamento {{ number }}
+              Lista de itens do orçamento nº <span class="text-blue-700 hover:text-blue-600"><Link :href="route('reports.quotes.quote_items', c_quote_id)">{{ number }}</Link></span>
             </h2>
             <div v-if="quote_items.length > 0" class="shadow overflow-x-auto border border-gray-200 sm:rounded-lg mt-8">
               <table class="min-w-full divide-y divide-gray-200">
@@ -207,6 +207,7 @@ const props = defineProps({
 
 const number = ref('');
 const air_conditioner_identifier = ref('');
+const c_quote_id = ref('')
 const search = ref('');
 const search_date = ref('');
 const sortProperty = ref('room');
@@ -222,6 +223,7 @@ async function load(air_conditioner, identifier, quote_id, quote_number) {
     onSuccess: page => { 
       air_conditioner_identifier.value = identifier
       number.value = quote_number 
+      c_quote_id.value = quote_id
     }
   });
 }
