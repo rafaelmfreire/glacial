@@ -23,7 +23,7 @@ class ReportController extends Controller
         $brands = Brand::all();
 
         return inertia('Reports/Tickets', [
-            'tickets' => Ticket::with('airConditioner', 'airConditioner.brand')->get()->map(function ($ticket) {
+            'tickets' => Ticket::with('airConditioner', 'airConditioner.latestServiceOrder', 'airConditioner.brand')->get()->map(function ($ticket) {
                 return [
                     'id' => $ticket->id,
                     'air_conditioner_id' => $ticket->airConditioner->id,
@@ -38,6 +38,7 @@ class ReportController extends Controller
                     'opened_at_formatted' => $ticket->opened_at->format('d/m/Y'),
                     'problem' => $ticket->problem,
                     'informed_by' => $ticket->informed_by,
+                    'latest_service_order' => $ticket->airConditioner->latestServiceOrder
                 ];
             }),
             'brands' => $brands

@@ -47,46 +47,49 @@
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-white">
                 <tr>
-                  <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" class="pl-6 pr-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     <button @click="sort('identifier')" class="text-xs font-medium text-gray-500 uppercase tracking-wider inline-flex items-center space-x-2">
                       <span>Aparelho</span>
                       <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" />
                       <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'identifier'" class="h-4 w-4" aria-hidden="true" />
                     </button>
                   </th>
-                  <th scope="col" class="px-6 py-3 text-xs text-right font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" class="px-3 py-3 text-xs text-right font-medium text-gray-500 uppercase tracking-wider">
                     <button @click="sort('btu')" class="text-xs font-medium text-gray-500 uppercase tracking-wider inline-flex items-center mr-2 space-x-2">
                       <span>Modelo</span>
                       <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'btu'" class="h-4 w-4" aria-hidden="true" />
                       <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'btu'" class="h-4 w-4" aria-hidden="true" />
                     </button>
                   </th>
-                  <th scope="col" class="px-6 py-3 text-xs text-left font-medium text-gray-500 uppercase tracking-wider">
+                  <th scope="col" class="px-3 py-3 text-xs text-left font-medium text-gray-500 uppercase tracking-wider">
                     <button @click="sort('opened_at')" class="text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center space-x-2">
                       <span>Data</span>
                       <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'opened_at'" class="h-4 w-4" aria-hidden="true" />
                       <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'opened_at'" class="h-4 w-4" aria-hidden="true" />
                     </button>
                   </th>
-                  <th scope="col" class="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-left w-full">
+                  <th scope="col" class="px-3 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider text-left w-full">
                     <button @click="sort('problem')" class="text-xs font-medium text-gray-500 uppercase tracking-wider inline-flex items-center space-x-2">
                       <span>Problema</span>
                       <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'problem'" class="h-4 w-4" aria-hidden="true" />
                       <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'problem'" class="h-4 w-4" aria-hidden="true" />
                     </button>
                   </th>
-                  <th scope="col" class="px-6 py-3 text-xs text-left font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                  <th scope="col" class="px-3 py-3 text-xs text-left font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                     <button @click="sort('informed_by')" class="text-xs font-medium text-gray-500 uppercase tracking-wider flex items-center space-x-2">
                       <span>Informado por</span>
                       <ChevronDownIcon v-if="sortDirection == 'desc' && sortProperty == 'informed_by'" class="h-4 w-4" aria-hidden="true" />
                       <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'informed_by'" class="h-4 w-4" aria-hidden="true" />
                     </button>
                   </th>
+                  <th scope="col" class="px-3 py-3 text-xs text-right font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                    <span>Último serviço</span>
+                  </th>
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
                 <tr v-for="(item, index) in ticketsList" :key="index" class="hover:bg-yellow-50 odd:bg-gray-100">
-                  <td class="px-6 py-4 whitespace-nowrap text-left">
+                  <td class="pl-6 pr-3 py-3 whitespace-nowrap text-left">
                     <Link :href="route('air_conditioners.show', item.air_conditioner_id)">
                       <div class="text-lg group">
                         <div class="tabular-nums font-semibold group-hover:text-blue-700">{{ item.identifier }}</div>
@@ -94,25 +97,34 @@
                       </div>
                     </Link>
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap tabular-nums text-right">
+                  <td class="px-3 py-3 whitespace-nowrap tabular-nums text-right">
                     <div class="text-sm">
                       <div v-if="item.btu" class="px-3 py-1 mb-2 inline-block font-bold bg-blue-100 rounded-full text-blue-700">{{ item.btu }}</div>
                       <div class="text-xs uppercase mr-2">{{ item.brand }}</div>
                     </div>
                   </td>
-                  <td class="px-6 py-4 tabular-nums whitespace-nowrap">
+                  <td class="px-3 py-3 tabular-nums whitespace-nowrap">
                     <div class="text-sm">
                       <span>{{ item.opened_at_formatted }}</span>
                     </div>
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
+                  <td class="px-3 py-3">
                     <div class="text-sm font-semibold text-gray-900">
                       <span>{{ item.problem }}</span>
                     </div>
                   </td>
-                  <td class="px-6 py-4 whitespace-nowrap w-full">
+                  <td class="px-3 py-3 whitespace-nowrap">
                     <div class="text-sm">
                       <span>{{ item.informed_by }}</span>
+                    </div>
+                  </td>
+                  <td class="px-3 py-3 text-right">
+                    <div class="text-sm relative group">
+                      <!-- <span class="px-3 py-1 whitespace-nowrap font-medium rounded-full" :class="[ item.latest_service_order.done_at > item.opened_at && item.latest_service_order.status_abbr == 'Co' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700']">{{ item.latest_service_order.status_abbr }} ‣ {{item.latest_service_order.done_at_formatted}}</span> -->
+                      <div class="px-3 py-1 inline-flex items-center space-x-1 whitespace-nowrap font-medium rounded-full" :class="statusClass(item.opened_at, item.latest_service_order?.status_abbr, item.latest_service_order?.done_at)">
+                        <span>{{ item.latest_service_order?.status_abbr ?? 'Nenhum' }}</span>
+                        <span>{{item.latest_service_order?.done_at_formatted ?? 'serviço'}}</span>
+                      </div>
                     </div>
                   </td>
                 </tr>
@@ -155,6 +167,18 @@ function sort(property) {
     }
   }
   sortProperty.value = property;
+}
+
+function statusClass(date, status, serviceDate) {
+  if(serviceDate > date) {
+    if(status == 'Co') {
+      return 'bg-green-50 text-green-700'
+    } else {
+      return 'bg-yellow-50 text-yellow-700'
+    }
+  }
+
+  return 'bg-red-50 text-red-700'
 }
 
 const ticketsList = computed(() => {

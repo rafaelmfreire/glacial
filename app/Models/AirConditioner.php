@@ -25,6 +25,11 @@ class AirConditioner extends Model
         return $this->hasMany(ServiceOrder::class);
     }
 
+    public function latestServiceOrder()
+    {
+        return $this->hasOne(ServiceOrder::class)->ofMany('done_at', 'max');
+    }
+
     public function quoteItems()
     {
         return $this->hasMany(QuoteItem::class);
