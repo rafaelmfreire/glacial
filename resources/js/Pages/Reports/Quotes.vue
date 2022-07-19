@@ -59,6 +59,9 @@
                       <ChevronUpIcon v-if="sortDirection == 'asc' && sortProperty == 'items'" class="h-4 w-4" aria-hidden="true" />
                     </button>
                   </th>
+                  <th scope="col" class="px-6 py-4 text-xs text-right font-medium text-gray-500 uppercase tracking-wider">
+                    <span>Total</span>
+                  </th>
                   <th class="w-full"></th>
                 </tr>
               </thead>
@@ -78,6 +81,11 @@
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap tabular-nums text-right">
                     <div class="text-sm tabular-nums">{{ item.items }}</div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap tabular-nums text-right">
+                    <div class="text-sm font-semibold tabular-nums">
+                      {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(item.total) }}
+                    </div>
                   </td>
                   <td class="w-full"></td>
                 </tr>

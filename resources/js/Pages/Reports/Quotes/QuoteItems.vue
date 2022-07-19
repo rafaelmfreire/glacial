@@ -1,9 +1,15 @@
 <template>
   <AppLayout :smallTitle="false" :title="`Itens do Orçamento nº ${quote.number}`">
     <template #header>
-      <time class="font-medium text-blue-700 bg-blue-50 ml-2 px-4 py-1 inline-flex items-center rounded-full">
-        {{ quote.date_formatted}}
-      </time>
+      <div class="flex items-center">
+        <time class="font-medium text-blue-700 bg-blue-50 ml-2 px-4 py-2 inline-flex items-center space-x-2 rounded-full">
+          <CalendarIcon class="w-6 h-6 text-blue-200" />
+          <span>{{ quote.date_formatted}}</span>
+        </time>
+        <div class="font-medium text-green-700 bg-green-50 ml-2 px-4 py-2 inline-flex items-center space-x-2 rounded-full">
+          <span>Total: {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(quote.total) }}</span>
+        </div>
+      </div>
     </template>
 
     <div class="flex flex-col">
@@ -151,7 +157,7 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { ref, computed } from 'vue'
-import { ChevronDownIcon, ChevronUpIcon, CalendarIcon } from '@heroicons/vue/outline';
+import { ChevronDownIcon, ChevronUpIcon, CalendarIcon, CurrencyDollarIcon } from '@heroicons/vue/outline';
 import { SearchIcon } from '@heroicons/vue/solid';
 import CompInput from '@/Components/Input.vue';
 import { Link } from '@inertiajs/inertia-vue3';

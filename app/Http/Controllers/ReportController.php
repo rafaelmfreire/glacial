@@ -87,6 +87,12 @@ class ReportController extends Controller
                     ->select(DB::raw('count(quote_items.id) as items'))
                     ->where('quote_id', $quote->id)
                     ->first()->items;
+
+                $quote->total = DB::table('quote_items')
+                    ->join('contract_items', 'contract_items.id', '=', 'quote_items.contract_item_id')
+                    ->select(DB::raw('sum(item_value * quantity) as total'))
+                    ->where('quote_id', $quote->id)
+                    ->first()->total / 100;
             })
             ->map(function ($quote) {
                 return [
@@ -95,7 +101,8 @@ class ReportController extends Controller
                     'date' => $quote->date,
                     'date_search' => $quote->date->format('Y-m-d'),
                     'date_formatted' => $quote->date->format('d/m/Y'),
-                    'items' => $quote->items
+                    'items' => $quote->items,
+                    'total' => $quote->total
                 ];
             }),
         ]);
@@ -103,6 +110,12 @@ class ReportController extends Controller
 
     public function quote_items(Quote $quote, Request $request)
     {
+        $quote->total = DB::table('quote_items')
+            ->join('contract_items', 'contract_items.id', '=', 'quote_items.contract_item_id')
+            ->select(DB::raw('sum(item_value * quantity) as total'))
+            ->where('quote_id', $quote->id)
+            ->first()->total / 100;
+
         return inertia('Reports/Quotes/QuoteItems', [
             'air_conditioners' => AirConditioner::with([
                 'quoteItems' => function ($query) use ($quote) {
@@ -207,15 +220,6 @@ class ReportController extends Controller
                 )->orderBy(
                     'service_date', 'asc'
                 )->get()
-                // ->each(
-                //     function ($quoteItem) {
-                //         $difference = $quoteItem->done_at->diffInDays();
-                //         $quoteItem->date_diff = $difference == 0 ? 'hoje' : ($difference == 1 ? 'ontem' : 'há '.$difference.' dias');
-                //         $quoteItem->done_date = $quoteItem->done_at->format('d/m/Y H:i');
-                //         $quoteItem->status_name = $quoteItem->statusName;
-                //         $quoteItem->status_abbr = $quoteItem->statusAbbr;
-                //     }
-                // )
             ),
         ]);
     }
