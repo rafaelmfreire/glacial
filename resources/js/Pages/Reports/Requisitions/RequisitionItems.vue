@@ -1,7 +1,7 @@
 <template>
   <AppLayout :smallTitle="false" :title="`Itens da Requisição nº ${requisition.number}/${requisition.year}`">
     <template #header>
-      <span class="font-medium text-blue-700 bg-blue-50 ml-2 px-4 py-1 inline-flex items-center rounded-full">
+      <span class="font-medium text-green-700 bg-green-50 ml-2 px-4 py-1 inline-flex items-center rounded-full">
         Total: {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(requisition.total) }}
       </span>
     </template>
