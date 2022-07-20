@@ -20,6 +20,7 @@ class AirConditionerSeeder extends Seeder
             'identifier' => '2010664711',
             'cpf'        => '347',
             'brand_id'   => '2',
+            'team_id'    => 1,
             'btu'        => '24000',
         ]);
         DB::table('air_conditioners')->insert([
@@ -27,6 +28,7 @@ class AirConditionerSeeder extends Seeder
             'identifier' => '2015041856',
             'cpf'        => '1420',
             'brand_id'   => '5',
+            'team_id'    => 1,
             'btu'        => '36000',
         ]);
         DB::table('air_conditioners')->insert([
@@ -34,6 +36,7 @@ class AirConditionerSeeder extends Seeder
             'identifier' => '2009059380',
             'cpf'        => '593',
             'brand_id'   => '7',
+            'team_id'    => 1,
             'btu'        => '36000',
         ]);
         DB::table('air_conditioners')->insert([
@@ -41,6 +44,7 @@ class AirConditionerSeeder extends Seeder
             'identifier' => '2007035263',
             'cpf'        => '4097',
             'brand_id'   => '8',
+            'team_id'    => 1,
             'btu'        => '48000',
         ]);
         DB::table('air_conditioners')->insert([
@@ -48,6 +52,7 @@ class AirConditionerSeeder extends Seeder
             'identifier' => '2014060747',
             'cpf'        => '1391',
             'brand_id'   => '7',
+            'team_id'    => 1,
             'btu'        => '58000',
         ]);
         DB::table('air_conditioners')->insert([
@@ -55,6 +60,7 @@ class AirConditionerSeeder extends Seeder
             'identifier' => '2009011903',
             'cpf'        => '139',
             'brand_id'   => '5',
+            'team_id'    => 1,
             'btu'        => '60000',
         ]);
         DB::table('air_conditioners')->insert([
@@ -62,6 +68,7 @@ class AirConditionerSeeder extends Seeder
             'identifier' => '2017017771',
             'cpf'        => '4098',
             'brand_id'   => '5',
+            'team_id'    => 1,
             'btu'        => '60000',
         ]);
         DB::table('air_conditioners')->insert([
@@ -69,6 +76,7 @@ class AirConditionerSeeder extends Seeder
             'identifier' => '2009059384',
             'cpf'        => '1347',
             'brand_id'   => '7',
+            'team_id'    => 1,
             'btu'        => '36000',
         ]);
         DB::table('air_conditioners')->insert([
@@ -76,6 +84,7 @@ class AirConditionerSeeder extends Seeder
             'identifier' => '2009059374',
             'cpf'        => '1348',
             'brand_id'   => '7',
+            'team_id'    => 1,
             'btu'        => '36000',
         ]);
         //

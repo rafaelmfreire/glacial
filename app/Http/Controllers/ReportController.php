@@ -14,16 +14,25 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 
 class ReportController extends Controller
 {
-    public function tickets()
+    public function tickets(Request $request)
     {
         $brands = Brand::all();
 
         return inertia('Reports/Tickets', [
-            'tickets' => Ticket::with('airConditioner', 'airConditioner.latestServiceOrder', 'airConditioner.brand')->get()->map(function ($ticket) {
+            'tickets' => Ticket::with([
+                'airConditioner',
+                'airConditioner.latestServiceOrder', 
+                'airConditioner.brand'
+            ])
+            ->whereHas('airConditioner', function (Builder $query) use ($request) {
+                $query->where('team_id', $request->user()->currentTeam->id);
+            })
+            ->get()->map(function ($ticket) {
                 return [
                     'id' => $ticket->id,
                     'air_conditioner_id' => $ticket->airConditioner->id,
@@ -45,7 +54,7 @@ class ReportController extends Controller
         ]);
     }
 
-    public function service_orders()
+    public function service_orders(Request $request)
     {
         $brands = Brand::all();
         $statusArray = [];
@@ -54,7 +63,11 @@ class ReportController extends Controller
         }
 
         return inertia('Reports/ServiceOrders', [
-            'service_orders' => ServiceOrder::with('airConditioner', 'airConditioner.brand')->get()
+            'service_orders' => ServiceOrder::with('airConditioner', 'airConditioner.brand')
+            ->whereHas('airConditioner', function (Builder $query) use ($request) {
+                $query->where('team_id', $request->user()->currentTeam->id);
+            })
+            ->get()
             ->map(function ($service_order) {
                 return [
                     'id' => $service_order->id,
@@ -79,10 +92,14 @@ class ReportController extends Controller
         ]);
     }
 
-    public function quotes()
+    public function quotes(Request $request)
     {
         return inertia('Reports/Quotes', [
-            'quotes' => Quote::all()
+            'quotes' => Quote::
+            whereHas('quoteItems.airConditioner', function (Builder $query) use ($request) {
+                $query->where('team_id', $request->user()->currentTeam->id);
+            })
+            ->get()
             ->each(function ($quote) {
                 $quote->items = DB::table('quote_items')
                     ->select(DB::raw('count(quote_items.id) as items'))
@@ -111,6 +128,10 @@ class ReportController extends Controller
 
     public function quote_items(Quote $quote, Request $request)
     {
+        if (!Gate::allows('view-quote-items', $quote)) {
+            abort(403);
+        }
+
         $quote->total = DB::table('quote_items')
             ->join('contract_items', 'contract_items.id', '=', 'quote_items.contract_item_id')
             ->select(DB::raw('sum(item_value * quantity) as total'))
@@ -125,7 +146,8 @@ class ReportController extends Controller
                 'quoteItems.contractItem', 
                 'brand'
             ])
-            ->wherehas('quoteItems', function (Builder $query) use ($quote) {
+            ->where('team_id', $request->user()->currentTeam->id)
+            ->whereHas('quoteItems', function (Builder $query) use ($quote) {
                 $query->where('quote_id', $quote->id);
             })
             ->get()
@@ -151,10 +173,14 @@ class ReportController extends Controller
         ]);
     }
 
-    public function requisitions()
+    public function requisitions(Request $request)
     {
         return inertia('Reports/Requisitions', [
-            'requisitions' => Requisition::all()
+            'requisitions' => Requisition::
+            whereHas('requisitionItems.airConditioner', function (Builder $query) use ($request) {
+                $query->where('team_id', $request->user()->currentTeam->id);
+            })
+            ->get()
             ->each(function ($requisition) {
                 $requisition->items = DB::table('requisition_items')
                     ->select(DB::raw('count(requisition_items.id) as items'))
@@ -181,6 +207,9 @@ class ReportController extends Controller
 
     public function requisition_items(Requisition $requisition, Request $request)
     {
+        if (!Gate::allows('view-requisition-items', $requisition)) {
+            abort(403);
+        }
 
         $requisition->total = DB::table('requisition_items')
             ->join('contract_items', 'contract_items.id', '=', 'requisition_items.contract_item_id')
@@ -197,7 +226,8 @@ class ReportController extends Controller
                 'requisitionItems.quote',
                 'brand'
             ])
-            ->wherehas('requisitionItems', function (Builder $query) use ($requisition) {
+            ->where('team_id', $request->user()->currentTeam->id)
+            ->whereHas('requisitionItems', function (Builder $query) use ($requisition) {
                 $query->where('requisition_id', $requisition->id);
             })
             ->get()

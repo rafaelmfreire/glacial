@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('air_conditioners', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('team_id')->constrained()->restrictOnDelete();
             $table->foreignId('brand_id')->nullable()->constrained()->restrictOnDelete();
             $table->string('room')->nullable();
             $table->string('btu')->nullable();

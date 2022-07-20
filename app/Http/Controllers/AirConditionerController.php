@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 
 class AirConditionerController extends Controller
@@ -22,12 +23,12 @@ class AirConditionerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $brands = Brand::all();
 
         return inertia('AirConditioners/Index', [
-            'airConditioners' => AirConditioner::with('brand')->get()->map(function ($airConditioner) {
+            'airConditioners' => AirConditioner::with('brand')->where('team_id', $request->user()->currentTeam->id)->get()->map(function ($airConditioner) {
                 return [
                     'id' => $airConditioner->id,
                     'room' => $airConditioner->room,
@@ -68,6 +69,8 @@ class AirConditionerController extends Controller
             'cpf' => ['nullable', 'string'],
             'brand_id' => ['required', 'exists:App\Models\Brand,id']
         ]);
+        
+        $validated['team_id'] = $request->user()->currentTeam->id;
 
         AirConditioner::create($validated);
 
@@ -82,6 +85,10 @@ class AirConditionerController extends Controller
      */
     public function show(AirConditioner $airConditioner)
     {
+        if (!Gate::allows('view-air-conditioner', $airConditioner)) {
+            abort(403);
+        }
+
         $tickets = Ticket::where('air_conditioner_id', $airConditioner->id)->orderBy('opened_at', 'desc')->get()->each(function ($ticket) {
             $difference = $ticket->opened_at->diffInDays();
             $ticket->date_diff = $difference == 0 ? 'hoje' : ($difference == 1 ? 'ontem' : 'há '.$difference.' dias');
@@ -99,8 +106,8 @@ class AirConditionerController extends Controller
         $quotes = Quote::
             with([
                 'quoteItems' => function ($query) use ($airConditioner) {
-                        $query->where('air_conditioner_id', $airConditioner->id);
-                    },
+                    $query->where('air_conditioner_id', $airConditioner->id);
+                },
                 'quoteItems.contractItem'
             ])
             ->whereHas('quoteItems', function (Builder $query) use ($airConditioner) {
@@ -122,8 +129,8 @@ class AirConditionerController extends Controller
         $requisitions = Requisition::
             with([
                 'requisitionItems' => function ($query) use ($airConditioner) {
-                        $query->where('air_conditioner_id', $airConditioner->id);
-                    },
+                    $query->where('air_conditioner_id', $airConditioner->id);
+                },
                 'requisitionItems.contractItem',
                 'requisitionItems.quote'
             ])
@@ -173,6 +180,10 @@ class AirConditionerController extends Controller
      */
     public function edit(AirConditioner $airConditioner)
     {
+        if (!Gate::allows('view-air-conditioner', $airConditioner)) {
+            abort(403);
+        }
+
         $brands = Brand::all();
 
         return inertia('AirConditioners/Edit', [
