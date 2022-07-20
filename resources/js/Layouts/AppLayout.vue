@@ -251,6 +251,10 @@ const logout = () => {
             <JetResponsiveNavLink :href="route('brands.index')" :active="route().current('brands.index')"> Marcas </JetResponsiveNavLink>
             <JetResponsiveNavLink :href="route('contract_items.index')" :active="route().current('contract_items.index')"> Itens do Contrato </JetResponsiveNavLink>
             <JetResponsiveNavLink :href="route('air_conditioners.index')" :active="route().current('air_conditioners.index')"> Ares </JetResponsiveNavLink>
+            <JetResponsiveNavLink :href="route('reports.tickets')" :active="route().current('reports.tickets')">Relatório de Chamados</JetResponsiveNavLink>
+            <JetResponsiveNavLink :href="route('reports.service_orders')" :active="route().current('reports.service_orders')">Relatório de Ordens de Serviço</JetResponsiveNavLink>
+            <JetResponsiveNavLink :href="route('reports.quotes')" :active="route().current('reports.quotes')">Relatório de Orçamentos</JetResponsiveNavLink>
+            <JetResponsiveNavLink :href="route('reports.requisitions')" :active="route().current('reports.requisitions')">Relatório de Requisições</JetResponsiveNavLink>
           </div>
 
           <!-- Responsive Settings Options -->
