@@ -27,37 +27,37 @@ const deleteTeam = () => {
 <template>
     <JetActionSection>
         <template #title>
-            Delete Team
+            Excluir Unidade
         </template>
 
         <template #description>
-            Permanently delete this team.
+            Excluir permanentemente esta unidade.
         </template>
 
         <template #content>
             <div class="max-w-xl text-sm text-gray-600">
-                Once a team is deleted, all of its resources and data will be permanently deleted. Before deleting this team, please download any data or information regarding this team that you wish to retain.
+                Uma vez que a unidade seja excluída, todos os dados vinculados à esta unidade serão permanentemente apagados. Antes de excluir, certifique-se de salvar qualquer informação que achar importante, referente à esta unidade.
             </div>
 
             <div class="mt-5">
                 <JetDangerButton @click="confirmTeamDeletion">
-                    Delete Team
+                    Excluir Unidade
                 </JetDangerButton>
             </div>
 
             <!-- Delete Team Confirmation Modal -->
             <JetConfirmationModal :show="confirmingTeamDeletion" @close="confirmingTeamDeletion = false">
                 <template #title>
-                    Delete Team
+                    Excluir Unidade
                 </template>
 
                 <template #content>
-                    Are you sure you want to delete this team? Once a team is deleted, all of its resources and data will be permanently deleted.
+                    Tem certeza que quer excluir esta unidade? Uma vez que excluir, todas as informações serão permanentemente apagadas.
                 </template>
 
                 <template #footer>
                     <JetSecondaryButton @click="confirmingTeamDeletion = false">
-                        Cancel
+                        Cancelar
                     </JetSecondaryButton>
 
                     <JetDangerButton
@@ -66,7 +66,7 @@ const deleteTeam = () => {
                         :disabled="form.processing"
                         @click="deleteTeam"
                     >
-                        Delete Team
+                        Excluir Unidade
                     </JetDangerButton>
                 </template>
             </JetConfirmationModal>

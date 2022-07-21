@@ -99,17 +99,17 @@ const displayableRole = (role) => {
             <!-- Add Team Member -->
             <JetFormSection @submitted="addTeamMember">
                 <template #title>
-                    Add Team Member
+                    Adicionar usuário à unidade
                 </template>
 
                 <template #description>
-                    Add a new team member to your team, allowing them to collaborate with you.
+                    Adicione um usuário à unidade e permita que ele gerencie os itens da unidade.
                 </template>
 
                 <template #form>
                     <div class="col-span-6">
                         <div class="max-w-xl text-sm text-gray-600">
-                            Please provide the email address of the person you would like to add to this team.
+                            Informe o email da pessoa que você quer adicionar. O email informado deve estar previamente cadastrado.
                         </div>
                     </div>
 
@@ -127,7 +127,7 @@ const displayableRole = (role) => {
 
                     <!-- Role -->
                     <div v-if="availableRoles.length > 0" class="col-span-6 lg:col-span-4">
-                        <JetLabel for="roles" value="Role" />
+                        <JetLabel for="roles" value="Atribuição" />
                         <JetInputError :message="addTeamMemberForm.errors.role" class="mt-2" />
 
                         <div class="relative z-0 mt-1 border border-gray-200 rounded-lg cursor-pointer">
@@ -170,11 +170,11 @@ const displayableRole = (role) => {
 
                 <template #actions>
                     <JetActionMessage :on="addTeamMemberForm.recentlySuccessful" class="mr-3">
-                        Added.
+                        Adicionado.
                     </JetActionMessage>
 
                     <JetButton :class="{ 'opacity-25': addTeamMemberForm.processing }" :disabled="addTeamMemberForm.processing">
-                        Add
+                        Adicionar
                     </JetButton>
                 </template>
             </JetFormSection>
@@ -223,11 +223,11 @@ const displayableRole = (role) => {
             <!-- Manage Team Members -->
             <JetActionSection class="mt-10 sm:mt-0">
                 <template #title>
-                    Team Members
+                    Membros da unidade
                 </template>
 
                 <template #description>
-                    All of the people that are part of this team.
+                    Todas que fazem parte desta unidade.
                 </template>
 
                 <!-- Team Member List -->
@@ -270,7 +270,7 @@ const displayableRole = (role) => {
                                     class="cursor-pointer ml-6 text-sm text-red-500"
                                     @click="confirmTeamMemberRemoval(user)"
                                 >
-                                    Remove
+                                    Remover
                                 </button>
                             </div>
                         </div>
@@ -282,7 +282,7 @@ const displayableRole = (role) => {
         <!-- Role Management Modal -->
         <JetDialogModal :show="currentlyManagingRole" @close="currentlyManagingRole = false">
             <template #title>
-                Manage Role
+                Gerenciar Atribuição
             </template>
 
             <template #content>
@@ -327,7 +327,7 @@ const displayableRole = (role) => {
 
             <template #footer>
                 <JetSecondaryButton @click="currentlyManagingRole = false">
-                    Cancel
+                    Cancelar
                 </JetSecondaryButton>
 
                 <JetButton
@@ -336,7 +336,7 @@ const displayableRole = (role) => {
                     :disabled="updateRoleForm.processing"
                     @click="updateRole"
                 >
-                    Save
+                    Salvar
                 </JetButton>
             </template>
         </JetDialogModal>
@@ -370,16 +370,16 @@ const displayableRole = (role) => {
         <!-- Remove Team Member Confirmation Modal -->
         <JetConfirmationModal :show="teamMemberBeingRemoved" @close="teamMemberBeingRemoved = null">
             <template #title>
-                Remove Team Member
+                Remover Usuário da Unidade
             </template>
 
             <template #content>
-                Are you sure you would like to remove this person from the team?
+                Tem certeza que deseja remover este usuário desta unidade?
             </template>
 
             <template #footer>
                 <JetSecondaryButton @click="teamMemberBeingRemoved = null">
-                    Cancel
+                    Cancelar
                 </JetSecondaryButton>
 
                 <JetDangerButton
@@ -388,7 +388,7 @@ const displayableRole = (role) => {
                     :disabled="removeTeamMemberForm.processing"
                     @click="removeTeamMember"
                 >
-                    Remove
+                    Remover
                 </JetDangerButton>
             </template>
         </JetConfirmationModal>

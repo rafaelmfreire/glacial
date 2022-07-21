@@ -182,7 +182,9 @@ const logout = () => {
 
                   <template #content>
                     <!-- Account Management -->
-                    <div class="block px-4 py-2 text-xs text-gray-400">Manage Account</div>
+                    <div class="block px-4 py-2 text-xs text-gray-400">Gerenciar Conta</div>
+
+                    <JetDropdownLink :href="route('profile.show')">Minha Conta</JetDropdownLink>
 
                     <JetDropdownLink :href="route('profile.show')"> Profile </JetDropdownLink>
 
@@ -192,7 +194,7 @@ const logout = () => {
 
                     <!-- Authentication -->
                     <form @submit.prevent="logout">
-                      <JetDropdownLink as="button"> Log Out </JetDropdownLink>
+                      <JetDropdownLink as="button"><span class="text-red-600">Sair</span></JetDropdownLink>
                     </form>
                   </template>
                 </JetDropdown>
@@ -274,30 +276,31 @@ const logout = () => {
             </div>
 
             <div class="mt-3 space-y-1">
-              <JetResponsiveNavLink :href="route('profile.show')" :active="route().current('profile.show')"> Profile </JetResponsiveNavLink>
+              <div class="block px-4 py-2 text-xs text-gray-400">Gerenciar Usuários</div>
+              <JetResponsiveNavLink :href="route('profile.show')" :active="route().current('profile.show')"> Minha Conta </JetResponsiveNavLink>
 
               <JetResponsiveNavLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')" :active="route().current('api-tokens.index')"> API Tokens </JetResponsiveNavLink>
 
               <!-- Authentication -->
               <form method="POST" @submit.prevent="logout">
-                <JetResponsiveNavLink as="button"> Log Out </JetResponsiveNavLink>
+                <JetResponsiveNavLink as="button"><span class="text-red-600">Sair</span></JetResponsiveNavLink>
               </form>
 
               <!-- Team Management -->
               <template v-if="$page.props.jetstream.hasTeamFeatures">
                 <div class="border-t border-gray-200" />
 
-                <div class="block px-4 py-2 text-xs text-gray-400">Manage Team</div>
+                <div class="block px-4 py-2 text-xs text-gray-400">Gerenciar Unidades</div>
 
                 <!-- Team Settings -->
-                <JetResponsiveNavLink :href="route('teams.show', $page.props.user.current_team)" :active="route().current('teams.show')"> Team Settings </JetResponsiveNavLink>
+                <JetResponsiveNavLink :href="route('teams.show', $page.props.user.current_team)" :active="route().current('teams.show')">Configurações</JetResponsiveNavLink>
 
-                <JetResponsiveNavLink v-if="$page.props.jetstream.canCreateTeams" :href="route('teams.create')" :active="route().current('teams.create')"> Create New Team </JetResponsiveNavLink>
+                <JetResponsiveNavLink v-if="$page.props.jetstream.canCreateTeams" :href="route('teams.create')" :active="route().current('teams.create')">Criar Nova Unidade</JetResponsiveNavLink>
 
                 <div class="border-t border-gray-200" />
 
                 <!-- Team Switcher -->
-                <div class="block px-4 py-2 text-xs text-gray-400">Switch Teams</div>
+                <div class="block px-4 py-2 text-xs text-gray-400">Mudar Unidade</div>
 
                 <template v-for="team in $page.props.user.all_teams" :key="team.id">
                   <form @submit.prevent="switchToTeam(team)">

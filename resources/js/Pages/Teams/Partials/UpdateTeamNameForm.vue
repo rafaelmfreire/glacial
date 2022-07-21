@@ -27,17 +27,33 @@ const updateTeamName = () => {
 <template>
     <JetFormSection @submitted="updateTeamName">
         <template #title>
-            Team Name
+            Unidade
         </template>
 
         <template #description>
-            The team's name and owner information.
+            Nome e responsável da unidade
         </template>
 
         <template #form>
+            <!-- Team Name -->
+            <div class="col-span-6 sm:col-span-4">
+                <JetLabel for="name" value="Nome da Unidade" />
+
+                <JetInput
+                    id="name"
+                    v-model="form.name"
+                    type="text"
+                    class="mt-1 block w-full"
+                    :class="[!permissions.canUpdateTeam ? 'border-none shadow-none p-0 font-medium text-lg' : '']"
+                    :disabled="! permissions.canUpdateTeam"
+                />
+
+                <JetInputError :message="form.errors.name" class="mt-2" />
+            </div>
+
             <!-- Team Owner Information -->
             <div class="col-span-6">
-                <JetLabel value="Team Owner" />
+                <JetLabel value="Responsável da Unidade" />
 
                 <div class="flex items-center mt-2">
                     <img class="w-12 h-12 rounded-full object-cover" :src="team.owner.profile_photo_url" :alt="team.owner.name">
@@ -51,29 +67,15 @@ const updateTeamName = () => {
                 </div>
             </div>
 
-            <!-- Team Name -->
-            <div class="col-span-6 sm:col-span-4">
-                <JetLabel for="name" value="Team Name" />
-
-                <JetInput
-                    id="name"
-                    v-model="form.name"
-                    type="text"
-                    class="mt-1 block w-full"
-                    :disabled="! permissions.canUpdateTeam"
-                />
-
-                <JetInputError :message="form.errors.name" class="mt-2" />
-            </div>
         </template>
 
         <template v-if="permissions.canUpdateTeam" #actions>
             <JetActionMessage :on="form.recentlySuccessful" class="mr-3">
-                Saved.
+                Atualizado.
             </JetActionMessage>
 
             <JetButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Save
+                Atualizar
             </JetButton>
         </template>
     </JetFormSection>

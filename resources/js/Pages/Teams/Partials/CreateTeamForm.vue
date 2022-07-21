@@ -21,16 +21,16 @@ const createTeam = () => {
 <template>
     <JetFormSection @submitted="createTeam">
         <template #title>
-            Team Details
+            Informações da Unidade
         </template>
 
         <template #description>
-            Create a new team to collaborate with others on projects.
+            Crie uma nova unidade para permitir inserir novos itens vinculados a ela.
         </template>
 
         <template #form>
             <div class="col-span-6">
-                <JetLabel value="Team Owner" />
+                <JetLabel value="Responsável" />
 
                 <div class="flex items-center mt-2">
                     <img class="object-cover w-12 h-12 rounded-full" :src="$page.props.user.profile_photo_url" :alt="$page.props.user.name">
@@ -45,7 +45,7 @@ const createTeam = () => {
             </div>
 
             <div class="col-span-6 sm:col-span-4">
-                <JetLabel for="name" value="Team Name" />
+                <JetLabel for="name" value="Nome da Unidade" />
                 <JetInput
                     id="name"
                     v-model="form.name"
@@ -59,7 +59,7 @@ const createTeam = () => {
 
         <template #actions>
             <JetButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                Create
+                Criar Unidade
             </JetButton>
         </template>
     </JetFormSection>
