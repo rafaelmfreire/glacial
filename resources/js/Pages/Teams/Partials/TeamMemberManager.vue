@@ -256,13 +256,13 @@ const displayableRole = (role) => {
                                 </div>
 
                                 <!-- Leave Team -->
-                                <button
+                                <!-- <button
                                     v-if="$page.props.user.id === user.id"
                                     class="cursor-pointer ml-6 text-sm text-red-500"
                                     @click="confirmLeavingTeam"
                                 >
                                     Leave
-                                </button>
+                                </button> -->
 
                                 <!-- Remove Team Member -->
                                 <button

@@ -131,13 +131,14 @@ const logout = () => {
                     <div class="w-60">
                       <!-- Team Management -->
                       <template v-if="$page.props.jetstream.hasTeamFeatures">
-                        <div v-if="$page.props.isAdminOfCurrentTeam">
-                          <div class="block px-4 py-2 text-xs text-gray-400">Gerenciar Unidades</div>
-                          <!-- Team Settings -->
-                          <JetDropdownLink :href="route('teams.show', $page.props.user.current_team)">Configurações</JetDropdownLink>
-                          <JetDropdownLink v-if="$page.props.jetstream.canCreateTeams" :href="route('teams.create')">Criar Nova Unidade</JetDropdownLink>
-                          <div class="border-t border-gray-100" />
-                        </div>
+
+                        <div class="block px-4 py-2 text-xs text-gray-400">Gerenciar Unidades</div>
+
+                        <!-- Team Settings -->
+                        <JetDropdownLink :href="route('teams.show', $page.props.user.current_team)">Configurações</JetDropdownLink>
+                        <JetDropdownLink v-if="$page.props.jetstream.canCreateTeams" :href="route('teams.create')">Criar Nova Unidade</JetDropdownLink>
+
+                        <div class="border-t border-gray-100" />
 
                         <!-- Team Switcher -->
                         <div class="block px-4 py-2 text-xs text-gray-400">Mudar Unidade</div>

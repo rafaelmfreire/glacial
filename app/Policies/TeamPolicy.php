@@ -30,7 +30,7 @@ class TeamPolicy
      */
     public function view(User $user, Team $team)
     {
-        return $user->belongsToTeam($team) && $user->hasTeamRole($team, 'admin');
+        return $user->belongsToTeam($team) && $user->hasTeamPermission($team, 'team:view');
     }
 
     /**
@@ -41,7 +41,7 @@ class TeamPolicy
      */
     public function create(User $user)
     {
-        return true;
+        return $user->hasTeamPermission($user->currentTeam, 'team:create');
     }
 
     /**
@@ -53,7 +53,7 @@ class TeamPolicy
      */
     public function update(User $user, Team $team)
     {
-        return $user->ownsTeam($team);
+        return $user->ownsTeam($team) || $user->hasTeamPermission($team, 'team:manage');
     }
 
     /**
@@ -65,7 +65,7 @@ class TeamPolicy
      */
     public function addTeamMember(User $user, Team $team)
     {
-        return $user->ownsTeam($team);
+        return $user->ownsTeam($team) || $user->hasTeamPermission($team, 'team:manage');
     }
 
     /**
@@ -77,7 +77,7 @@ class TeamPolicy
      */
     public function updateTeamMember(User $user, Team $team)
     {
-        return $user->ownsTeam($team);
+        return $user->ownsTeam($team) || $user->hasTeamPermission($team, 'team:manage');
     }
 
     /**
@@ -89,7 +89,7 @@ class TeamPolicy
      */
     public function removeTeamMember(User $user, Team $team)
     {
-        return $user->ownsTeam($team);
+        return $user->ownsTeam($team) || $user->hasTeamPermission($team, 'team:manage');
     }
 
     /**
@@ -101,6 +101,6 @@ class TeamPolicy
      */
     public function delete(User $user, Team $team)
     {
-        return $user->ownsTeam($team);
+        return $user->ownsTeam($team) || $user->hasTeamPermission($team, 'team:manage');
     }
 }
