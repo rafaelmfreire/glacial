@@ -186,7 +186,8 @@ const logout = () => {
 
                     <JetDropdownLink :href="route('profile.show')">Minha Conta</JetDropdownLink>
 
-                    <JetDropdownLink :href="route('profile.show')"> Profile </JetDropdownLink>
+                    <!-- User Management -->
+                    <JetDropdownLink v-if="$page.props.canCreateUser" :href="route('new_user')">Cadastrar Usuário</JetDropdownLink>
 
                     <JetDropdownLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')"> API Tokens </JetDropdownLink>
 

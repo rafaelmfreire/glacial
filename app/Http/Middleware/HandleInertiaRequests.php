@@ -37,7 +37,8 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
-            'isAdminOfCurrentTeam' => $request->user()?->hasTeamRole($request->user()?->currentTeam, 'admin')
+            'canCreateUser' => $request->user()?->hasTeamPermission($request->user()?->currentTeam, 'user:create'),
+            'belongsToAnyTeam' => $request->user()?->allTeams()->count() > 0
         ]);
     }
 }

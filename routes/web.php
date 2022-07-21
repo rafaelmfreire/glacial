@@ -10,6 +10,7 @@ use App\Http\Controllers\RequisitionItemController;
 use App\Http\Controllers\ServiceOrderController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -44,6 +45,10 @@ Route::middleware([
         return Inertia::render('Dashboard');
     })->name('dashboard');
 });
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/new_user', [UserController::class, 'create'])->name('new_user');
+Route::middleware(['auth:sanctum', 'verified'])->post('/new_user', [UserController::class, 'store'])->name('new_user.store');
+
 
 Route::middleware(['auth:sanctum', 'verified'])->resource('brands', BrandController::class);
 Route::middleware(['auth:sanctum', 'verified'])->resource('contract_items', ContractItemController::class);

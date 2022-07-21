@@ -2,6 +2,7 @@
 
 namespace App\Actions\Jetstream;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Jetstream\Contracts\AddsTeamMembers;
@@ -34,6 +35,10 @@ class AddTeamMember implements AddsTeamMembers
         $team->users()->attach(
             $newTeamMember, ['role' => $role]
         );
+
+        DB::table('users')
+            ->where('id', $newTeamMember->id)
+            ->update(['current_team_id' => $team->id ]);
 
         TeamMemberAdded::dispatch($team, $newTeamMember);
     }
