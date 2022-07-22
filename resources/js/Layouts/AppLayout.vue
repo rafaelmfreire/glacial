@@ -279,6 +279,7 @@ const logout = () => {
             <div class="mt-3 space-y-1">
               <div class="block px-4 py-2 text-xs text-gray-400">Gerenciar Usuários</div>
               <JetResponsiveNavLink :href="route('profile.show')" :active="route().current('profile.show')"> Minha Conta </JetResponsiveNavLink>
+              <JetResponsiveNavLink v-if="$page.props.canCreateUser" :href="route('new_user')" :active="route().current('new_user')">Cadastrar Usuário</JetResponsiveNavLink>
 
               <JetResponsiveNavLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')" :active="route().current('api-tokens.index')"> API Tokens </JetResponsiveNavLink>
 

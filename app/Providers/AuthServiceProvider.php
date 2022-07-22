@@ -33,6 +33,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        Gate::define('create-user', function (User $user) {
+            return $user->hasTeamPermission($user->currentTeam, 'user:create');
+        });
+
         Gate::define('view-air-conditioner', function (User $user, AirConditioner $airConditioner) {
             return $user->currentTeam->id === $airConditioner->team_id;
         });
