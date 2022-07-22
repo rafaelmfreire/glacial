@@ -2,6 +2,7 @@
 import { Link } from '@inertiajs/inertia-vue3';
 
 defineProps({
+    active: Boolean,
     href: String,
     as: String,
 });
@@ -17,7 +18,8 @@ defineProps({
             <slot />
         </a>
 
-        <Link v-else :href="href" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition">
+        <Link v-else :href="href" class="block px-4 py-2 text-sm leading-5 focus:outline-none focus:bg-gray-100 transition"
+            :class="[ active ? 'text-blue-700 bg-blue-50' : ' text-gray-700 hover:bg-gray-100']">
             <slot />
         </Link>
     </div>

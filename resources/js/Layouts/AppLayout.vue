@@ -58,8 +58,6 @@ const logout = () => {
 
               <!-- Navigation Links -->
               <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                <JetNavLink :href="route('brands.index')" :active="route().current('brands.index')"> Marcas </JetNavLink>
-                <JetNavLink :href="route('contract_items.index')" :active="route().current('contract_items.index')"> Itens do Contrato </JetNavLink>
                 <JetNavLink :href="route('air_conditioners.index')" :active="route().current('air_conditioners.index')"> Ares </JetNavLink>
 
                 <div class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition cursor-pointer">
@@ -135,8 +133,8 @@ const logout = () => {
                         <div class="block px-4 py-2 text-xs text-gray-400">Gerenciar Unidades</div>
 
                         <!-- Team Settings -->
-                        <JetDropdownLink :href="route('teams.show', $page.props.user.current_team)">Configurações</JetDropdownLink>
-                        <JetDropdownLink v-if="$page.props.jetstream.canCreateTeams" :href="route('teams.create')">Criar Nova Unidade</JetDropdownLink>
+                        <JetDropdownLink :href="route('teams.show', $page.props.user.current_team)" :active="route().current('teams.show')">Configurações</JetDropdownLink>
+                        <JetDropdownLink v-if="$page.props.jetstream.canCreateTeams" :href="route('teams.create')" :active="route().current('teams.create')">Criar Nova Unidade</JetDropdownLink>
 
                         <div class="border-t border-gray-100" />
 
@@ -181,13 +179,20 @@ const logout = () => {
                   </template>
 
                   <template #content>
+                    <div class="block px-4 py-2 text-xs text-gray-400">Administrativo</div>
+
+                    <JetDropdownLink :href="route('brands.index')" :active="route().current('brands.index')">Marcas</JetDropdownLink>
+                    <JetDropdownLink :href="route('contract_items.index')" :active="route().current('contract_items.index')">Itens do Contrato</JetDropdownLink>
+
+                    <div class="border-t border-gray-100" />
+
                     <!-- Account Management -->
                     <div class="block px-4 py-2 text-xs text-gray-400">Gerenciar Conta</div>
 
-                    <JetDropdownLink :href="route('profile.show')">Minha Conta</JetDropdownLink>
+                    <JetDropdownLink :href="route('profile.show')" :active="route().current('profile.show')">Minha Conta</JetDropdownLink>
 
                     <!-- User Management -->
-                    <JetDropdownLink v-if="$page.props.canCreateUser" :href="route('new_user')">Cadastrar Usuário</JetDropdownLink>
+                    <JetDropdownLink v-if="$page.props.canCreateUser" :href="route('new_user')" :active="route().current('new_user')">Cadastrar Usuário</JetDropdownLink>
 
                     <JetDropdownLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')"> API Tokens </JetDropdownLink>
 
@@ -250,8 +255,6 @@ const logout = () => {
           class="sm:hidden"
         >
           <div class="pt-2 pb-3 space-y-1">
-            <JetResponsiveNavLink :href="route('brands.index')" :active="route().current('brands.index')"> Marcas </JetResponsiveNavLink>
-            <JetResponsiveNavLink :href="route('contract_items.index')" :active="route().current('contract_items.index')"> Itens do Contrato </JetResponsiveNavLink>
             <JetResponsiveNavLink :href="route('air_conditioners.index')" :active="route().current('air_conditioners.index')"> Ares </JetResponsiveNavLink>
             <JetResponsiveNavLink :href="route('reports.tickets')" :active="route().current('reports.tickets')">Relatório de Chamados</JetResponsiveNavLink>
             <JetResponsiveNavLink :href="route('reports.service_orders')" :active="route().current('reports.service_orders')">Relatório de Ordens de Serviço</JetResponsiveNavLink>
@@ -277,7 +280,13 @@ const logout = () => {
             </div>
 
             <div class="mt-3 space-y-1">
-              <div class="block px-4 py-2 text-xs text-gray-400">Gerenciar Usuários</div>
+              <div class="block px-4 py-2 text-xs text-gray-400">Administrativo</div>
+              <JetResponsiveNavLink :href="route('brands.index')" :active="route().current('brands.index')">Marcas</JetResponsiveNavLink>
+              <JetResponsiveNavLink :href="route('contract_items.index')" :active="route().current('contract_items.index')">Itens do Contrato</JetResponsiveNavLink>
+
+              <div class="border-t border-gray-200" />
+
+              <div class="block px-4 py-2 text-xs text-gray-400">Gerenciar Conta</div>
               <JetResponsiveNavLink :href="route('profile.show')" :active="route().current('profile.show')"> Minha Conta </JetResponsiveNavLink>
               <JetResponsiveNavLink v-if="$page.props.canCreateUser" :href="route('new_user')" :active="route().current('new_user')">Cadastrar Usuário</JetResponsiveNavLink>
 
