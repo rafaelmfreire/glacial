@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('btu')->nullable();
             $table->string('identifier')->nullable();
             $table->string('cpf')->nullable(); //another type of identifer
+            $table->text('observation')->nullable();
             $table->timestamps();
         });
     }

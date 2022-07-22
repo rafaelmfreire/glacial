@@ -67,7 +67,8 @@ class AirConditionerController extends Controller
             'btu' => ['nullable', 'numeric'],
             'identifier' => ['nullable', 'digits_between:4,10', 'numeric'],
             'cpf' => ['nullable', 'string'],
-            'brand_id' => ['required', 'exists:App\Models\Brand,id']
+            'brand_id' => ['required', 'exists:App\Models\Brand,id'],
+            'observation' => ['nullable', 'string']
         ]);
         
         $validated['team_id'] = $request->user()->currentTeam->id;
@@ -161,6 +162,7 @@ class AirConditionerController extends Controller
                 'btu'           => $airConditioner->btu,
                 'identifier'    => $airConditioner->identifier,
                 'cpf'           => $airConditioner->cpf,
+                'observation'   => $airConditioner->observation,
                 'brand'         => $airConditioner->brand->name,
                 'brand_id'      => $airConditioner->brand->id,
                 'tickets'       => $tickets,
@@ -188,12 +190,13 @@ class AirConditionerController extends Controller
 
         return inertia('AirConditioners/Edit', [
             'airConditioner' => [
-                'id' => $airConditioner->id,
-                'room' => $airConditioner->room,
-                'btu' => $airConditioner->btu,
-                'identifier' => $airConditioner->identifier,
-                'cpf' => $airConditioner->cpf,
-                'brand_id' => $airConditioner->brand->id,
+                'id'            => $airConditioner->id,
+                'room'          => $airConditioner->room,
+                'btu'           => $airConditioner->btu,
+                'identifier'    => $airConditioner->identifier,
+                'cpf'           => $airConditioner->cpf,
+                'observation'   => $airConditioner->observation,
+                'brand_id'      => $airConditioner->brand->id,
             ],
             'brands' => $brands
         ]);
@@ -213,7 +216,8 @@ class AirConditionerController extends Controller
             'btu' => ['nullable', 'numeric'],
             'identifier' => ['nullable', 'numeric'],
             'cpf' => ['nullable', 'string'],
-            'brand_id' => ['required', 'exists:App\Models\Brand,id']
+            'brand_id' => ['required', 'exists:App\Models\Brand,id'],
+            'observation' => ['nullable', 'string']
         ]);
 
         $airConditioner->room = $validated['room'];
@@ -221,6 +225,7 @@ class AirConditionerController extends Controller
         $airConditioner->identifier = $validated['identifier'];
         $airConditioner->cpf = $validated['cpf'];
         $airConditioner->brand_id = $validated['brand_id'];
+        $airConditioner->observation = $validated['observation'];
 
         $airConditioner->save();
 

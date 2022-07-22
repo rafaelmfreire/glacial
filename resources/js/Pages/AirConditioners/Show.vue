@@ -429,6 +429,11 @@
                   <dt class="text-sm text-gray-400">CPF</dt>
                   <dd class="text-sm text-gray-900 mt-0">{{ airConditioner.cpf }}</dd>
                 </div>
+
+                <div v-if="airConditioner.observation" class="py-3 flex flex-col items-start gap-2">
+                  <dt class="text-sm text-gray-400">Observações</dt>
+                  <dd class="text-sm text-gray-900 mt-0 whitespace-pre-wrap">{{ airConditioner.observation }}</dd>
+                </div>
               </dl>
             </div>
           </div>

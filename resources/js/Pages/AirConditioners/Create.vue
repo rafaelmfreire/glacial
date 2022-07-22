@@ -33,6 +33,8 @@
                     <CompInput name="identifier" maxlength="10" autofocus v-model="form.identifier" :message="errors.identifier" @keydown="errors.identifier = null">Tombamento</CompInput>
                     <CompInput name="cpf" autofocus v-model="form.cpf" :message="errors.cpf" @keydown="errors.cpf = null">CPF</CompInput>
                   </div>
+                  
+                  <CompTextarea name="observation" rows="3" v-model="form.observation" :message="errors.observation" @keydown="errors.observation = null">Observações</CompTextarea>
                 </div>
               </div>
             </div>
@@ -51,6 +53,7 @@ import LinkButton from '@/Components/LinkButton.vue';
 import CompInput from '@/Components/Input.vue';
 import CompSelect from '@/Components/Select.vue';
 import CompOption from '@/Components/Option.vue';
+import CompTextarea from '@/Components/Textarea.vue';
 
 const loading = ref(false);
 const props = defineProps({
@@ -64,6 +67,7 @@ const form = reactive({
   identifier: null,
   cpf: null,
   brand_id: null,
+  observation: null
 });
 
 function submit() {
