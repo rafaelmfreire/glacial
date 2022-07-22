@@ -41,7 +41,7 @@ class ServiceOrderController extends Controller
     {
         $validated = $request->validate([
             'services' => ['required', 'string'],
-            'technicians' => ['nullable', 'string'],
+            'technicians' => ['required', 'string'],
             'done_at' => ['required', 'date'],
             'status' => ['required', new Enum(ServiceOrderStatus::class)]
         ]);
