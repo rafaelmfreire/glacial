@@ -82,11 +82,12 @@ class TicketController extends Controller
         Ticket::create([
             'air_conditioner_id' => $airConditioner->id,
             'problem'            => $validated['problem'],
-            'informed_by'            => $validated['informed_by'],
-            'opened_at'            => $validated['opened_at'],
+            'informed_by'        => $validated['informed_by'],
+            'opened_at'          => $validated['opened_at'],
         ]);
 
-        $request->session()->flash('flash.banner', 'Chamado cadastrado!');
+        $request->session()->flash('flash.banner', 'Chamado "'.$validated['problem'].'" cadastrado para o aparelho '.$validated['identifier']);
+        $request->session()->flash('flash.bannerStyle', 'success');
 
         if($request->page == 'airConditioner') {
             return Redirect::route('air_conditioners.show', $airConditioner);
