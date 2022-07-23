@@ -89,7 +89,6 @@ class ServiceOrderController extends Controller
         ]);
 
         $airConditioner =  AirConditioner::where('identifier', $validated['identifier'])->first();
-        $validated['air_conditioner_id'] = $airConditioner->id;
 
         ServiceOrder::create([
             'services' => $validated['services'],
