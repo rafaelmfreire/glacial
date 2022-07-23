@@ -153,9 +153,17 @@ class QuoteController extends Controller
      * @param  \App\Models\Quote  $quote
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AirConditioner $airConditioner, Quote $quote)
+    public function destroy(Request $request, Quote $quote)
     {
-        $quote->delete();
-        return Redirect::route('air_conditioners.show', $airConditioner);
+        // TODO: quotes can only be deleted when there hasn't quote_items. Only admins can see and delete quotes that doesn't have quote_items
+
+        // if($quote->quoteItems->count() > 0) {
+        //     $message = "Este Orçamento ainda possui itens vinculados e não pode ser excluído. Exclua todos os itens antes de excluir o orçamento.";
+        //     $request->session()->flash('flash.banner', $message);
+        //     $request->session()->flash('flash.bannerStyle', 'danger');
+        //     return Redirect::route('quotes.index');
+        // }
+        // $quote->delete();
+        // return Redirect::route('quotes.index');
     }
 }

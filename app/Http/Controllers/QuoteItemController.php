@@ -81,8 +81,10 @@ class QuoteItemController extends Controller
      * @param  \App\Models\QuoteItem  $quoteItem
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AirConditioner $airConditioner, Quote $quote, QuoteItem $quoteItem)
+    public function destroy(Quote $quote, QuoteItem $quoteItem)
     {
+        $airConditioner = AirConditioner::where('id', $quoteItem->air_conditioner_id)->first();
+
         $quoteItem->delete();
         return Redirect::route('air_conditioners.show', $airConditioner);
     }

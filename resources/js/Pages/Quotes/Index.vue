@@ -103,7 +103,16 @@
                       {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(item.total) }}
                     </div>
                   </td>
-                  <td class="w-full"></td>
+                  <td class="w-full">
+                    <!-- <div class="group-hover:text-slate-500">
+                      <span class="cursor-pointer hover:text-red-600">
+                        <BtnDelete :inline="true" :id="item.id" :route="`/quotes/${item.id}`">
+                          <template #title>Apagar Item nº {{ item.number }}</template>
+                          Excluir
+                        </BtnDelete>
+                      </span>
+                    </div> -->
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -117,8 +126,9 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { ref, computed } from 'vue'
-import { ChevronDownIcon, ChevronUpIcon, PlusCircleIcon } from '@heroicons/vue/outline';
+import { ChevronDownIcon, ChevronUpIcon, PlusCircleIcon, TrashIcon } from '@heroicons/vue/outline';
 import CompInput from '@/Components/Input.vue';
+import BtnDelete from '@/Components/Delete.vue';
 import { Link } from '@inertiajs/inertia-vue3';
 
 const props = defineProps({

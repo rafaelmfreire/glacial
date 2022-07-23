@@ -150,14 +150,14 @@
                             <CalendarIcon class="h-4 w-4 mr-1 text-blue-400/60 inline"/>
                             <span>{{ quote.date_formatted }}</span>
                           </time>
-                          <div class="text-slate-200 group">
+                          <!-- <div class="text-slate-200 group">
                             <div class="group-hover:text-slate-500">
                               <BtnDelete :id="quote.id" :route="`/quotes/${quote.id}`">
                                 <template #title>Apagar Orçamento nº {{ quote.number }}</template>
                                 <TrashIcon class="w-8 h-8 cursor-pointer p-1 rounded-lg hover:text-red-400" />
                               </BtnDelete>
                             </div>
-                          </div>
+                          </div> -->
                         </div>
                       </div>
                       <div class="shadow overflow-x-auto border border-gray-200 sm:rounded-lg mt-2">
@@ -215,7 +215,7 @@
                             <tr v-for="quoteItem in resort(quote.quote_items, 'contract_item.number', 'asc')" :key="quoteItem.id" class="hover:bg-yellow-50 odd:bg-gray-100 divide-x group">
                               <td class="text-slate-200 group">
                                 <div class="group-hover:text-slate-500">
-                                  <BtnDelete :id="quoteItem.id" :route="`/air_conditioners/${airConditioner.id}/quotes/${quote.id}/quote_items/${quoteItem.id}`">
+                                  <BtnDelete :id="quoteItem.id" :route="`/quotes/${quote.id}/quote_items/${quoteItem.id}`">
                                     <template #title>Apagar Item nº {{ quoteItem.contract_item.number }}</template>
                                     <TrashIcon class="w-8 h-8 cursor-pointer p-1 rounded-lg hover:text-red-400" />
                                   </BtnDelete>
