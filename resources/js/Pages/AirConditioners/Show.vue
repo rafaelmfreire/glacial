@@ -45,7 +45,7 @@
                         <p class="text-slate-500 text-sm mb-12 whitespace-pre-line">{{ ticket.problem }}</p>
                       </div>
                       <div class="text-slate-100 group-hover:text-gray-400 absolute left-full -ml-6">
-                        <BtnDelete :id="ticket.id" :route="`/air_conditioners/${airConditioner.id}/tickets/${ticket.id}`">
+                        <BtnDelete :id="ticket.id" :route="`/tickets/${ticket.id}`">
                           <TrashIcon class="w-8 h-8 cursor-pointer p-1 rounded-lg hover:text-red-400" />
                         </BtnDelete>
                       </div>
@@ -463,9 +463,10 @@ const formTicket = reactive({
   problem: null,
   opened_at: (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate()),
   informed_by: props.user.name,
+  identifier: props.airConditioner.identifier,
+  page: 'airConditioner'
 });
 
-  // done_at: (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate()+' '+(new Date().getHours()).toString().padStart(2, '0')+':'+(new Date().getMinutes()).toString().padStart(2, '0')),
 const formServiceOrder = reactive({
   services: null,
   done_at: (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate()),
@@ -513,7 +514,7 @@ const props = defineProps({
 
 async function submitTicket() {
   this.loading = true;
-  Inertia.post(route('air_conditioners.tickets.store', props.airConditioner.id), this.formTicket, {
+  Inertia.post(route('tickets.store'), this.formTicket, {
     preserveState: (page) => Object.keys(page.props.errors).length,
   });
   this.loading = false;

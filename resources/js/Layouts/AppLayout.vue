@@ -60,7 +60,7 @@ const logout = () => {
               <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                 <JetNavLink :href="route('air_conditioners.index')" :active="route().current('air_conditioners.index')"> Ares </JetNavLink>
 
-                <!-- <JetNavLink :href="route('air_conditioners.index')" :active="route().current('air_conditioners.index')"> Chamados </JetNavLink> -->
+                <JetNavLink :href="route('tickets.index')" :active="route().current('tickets.index')"> Chamados </JetNavLink>
                 <JetNavLink :href="route('service_orders.index')" :active="route().current('service_orders.index')"> Serviços </JetNavLink>
                 <!-- <JetNavLink :href="route('air_conditioners.index')" :active="route().current('air_conditioners.index')"> Orçamentos </JetNavLink> -->
                 <!-- <JetNavLink :href="route('air_conditioners.index')" :active="route().current('air_conditioners.index')"> Requisições </JetNavLink> -->
@@ -258,8 +258,8 @@ const logout = () => {
         >
           <div class="pt-2 pb-3 space-y-1">
             <JetResponsiveNavLink :href="route('air_conditioners.index')" :active="route().current('air_conditioners.index')"> Ares </JetResponsiveNavLink>
+            <JetResponsiveNavLink :href="route('tickets.index')" :active="route().current('tickets.index')">Chamados</JetResponsiveNavLink>
             <JetResponsiveNavLink :href="route('service_orders.index')" :active="route().current('service_orders.index')">Serviços</JetResponsiveNavLink>
-            <JetResponsiveNavLink :href="route('reports.tickets')" :active="route().current('reports.tickets')">Relatório de Chamados</JetResponsiveNavLink>
             <JetResponsiveNavLink :href="route('reports.quotes')" :active="route().current('reports.quotes')">Relatório de Orçamentos</JetResponsiveNavLink>
             <JetResponsiveNavLink :href="route('reports.requisitions')" :active="route().current('reports.requisitions')">Relatório de Requisições</JetResponsiveNavLink>
           </div>
