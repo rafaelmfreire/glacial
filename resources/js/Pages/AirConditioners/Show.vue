@@ -71,7 +71,8 @@
                     </CompSelect>
                   </div>
                   <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <CompInput :withPadding="false" type="datetime-local" name="done_at" v-model="formServiceOrder.done_at" :message="errors.done_at" @keydown="errors.done_at = null">Realizado em</CompInput>
+                    <CompInput :withPadding="false" type="date" name="done_at" v-model="formServiceOrder.done_at" :message="errors.done_at" @keydown="errors.done_at = null">Realizado em</CompInput>
+                    <CompInput :withPadding="false" type="time" name="done_at_time" v-model="formServiceOrder.done_at_time" :message="errors.done_at_time" @keydown="errors.done_at_time = null">Horário</CompInput>
                   </div>
                   <div>
                     <LinkButton tag="button" @click="submitServiceOrder()">Adicionar</LinkButton>
@@ -99,7 +100,7 @@
                         <p class="text-slate-500 text-sm mb-12 whitespace-pre-line">{{ serviceOrder.services }}</p>
                       </div>
                       <div class="text-slate-100 group-hover:text-gray-400 absolute left-full -ml-6">
-                        <BtnDelete :id="serviceOrder.id" :route="`/air_conditioners/${airConditioner.id}/service_orders/${serviceOrder.id}`">
+                        <BtnDelete :id="serviceOrder.id" :route="`/service_orders/${serviceOrder.id}`">
                           <TrashIcon class="w-8 h-8 cursor-pointer p-1 rounded-lg hover:text-red-400" />
                         </BtnDelete>
                       </div>
@@ -464,11 +465,15 @@ const formTicket = reactive({
   informed_by: props.user.name,
 });
 
+  // done_at: (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate()+' '+(new Date().getHours()).toString().padStart(2, '0')+':'+(new Date().getMinutes()).toString().padStart(2, '0')),
 const formServiceOrder = reactive({
   services: null,
-  done_at: (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate()+' '+(new Date().getHours()).toString().padStart(2, '0')+':'+(new Date().getMinutes()).toString().padStart(2, '0')),
+  done_at: (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate()),
+  done_at_time: '00:00',
   technicians: '',
-  status: null
+  status: null,
+  identifier: props.airConditioner.identifier,
+  page: 'airConditioner'
 });
 
 const formQuote = reactive({
@@ -542,11 +547,12 @@ async function submitRequisition() {
 
 async function submitServiceOrder() {
   this.loading = true;
-  Inertia.post(route('air_conditioners.service_orders.store', props.airConditioner.id), this.formServiceOrder, {
+  Inertia.post(route('service_orders.store'), this.formServiceOrder, {
     preserveState: true,
     onSuccess: (page) => {
       formServiceOrder.services = null
-      formServiceOrder.done_at = (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate()+' '+new Date().getHours()+':'+(new Date().getMinutes()).toString().padStart(2, '0'))
+      formServiceOrder.done_at = (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate())
+      formServiceOrder.done_at_time = '00:00'
       formServiceOrder.technicians = null 
       formServiceOrder.status = null
     }

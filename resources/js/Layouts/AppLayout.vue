@@ -60,6 +60,11 @@ const logout = () => {
               <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                 <JetNavLink :href="route('air_conditioners.index')" :active="route().current('air_conditioners.index')"> Ares </JetNavLink>
 
+                <!-- <JetNavLink :href="route('air_conditioners.index')" :active="route().current('air_conditioners.index')"> Chamados </JetNavLink> -->
+                <JetNavLink :href="route('service_orders.index')" :active="route().current('service_orders.index')"> Serviços </JetNavLink>
+                <!-- <JetNavLink :href="route('air_conditioners.index')" :active="route().current('air_conditioners.index')"> Orçamentos </JetNavLink> -->
+                <!-- <JetNavLink :href="route('air_conditioners.index')" :active="route().current('air_conditioners.index')"> Requisições </JetNavLink> -->
+
                 <div class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition cursor-pointer">
                   <JetDropdown class="h-full">
                     <template #trigger>
@@ -72,12 +77,9 @@ const logout = () => {
                     </template>
 
                     <template #content>
-                      <!-- <div class="block px-4 py-2 text-xs text-gray-400">Manage Account</div> -->
                       <JetDropdownLink :href="route('reports.tickets')"> Chamados </JetDropdownLink>
-                      <JetDropdownLink :href="route('reports.service_orders')"> Ordens de Serviço </JetDropdownLink>
                       <JetDropdownLink :href="route('reports.quotes')"> Orçamentos </JetDropdownLink>
                       <JetDropdownLink :href="route('reports.requisitions')"> Requisições </JetDropdownLink>
-                      <!-- <div class="border-t border-gray-100" /> -->
                     </template>
 
                   </JetDropdown>
@@ -256,8 +258,8 @@ const logout = () => {
         >
           <div class="pt-2 pb-3 space-y-1">
             <JetResponsiveNavLink :href="route('air_conditioners.index')" :active="route().current('air_conditioners.index')"> Ares </JetResponsiveNavLink>
+            <JetResponsiveNavLink :href="route('service_orders.index')" :active="route().current('service_orders.index')">Serviços</JetResponsiveNavLink>
             <JetResponsiveNavLink :href="route('reports.tickets')" :active="route().current('reports.tickets')">Relatório de Chamados</JetResponsiveNavLink>
-            <JetResponsiveNavLink :href="route('reports.service_orders')" :active="route().current('reports.service_orders')">Relatório de Ordens de Serviço</JetResponsiveNavLink>
             <JetResponsiveNavLink :href="route('reports.quotes')" :active="route().current('reports.quotes')">Relatório de Orçamentos</JetResponsiveNavLink>
             <JetResponsiveNavLink :href="route('reports.requisitions')" :active="route().current('reports.requisitions')">Relatório de Requisições</JetResponsiveNavLink>
           </div>

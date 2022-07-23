@@ -15,13 +15,21 @@ class ServiceOrder extends Model
     protected $guarded  = [];
     protected $casts    = ['status' => ServiceOrderStatus::class];
     protected $dates    = ['done_at'];
-    protected $appends  = array('status_abbr', 'done_at_formatted');
+    protected $appends  = array('status_abbr', 'done_at_formatted', 'done_at_time');
 
     protected function doneAtFormatted(): Attribute
     {
         return Attribute::make(
             get: fn ($value, $attributes) =>
                 Carbon::createFromFormat('Y-m-d H:i:s', $attributes['done_at'])->format('d/m/Y')
+        );
+    }
+
+    protected function doneAtTime(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value, $attributes) =>
+                Carbon::createFromFormat('Y-m-d H:i:s', $attributes['done_at'])->format('H:i')
         );
     }
 
