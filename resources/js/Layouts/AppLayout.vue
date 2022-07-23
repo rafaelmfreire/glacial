@@ -77,7 +77,6 @@ const logout = () => {
                     </template>
 
                     <template #content>
-                      <JetDropdownLink :href="route('reports.tickets')"> Chamados </JetDropdownLink>
                       <JetDropdownLink :href="route('reports.quotes')"> Orçamentos </JetDropdownLink>
                       <JetDropdownLink :href="route('reports.requisitions')"> Requisições </JetDropdownLink>
                     </template>
