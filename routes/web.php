@@ -54,13 +54,13 @@ Route::middleware(['auth:sanctum', 'verified'])->resource('brands', BrandControl
 Route::middleware(['auth:sanctum', 'verified'])->resource('contract_items', ContractItemController::class);
 Route::middleware(['auth:sanctum', 'verified'])->resource('air_conditioners', AirConditionerController::class);
 
-Route::middleware(['auth:sanctum', 'verified'])->resource('air_conditioners.quotes', QuoteController::class);
 Route::middleware(['auth:sanctum', 'verified'])->resource('air_conditioners.quotes.quote_items', QuoteItemController::class);
 Route::middleware(['auth:sanctum', 'verified'])->resource('air_conditioners.requisitions', RequisitionController::class);
 Route::middleware(['auth:sanctum', 'verified'])->resource('air_conditioners.requisitions.requisition_items', RequisitionItemController::class);
 
 Route::middleware(['auth:sanctum', 'verified'])->resource('tickets', TicketController::class);
 Route::middleware(['auth:sanctum', 'verified'])->resource('service_orders', ServiceOrderController::class);
+Route::middleware(['auth:sanctum', 'verified'])->resource('quotes', QuoteController::class);
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/reports/tickets', [ReportController::class, 'tickets'])->name('reports.tickets');
 Route::middleware(['auth:sanctum', 'verified'])->get('/reports/quotes', [ReportController::class, 'quotes'])->name('reports.quotes');

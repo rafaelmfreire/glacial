@@ -152,7 +152,7 @@
                           </time>
                           <div class="text-slate-200 group">
                             <div class="group-hover:text-slate-500">
-                              <BtnDelete :id="quote.id" :route="`/air_conditioners/${airConditioner.id}/quotes/${quote.id}`">
+                              <BtnDelete :id="quote.id" :route="`/quotes/${quote.id}`">
                                 <template #title>Apagar Orçamento nº {{ quote.number }}</template>
                                 <TrashIcon class="w-8 h-8 cursor-pointer p-1 rounded-lg hover:text-red-400" />
                               </BtnDelete>
@@ -483,6 +483,8 @@ const formQuote = reactive({
   contract_item_id: '000',
   quantity: 1,
   service_date: (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate()),
+  identifier: props.airConditioner.identifier,
+  page: 'airConditioner'
 });
 
 const formRequisition = reactive({
@@ -522,7 +524,7 @@ async function submitTicket() {
 
 async function submitQuote() {
   this.loading = true;
-  Inertia.post(route('air_conditioners.quotes.store', props.airConditioner.id), this.formQuote, {
+  Inertia.post(route('quotes.store'), this.formQuote, {
     preserveState: true,
     onSuccess: (page) => {
       formQuote.date = (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate())

@@ -62,7 +62,7 @@ const logout = () => {
 
                 <JetNavLink :href="route('tickets.index')" :active="route().current('tickets.index')"> Chamados </JetNavLink>
                 <JetNavLink :href="route('service_orders.index')" :active="route().current('service_orders.index')"> Serviços </JetNavLink>
-                <!-- <JetNavLink :href="route('air_conditioners.index')" :active="route().current('air_conditioners.index')"> Orçamentos </JetNavLink> -->
+                <JetNavLink :href="route('quotes.index')" :active="route().current('quotes.index')"> Orçamentos </JetNavLink>
                 <!-- <JetNavLink :href="route('air_conditioners.index')" :active="route().current('air_conditioners.index')"> Requisições </JetNavLink> -->
 
                 <div class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition cursor-pointer">
@@ -77,7 +77,6 @@ const logout = () => {
                     </template>
 
                     <template #content>
-                      <JetDropdownLink :href="route('reports.quotes')"> Orçamentos </JetDropdownLink>
                       <JetDropdownLink :href="route('reports.requisitions')"> Requisições </JetDropdownLink>
                     </template>
 
@@ -259,7 +258,7 @@ const logout = () => {
             <JetResponsiveNavLink :href="route('air_conditioners.index')" :active="route().current('air_conditioners.index')"> Ares </JetResponsiveNavLink>
             <JetResponsiveNavLink :href="route('tickets.index')" :active="route().current('tickets.index')">Chamados</JetResponsiveNavLink>
             <JetResponsiveNavLink :href="route('service_orders.index')" :active="route().current('service_orders.index')">Serviços</JetResponsiveNavLink>
-            <JetResponsiveNavLink :href="route('reports.quotes')" :active="route().current('reports.quotes')">Relatório de Orçamentos</JetResponsiveNavLink>
+            <JetResponsiveNavLink :href="route('quotes.index')" :active="route().current('quotes.index')">Orçamentos</JetResponsiveNavLink>
             <JetResponsiveNavLink :href="route('reports.requisitions')" :active="route().current('reports.requisitions')">Relatório de Requisições</JetResponsiveNavLink>
           </div>
 
