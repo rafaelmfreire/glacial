@@ -31,8 +31,8 @@
                   <div class="block sm:grid grid-cols-4">
                     <CompInput name="identifier" :maxlength="10" v-model="form.identifier" :message="errors.identifier" @keydown="errors.identifier = null">Tombamento</CompInput>
                     <CompInput type="date" name="service_date" v-model="form.service_date" :message="errors.service_date" @keydown="errors.service_date = null">Data do Serviço</CompInput>
-                    <CompInput name="contract_item_id" v-model="form.contract_item_id" :message="errors.contract_item_id" @keydown="errors.contract_item_id = null">Item</CompInput>
-                    <CompInput name="quantity" :min="1" type="number" v-model="form.quantity" :message="errors.quantity" @keydown="errors.quantity = null">Quantidade</CompInput>
+                    <CompInput @keypress.enter="submit()" name="contract_item_id" v-model="form.contract_item_id" :message="errors.contract_item_id" @keydown="errors.contract_item_id = null">Item</CompInput>
+                    <CompInput @keypress.enter="submit()" name="quantity" :min="1" type="number" v-model="form.quantity" :message="errors.quantity" @keydown="errors.quantity = null">Quantidade</CompInput>
                   </div>
                 </div>
               </div>
