@@ -6,6 +6,7 @@ use App\Enums\ServiceOrderStatus;
 use App\Models\AirConditioner;
 use App\Models\Brand;
 use App\Models\ServiceOrder;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Database\Eloquent\Builder;
@@ -98,7 +99,8 @@ class ServiceOrderController extends Controller
             'air_conditioner_id' => AirConditioner::where('identifier', $validated['identifier'])->first()->id
         ]);
 
-        $request->session()->flash('flash.banner', 'Serviço cadastrado!');
+        $done_at_formatted = Carbon::createFromFormat('Y-m-d', $validated['done_at'])->format('d/m/Y');
+        $request->session()->flash('flash.banner', 'Serviço cadastrado para a máquina '.$validated['identifier'].' no dia '.$done_at_formatted.' às '.$validated['done_at_time'].'!');
 
         if($request->page == 'airConditioner') {
             return Redirect::route('air_conditioners.show', $airConditioner);
