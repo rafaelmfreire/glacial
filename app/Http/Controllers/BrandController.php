@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 
 class BrandController extends Controller
@@ -15,6 +16,10 @@ class BrandController extends Controller
      */
     public function index()
     {
+        if (!Gate::allows('view-brands')) {
+            abort(403);
+        }
+
         $brands = Brand::all();
 
         return inertia('Brands/Index', ['brands' => $brands]);

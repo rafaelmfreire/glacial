@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ContractItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 
 class ContractItemController extends Controller
@@ -15,6 +16,10 @@ class ContractItemController extends Controller
      */
     public function index()
     {
+        if (!Gate::allows('view-contract-items')) {
+            abort(403);
+        }
+
         $contractItems = ContractItem::all();
 
         return inertia('ContractItems/Index', ['contractItems' => $contractItems]);

@@ -59,13 +59,21 @@ class JetstreamServiceProvider extends ServiceProvider
             'team:manage',
             'team:create',
             'team:view',
+            'brand:manage',
+            'brand:view',
+            'brand:create',
+            'contract_item:manage',
+            'contract_item:view',
+            'contract_item:create'
         ])->description('Assessores podem realizar todas as ações.');
 
         Jetstream::role('secretary', 'Secretaria', [
             'read',
             'create',
             'update',
-            'team:view'
+            'team:view',
+            'brand:view',
+            'contract_item:view',
         ])->description('Usuários de secretaria podem realizar todas as funções dentro da sua unidade.');
     }
 }

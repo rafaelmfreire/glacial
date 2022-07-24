@@ -38,7 +38,9 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'canCreateUser' => $request->user()?->hasTeamPermission($request->user()?->currentTeam, 'user:create'),
-            'belongsToAnyTeam' => $request->user()?->allTeams()->count() > 0
+            'belongsToAnyTeam' => $request->user()?->allTeams()->count() > 0,
+            'canManageBrands' => $request->user()?->hasTeamPermission($request->user()?->currentTeam, 'brand:manage'),
+            'canManageContractItems' => $request->user()?->hasTeamPermission($request->user()?->currentTeam, 'contract_item:manage'),
         ]);
     }
 }

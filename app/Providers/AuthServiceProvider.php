@@ -33,6 +33,14 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        Gate::define('view-brands', function (User $user) {
+            return $user->hasTeamPermission($user->currentTeam, 'brand:view');
+        });
+
+        Gate::define('view-contract-items', function (User $user) {
+            return $user->hasTeamPermission($user->currentTeam, 'contract_item:view');
+        });
+
         Gate::define('create-user', function (User $user) {
             return $user->hasTeamPermission($user->currentTeam, 'user:create');
         });

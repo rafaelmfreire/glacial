@@ -37,7 +37,7 @@
                 </tr>
               </thead>
               <tbody class="bg-white divide-y divide-gray-200">
-                <tr class="bg-gray-100 hover:bg-yellow-50">
+                <tr v-if="$page.props.canManageContractItems" class="bg-gray-100 hover:bg-yellow-50">
                   <td v-if="!showCreateForm" class="px-6 py-6 whitespace-nowrap" colspan="4">
                     <div class="text-sm font-medium">
                       <a @click="create()" class="text-blue-400 hover:text-blue-500 flex items-center gap-1 cursor-pointer"> <PlusCircleIcon class="h-5 w-5" /> Novo Item </a>
@@ -123,7 +123,7 @@
                     </div>
                   </td>
                   <td v-show="editOffset != index" class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <a @click.prevent="showEdit(item, index)" class="text-blue-600 hover:text-blue-900 cursor-pointer">Alterar</a>
+                    <a v-if="$page.props.canManageContractItems" @click.prevent="showEdit(item, index)" class="text-blue-600 hover:text-blue-900 cursor-pointer">Alterar</a>
                   </td>
 
                   <td v-show="editOffset == index" class="px-6 py-4 whitespace-nowrap" colspan="4">
