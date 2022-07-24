@@ -84,7 +84,7 @@
               <tbody class="bg-white divide-y divide-gray-200">
                 <tr v-for="(item, index) in quotesList" :key="index" class="hover:bg-yellow-50 odd:bg-gray-100">
                   <td class="px-6 py-4 whitespace-nowrap text-right">
-                    <Link :href="route('reports.quotes.quote_items', item.id)">
+                    <Link :href="route('quotes.quote_items.index', item.id)">
                       <div class="text-lg group">
                         <div class="tabular-nums group-hover:text-blue-700">{{ item.number }}</div>
                       </div>
