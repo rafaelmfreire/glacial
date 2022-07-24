@@ -11,6 +11,7 @@
 				:autofocus="autofocus"
 				:min="min"
 				:max="max"
+				:tabindex="tabindex"
 				class="w-full border-gray-300 focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 rounded-md shadow-sm font-medium text-black placeholder:text-gray-400 placeholder:font-normal"
 				:class="{ 'border-red-500': message }"
 				ref="input"
@@ -28,6 +29,10 @@
 <script>
 export default {
 	props: {
+		tabindex: {
+			type: Number,
+			default: 0
+		},
 		name: {
 			type: String,
 		},
