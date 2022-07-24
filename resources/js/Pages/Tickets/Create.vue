@@ -18,11 +18,11 @@
                   <div class="block sm:grid grid-cols-3">
 
                     <CompInput type="date" name="opened_at" v-model="form.opened_at" :message="errors.opened_at" @keydown="errors.opened_at = null">Aberto em</CompInput>
-                    <CompInput name="informed_by" v-model="form.informed_by" autofocus="autofocus" :message="errors.informed_by" @keydown="errors.informed_by = null">Informado Por</CompInput>
-                    <CompInput name="identifier" v-model="form.identifier" autofocus="autofocus" :message="errors.identifier" @keydown="errors.identifier = null">Tombamento</CompInput>
+                    <CompInput @keypress.enter="submit()" name="informed_by" v-model="form.informed_by" autofocus="autofocus" :message="errors.informed_by" @keydown="errors.informed_by = null">Informado Por</CompInput>
+                    <CompInput @keypress.enter="submit()" :maxlength="10" name="identifier" v-model="form.identifier" autofocus="autofocus" :message="errors.identifier" @keydown="errors.identifier = null">Tombamento</CompInput>
 
                   </div>
-                  <CompTextarea name="problem" rows="3" v-model="form.problem" :message="errors.problem" @keydown="errors.problem = null">Descreva o problema</CompTextarea>
+                  <CompTextarea @keypress.enter.exact.prevent="submit()" name="problem" rows="3" v-model="form.problem" :message="errors.problem" @keydown="errors.problem = null">Descreva o problema</CompTextarea>
                 </div>
               </div>
             </div>

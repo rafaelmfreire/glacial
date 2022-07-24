@@ -18,7 +18,7 @@
                   <div class="block sm:grid grid-cols-2">
 
                     <CompInput type="date" name="done_at" v-model="form.done_at" :message="errors.done_at" @keydown="errors.done_at = null">Realizado em</CompInput>
-                    <CompInput name="technicians" v-model="form.technicians" autofocus="autofocus" :message="errors.technicians" @keydown="errors.technicians = null">Equipe</CompInput>
+                    <CompInput @keypress.enter="submit()" name="technicians" v-model="form.technicians" autofocus="autofocus" :message="errors.technicians" @keydown="errors.technicians = null">Equipe</CompInput>
 
                   </div>
                 </div>
@@ -29,7 +29,7 @@
               <div class="bg-white">
                 <div class="px-4 py-6">
                   <div class="block sm:grid grid-cols-3">
-                    <CompInput name="identifier" :maxlength="10" v-model="form.identifier" :message="errors.identifier" @keydown="errors.identifier = null">Tombamento</CompInput>
+                    <CompInput @keypress.enter="submit()" name="identifier" :maxlength="10" v-model="form.identifier" :message="errors.identifier" @keydown="errors.identifier = null">Tombamento</CompInput>
                     <CompSelect name="status" v-model="form.status" :message="errors.status" @change="errors.status = null" >Status
                       <template #options>
                         <CompOption v-for="(index, item) in statuses" :key="index.toString()" :value="index.toString()">
@@ -37,10 +37,10 @@
                         </CompOption>
                       </template>
                     </CompSelect>
-                    <CompInput type="time" name="done_at_time" v-model="form.done_at_time" :message="errors.done_at_time" @keydown="errors.done_at_time = null">Horário</CompInput>
+                    <CompInput @keypress.enter="submit()" type="time" name="done_at_time" v-model="form.done_at_time" :message="errors.done_at_time" @keydown="errors.done_at_time = null">Horário</CompInput>
                   </div>
                   
-                  <CompTextarea name="services" rows="3" v-model="form.services" :message="errors.services" @keydown="errors.services = null">Serviços</CompTextarea>
+                  <CompTextarea @keypress.enter.exact.prevent="submit()" name="services" rows="3" v-model="form.services" :message="errors.services" @keydown="errors.services = null">Serviços</CompTextarea>
                 </div>
               </div>
             </div>

@@ -14,10 +14,10 @@
 
               <Tab title="Chamados">
                 <div class="grid grid-cols-1 gap-4">
-                  <CompTextarea :withPadding="false" name="problem" rows="3" v-model="formTicket.problem" :message="errors.problem" @keydown="errors.problem = null">Descreva o problema</CompTextarea>
+                  <CompTextarea @keypress.enter.exact.prevent="submitTicket()" :withPadding="false" name="problem" rows="3" v-model="formTicket.problem" :message="errors.problem" @keydown="errors.problem = null">Descreva o problema</CompTextarea>
                   <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <CompInput :withPadding="false" name="informed_by" v-model="formTicket.informed_by" :message="errors.informed_by" @keydown="errors.informed_by = null">Informado por</CompInput>
-                    <CompInput :withPadding="false" type="date" name="opened_at" v-model="formTicket.opened_at" :message="errors.opened_at" @keydown="errors.opened_at = null">Aberto em</CompInput>
+                    <CompInput @keypress.enter="submitTicket()" :withPadding="false" name="informed_by" v-model="formTicket.informed_by" :message="errors.informed_by" @keydown="errors.informed_by = null">Informado por</CompInput>
+                    <CompInput @keypress.enter="submitTicket()" :withPadding="false" type="date" name="opened_at" v-model="formTicket.opened_at" :message="errors.opened_at" @keydown="errors.opened_at = null">Aberto em</CompInput>
                   </div>
                   <div>
                     <LinkButton tag="button" @click="submitTicket()">Adicionar</LinkButton>
@@ -59,9 +59,9 @@
 
               <Tab title="Ordens de Serviço">
                 <div class="grid grid-cols-1 gap-4">
-                  <CompTextarea :withPadding="false" name="services" rows="3" v-model="formServiceOrder.services" :message="errors.services" @keydown="errors.services = null">Descreva os serviços</CompTextarea>
+                  <CompTextarea @keypress.enter.exact.prevent="submitServiceOrder()" :withPadding="false" name="services" rows="3" v-model="formServiceOrder.services" :message="errors.services" @keydown="errors.services = null">Descreva os serviços</CompTextarea>
                   <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <CompInput :withPadding="false" name="technicians" v-model="formServiceOrder.technicians" :message="errors.technicians" @keydown="errors.technicians = null">Equipe</CompInput>
+                    <CompInput @keypress.enter="submitServiceOrder()" :withPadding="false" name="technicians" v-model="formServiceOrder.technicians" :message="errors.technicians" @keydown="errors.technicians = null">Equipe</CompInput>
                     <CompSelect :withPadding="false" name="status" v-model="formServiceOrder.status" :message="errors.status" @change="errors.status = null" >Status
                       <template #options>
                         <CompOption v-for="(index, item) in statuses" :key="index.toString()" :value="index.toString()">
@@ -71,8 +71,8 @@
                     </CompSelect>
                   </div>
                   <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <CompInput :withPadding="false" type="date" name="done_at" v-model="formServiceOrder.done_at" :message="errors.done_at" @keydown="errors.done_at = null">Realizado em</CompInput>
-                    <CompInput :withPadding="false" type="time" name="done_at_time" v-model="formServiceOrder.done_at_time" :message="errors.done_at_time" @keydown="errors.done_at_time = null">Horário</CompInput>
+                    <CompInput @keypress.enter="submitServiceOrder()" :withPadding="false" type="date" name="done_at" v-model="formServiceOrder.done_at" :message="errors.done_at" @keydown="errors.done_at = null">Realizado em</CompInput>
+                    <CompInput @keypress.enter="submitServiceOrder()" :withPadding="false" type="time" name="done_at_time" v-model="formServiceOrder.done_at_time" :message="errors.done_at_time" @keydown="errors.done_at_time = null">Horário</CompInput>
                   </div>
                   <div>
                     <LinkButton tag="button" @click="submitServiceOrder()">Adicionar</LinkButton>
@@ -113,13 +113,13 @@
               <Tab title="Orçamentos">
                 <div class="grid grid-cols-1 gap-4">
                   <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <CompInput :withPadding="false" name="number" v-model="formQuote.number" :message="errors.number" @keydown="errors.number = null">Orçamento Nº</CompInput>
-                    <CompInput :withPadding="false" type="date" name="date" v-model="formQuote.date" :message="errors.date" @keydown="errors.date = null">Data do Orçamento</CompInput>
+                    <CompInput @keypress.enter="submitQuote()" :withPadding="false" name="number" v-model="formQuote.number" :message="errors.number" @keydown="errors.number = null">Orçamento Nº</CompInput>
+                    <CompInput @keypress.enter="submitQuote()" :withPadding="false" type="date" name="date" v-model="formQuote.date" :message="errors.date" @keydown="errors.date = null">Data do Orçamento</CompInput>
                   </div>
                   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                    <CompInput :withPadding="false" name="contract_item_id" v-model="formQuote.contract_item_id" :message="errors.contract_item_id" @keydown="errors.contract_item_id = null">Item</CompInput>
-                    <CompInput :withPadding="false" name="quantity" :min="1" type="number" v-model="formQuote.quantity" :message="errors.quantity" @keydown="errors.quantity = null">Quantidade</CompInput>
-                    <CompInput :withPadding="false" type="date" name="service_date" v-model="formQuote.service_date" :message="errors.service_date" @keydown="errors.service_date = null">Data do Serviço</CompInput>
+                    <CompInput @keypress.enter="submitQuote()" :withPadding="false" name="contract_item_id" v-model="formQuote.contract_item_id" :message="errors.contract_item_id" @keydown="errors.contract_item_id = null">Item</CompInput>
+                    <CompInput @keypress.enter="submitQuote()" :withPadding="false" name="quantity" :min="1" type="number" v-model="formQuote.quantity" :message="errors.quantity" @keydown="errors.quantity = null">Quantidade</CompInput>
+                    <CompInput @keypress.enter="submitQuote()" :withPadding="false" type="date" name="service_date" v-model="formQuote.service_date" :message="errors.service_date" @keydown="errors.service_date = null">Data do Serviço</CompInput>
                   </div>
                   <div>
                     <LinkButton tag="button" @click="submitQuote()">Adicionar</LinkButton>
@@ -232,13 +232,13 @@
               <Tab title="Requisições">
                 <div class="grid grid-cols-1 gap-4">
                   <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <CompInput :withPadding="false" name="number" v-model="formRequisition.number" :message="errors.number" @keydown="errors.number = null">Requisição Nº</CompInput>
-                    <CompInput :withPadding="false" type="number" name="year" v-model="formRequisition.year" :message="errors.year" @keydown="errors.year = null">Ano</CompInput>
+                    <CompInput @keypress.enter="submitRequisition()" :withPadding="false" name="number" v-model="formRequisition.number" :message="errors.number" @keydown="errors.number = null">Requisição Nº</CompInput>
+                    <CompInput @keypress.enter="submitRequisition()" :withPadding="false" type="number" name="year" v-model="formRequisition.year" :message="errors.year" @keydown="errors.year = null">Ano</CompInput>
                   </div>
                   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                    <CompInput :withPadding="false" name="contract_item_id" v-model="formRequisition.contract_item_id" :message="errors.contract_item_id" @keydown="errors.contract_item_id = null">Item</CompInput>
-                    <CompInput :withPadding="false" name="quantity" type="number" :min="1" v-model="formRequisition.quantity" :message="errors.quantity" @keydown="errors.quantity = null">Quantidade</CompInput>
-                    <CompInput :withPadding="false" name="quote_number" v-model="formRequisition.quote_number" :message="errors.quote_number" @keydown="errors.quote_number = null">Nº do orçamento</CompInput>
+                    <CompInput @keypress.enter="submitRequisition()" :withPadding="false" name="contract_item_id" v-model="formRequisition.contract_item_id" :message="errors.contract_item_id" @keydown="errors.contract_item_id = null">Item</CompInput>
+                    <CompInput @keypress.enter="submitRequisition()" :withPadding="false" name="quantity" type="number" :min="1" v-model="formRequisition.quantity" :message="errors.quantity" @keydown="errors.quantity = null">Quantidade</CompInput>
+                    <CompInput @keypress.enter="submitRequisition()" :withPadding="false" name="quote_number" v-model="formRequisition.quote_number" :message="errors.quote_number" @keydown="errors.quote_number = null">Nº do orçamento</CompInput>
                   </div>
                   <div>
                     <LinkButton tag="button" @click="submitRequisition()">Adicionar</LinkButton>

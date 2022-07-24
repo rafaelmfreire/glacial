@@ -16,7 +16,7 @@
               <div class="bg-white">
                 <div class="px-4 py-6">
                   <div class="block sm:grid grid-cols-4">
-                    <CompInput class="col-span-2" name="room" autofocus v-model="form.room" :message="errors.room" @keydown="errors.room = null">Sala</CompInput>
+                    <CompInput @keypress.enter="submit()" class="col-span-2" name="room" autofocus v-model="form.room" :message="errors.room" @keydown="errors.room = null">Sala</CompInput>
                     
                     <CompSelect name="brand_id" v-model="form.brand_id" :message="errors.brand_id" @change="errors.brand_id = null" >Marca
                       <template #options>
@@ -26,15 +26,15 @@
                       </template>
                     </CompSelect>
 
-                    <CompInput name="btu" maxlength="5" autofocus v-model="form.btu" :message="errors.btu" @keydown="errors.btu = null">BTU</CompInput>
+                    <CompInput @keypress.enter="submit()" name="btu" maxlength="5" autofocus v-model="form.btu" :message="errors.btu" @keydown="errors.btu = null">BTU</CompInput>
                   </div>
 
                   <div class="block sm:grid grid-cols-2">
-                    <CompInput name="identifier" maxlength="10" autofocus v-model="form.identifier" :message="errors.identifier" @keydown="errors.identifier = null">Tombamento</CompInput>
-                    <CompInput name="cpf" autofocus v-model="form.cpf" :message="errors.cpf" @keydown="errors.cpf = null">CPF</CompInput>
+                    <CompInput @keypress.enter="submit()" name="identifier" maxlength="10" autofocus v-model="form.identifier" :message="errors.identifier" @keydown="errors.identifier = null">Tombamento</CompInput>
+                    <CompInput @keypress.enter="submit()" name="cpf" autofocus v-model="form.cpf" :message="errors.cpf" @keydown="errors.cpf = null">CPF</CompInput>
                   </div>
                   
-                  <CompTextarea name="observation" rows="3" v-model="form.observation" :message="errors.observation" @keydown="errors.observation = null">Observações</CompTextarea>
+                  <CompTextarea @keypress.enter.exact.prevent="submit()" name="observation" rows="3" v-model="form.observation" :message="errors.observation" @keydown="errors.observation = null">Observações</CompTextarea>
                 </div>
               </div>
             </div>
@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import { reactive, ref, nextTick, computed } from 'vue';
+import { reactive, ref, onMounted } from 'vue';
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { Inertia } from '@inertiajs/inertia';
 import LinkButton from '@/Components/LinkButton.vue';
@@ -69,6 +69,10 @@ const form = reactive({
   brand_id: null,
   observation: null
 });
+
+onMounted(() => {
+  document.getElementById("room").focus();
+})
 
 function submit() {
   this.loading = true;
