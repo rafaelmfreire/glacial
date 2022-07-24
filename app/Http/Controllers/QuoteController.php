@@ -81,22 +81,24 @@ class QuoteController extends Controller
 
         $airConditioner =  AirConditioner::where('identifier', $validated['identifier'])->first();
 
-        $quote = Quote::where('number', '=', $validated['number'])->firstOrCreate(
-            [
-            'number' => $validated['number'],
-            ],
-            [
-                'date'   => $validated['date'],
-            ]
-        );
+        $transaction = DB::transaction(function () use ($validated, $airConditioner) {
+            $quote = Quote::where('number', '=', $validated['number'])->firstOrCreate(
+                [
+                'number' => $validated['number'],
+                ],
+                [
+                    'date'   => $validated['date'],
+                ]
+            );
 
-        QuoteItem::create([
-            'quote_id' => $quote->id,
-            'air_conditioner_id' => $airConditioner->id,
-            'contract_item_id' => ContractItem::where('number', $validated['contract_item_id'])->first()->id,
-            'quantity' => $validated['quantity'],
-            'service_date' => $validated['service_date']
-        ]);
+            QuoteItem::create([
+                'quote_id' => $quote->id,
+                'air_conditioner_id' => $airConditioner->id,
+                'contract_item_id' => ContractItem::where('number', $validated['contract_item_id'])->first()->id,
+                'quantity' => $validated['quantity'],
+                'service_date' => $validated['service_date']
+            ]);
+        });
         
         $message = $validated['quantity'].' item '.$validated['contract_item_id'].' cadastrado no Orçamento '.$validated['number'].' para o aparelho '.$validated['identifier'];
         
