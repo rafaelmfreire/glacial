@@ -127,8 +127,8 @@
                 </div>
 
                 <div class="mt-8">
-                  <h2 class="font-medium text-gray-700 text-xl pt-4">Histórico</h2>
-                  <div v-if="airConditioner.quotes" class="divide-y">
+                  <h2 class="font-medium text-gray-700 text-xl pt-4 mb-4">Histórico</h2>
+                  <div v-if="airConditioner.quotes.length > 0" class="divide-y">
                     <div v-for="quote in airConditioner.quotes" :key="quote.id" class="space-y-2 py-10 first:pt-6 last:pb-0">
                       <div class="flex items-center justify-between">
                         <h3>
@@ -225,6 +225,7 @@
                       </div>
                     </div>
                   </div>
+                  <div v-else class="text-slate-500 text-sm">Ainda não foram cadastrados Orçamentos para este aparelho.</div>
                 </div>
               </Tab>
 
@@ -245,8 +246,8 @@
                 </div>
 
                 <div class="mt-8">
-                  <h2 class="font-medium text-gray-700 text-xl pt-4">Histórico</h2>
-                  <div class="divide-y">
+                  <h2 class="font-medium text-gray-700 text-xl pt-4 mb-4">Histórico</h2>
+                  <div v-if="airConditioner.requisitions.length > 0" class="divide-y">
                     <div v-for="requisition in airConditioner.requisitions" :key="requisition.id" class="space-y-2 py-10 first:pt-6 last:pb-0">
                       <div class="flex items-center justify-between">
                         <h3>
@@ -339,6 +340,7 @@
                       </div>
                     </div>
                   </div>
+                  <div v-else class="text-slate-500 text-sm">Ainda não foram cadastradas Requisições para este aparelho.</div>
                 </div>
               </Tab>
 
