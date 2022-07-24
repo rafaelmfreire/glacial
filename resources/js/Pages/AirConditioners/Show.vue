@@ -150,14 +150,6 @@
                             <CalendarIcon class="h-4 w-4 mr-1 text-blue-400/60 inline"/>
                             <span>{{ quote.date_formatted }}</span>
                           </time>
-                          <!-- <div class="text-slate-200 group">
-                            <div class="group-hover:text-slate-500">
-                              <BtnDelete :id="quote.id" :route="`/quotes/${quote.id}`">
-                                <template #title>Apagar Orçamento nº {{ quote.number }}</template>
-                                <TrashIcon class="w-8 h-8 cursor-pointer p-1 rounded-lg hover:text-red-400" />
-                              </BtnDelete>
-                            </div>
-                          </div> -->
                         </div>
                       </div>
                       <div class="shadow overflow-x-auto border border-gray-200 sm:rounded-lg mt-2">
@@ -296,14 +288,6 @@
                               {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(requisition.total) }}
                             </span>
                           </div>
-                          <div class="text-slate-200 group">
-                            <div class="group-hover:text-slate-500">
-                              <BtnDelete :id="requisition.id" :route="`/air_conditioners/${airConditioner.id}/requisitions/${requisition.id}`">
-                                <template #title>Apagar Requisição nº {{ requisition.number }}/{{ requisition.year }}</template>
-                                <TrashIcon class="w-8 h-8 cursor-pointer p-1 rounded-lg hover:text-red-400" />
-                              </BtnDelete>
-                            </div>
-                          </div>
                         </div>
                       </div>
                       <div class="shadow overflow-x-auto border border-gray-200 sm:rounded-lg mt-2">
@@ -361,7 +345,7 @@
                             <tr v-for="requisitionItem in resort(requisition.requisition_items, 'contract_item.number', 'asc')" :key="requisitionItem.id" class="hover:bg-yellow-50 odd:bg-gray-100 divide-x group">
                               <td class="text-slate-200 group">
                                 <div class="group-hover:text-slate-500">
-                                  <BtnDelete :id="requisitionItem.id" :route="`/air_conditioners/${airConditioner.id}/requisitions/${requisition.id}/requisition_items/${requisitionItem.id}`">
+                                  <BtnDelete :id="requisitionItem.id" :route="`/requisitions/${requisition.id}/requisition_items/${requisitionItem.id}`">
                                     <template #title>Apagar Item nº {{ requisitionItem.contract_item.number }}</template>
                                     <TrashIcon class="w-8 h-8 cursor-pointer p-1 rounded-lg hover:text-red-400" />
                                   </BtnDelete>
@@ -492,7 +476,9 @@ const formRequisition = reactive({
   year: new Date().getFullYear(),
   contract_item_id: '000',
   quantity: 1,
-  quote_number: null
+  quote_number: null,
+  identifier: props.airConditioner.identifier,
+  page: 'airConditioner'
 });
 
 watch(formQuote, async (newNumber, oldNumber) => {
@@ -537,7 +523,7 @@ async function submitQuote() {
 
 async function submitRequisition() {
   this.loading = true;
-  Inertia.post(route('air_conditioners.requisitions.store', props.airConditioner.id), this.formRequisition, {
+  Inertia.post(route('requisitions.store'), this.formRequisition, {
     preserveState: true,
     onSuccess: (page) => {
       formRequisition.year = new Date().getFullYear()
