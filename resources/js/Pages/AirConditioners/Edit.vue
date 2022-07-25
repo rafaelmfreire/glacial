@@ -77,10 +77,10 @@ const form = reactive({
 });
 
 function submit() {
-  this.loading = true;
-  Inertia.put(route('air_conditioners.update', props.airConditioner.id), this.form, {
+  loading.value = true;
+  Inertia.put(route('air_conditioners.update', props.airConditioner.id), form, {
     preserveState: (page) => Object.keys(page.props.errors).length,
   });
-  this.loading = false;
+  loading.value = false;
 }
 </script>

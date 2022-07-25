@@ -81,7 +81,7 @@ const form = reactive({
 });
 
 function submit() {
-  Inertia.post(route('service_orders.store'), this.form, {
+  Inertia.post(route('service_orders.store'), form, {
     preserveState: (page) => true,
     onSuccess: (page) => {
       form.identifier = null

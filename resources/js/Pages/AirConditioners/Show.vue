@@ -455,16 +455,13 @@ const props = defineProps({
 });
 
 async function submitTicket() {
-  this.loading = true;
-  Inertia.post(route('tickets.store'), this.formTicket, {
+  Inertia.post(route('tickets.store'), formTicket, {
     preserveState: (page) => Object.keys(page.props.errors).length,
   });
-  this.loading = false;
 }
 
 async function submitQuote() {
-  this.loading = true;
-  Inertia.post(route('quotes.store'), this.formQuote, {
+  Inertia.post(route('quotes.store'), formQuote, {
     preserveState: true,
     onSuccess: (page) => {
       formQuote.date = (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate())
@@ -472,12 +469,10 @@ async function submitQuote() {
       formQuote.quantity = 1
     }
   });
-  this.loading = false;
 }
 
 async function submitRequisition() {
-  this.loading = true;
-  Inertia.post(route('requisitions.store'), this.formRequisition, {
+  Inertia.post(route('requisitions.store'), formRequisition, {
     preserveState: true,
     onSuccess: (page) => {
       formRequisition.year = new Date().getFullYear()
@@ -485,12 +480,10 @@ async function submitRequisition() {
       formRequisition.quantity = 1
     }
   });
-  this.loading = false;
 }
 
 async function submitServiceOrder() {
-  this.loading = true;
-  Inertia.post(route('service_orders.store'), this.formServiceOrder, {
+  Inertia.post(route('service_orders.store'), formServiceOrder, {
     preserveState: true,
     onSuccess: (page) => {
       formServiceOrder.services = null
@@ -500,7 +493,6 @@ async function submitServiceOrder() {
       formServiceOrder.status = null
     }
   });
-  this.loading = false;
 }
 
 function resort(list, property, direction) {
