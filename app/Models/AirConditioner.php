@@ -9,6 +9,9 @@ class AirConditioner extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $casts = [
+        'id' => 'integer',
+    ];
 
     public function brand()
     {
