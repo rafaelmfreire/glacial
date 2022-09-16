@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\ServiceOrderStatus;
 use App\Models\AirConditioner;
+use App\Models\AirConditionerFile;
 use App\Models\Brand;
 use App\Models\Quote;
 use App\Models\Requisition;
@@ -15,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class AirConditionerController extends Controller
 {
@@ -150,6 +152,8 @@ class AirConditionerController extends Controller
                     ->first()->total / 100;
             });
 
+        $files = AirConditionerFile::where('air_conditioner_id', $airConditioner->id)->get();
+
         $statusArray = [];
         foreach (ServiceOrderStatus::cases() as $key => $status) {
             $statusArray[__('messages.status.'.$status->name)] = $status->value;
@@ -168,7 +172,9 @@ class AirConditionerController extends Controller
                 'tickets'       => $tickets,
                 'serviceOrders' => $serviceOrders,
                 'quotes'        => $quotes,
-                'requisitions'  => $requisitions
+                'requisitions'  => $requisitions,
+                'airConditionerFiles' => $files,
+                'path' => asset('')
             ],
             'statuses' => $statusArray
         ]);
@@ -241,5 +247,34 @@ class AirConditionerController extends Controller
     public function destroy(AirConditioner $airConditioner)
     {
         //
+    }
+
+    public function uploadFile(Request $request, AirConditioner $airConditioner)
+    {
+        $transaction = DB::transaction(function () use ($request, $airConditioner) {
+            $path = $request->file('attachment')->store('air_conditioner');
+            $filename = request('filename');
+
+            $file = new AirConditionerFile();
+            $file->path = $path;
+            $file->filename = $filename;
+            $file->air_conditioner_id = $airConditioner->id;
+            $file->extension = $request->file('attachment')->extension();
+            $file->save();
+        });
+
+        return Redirect::route('air_conditioners.show', $airConditioner);
+    }
+
+    public function deleteFile($id)
+    {
+        $file = AirConditionerFile::find($id);
+
+        Storage::delete($file->path);
+
+        $air_conditioner_id = $file->air_conditioner_id;
+        $file->delete();
+
+        return Redirect::route('air_conditioners.show', $air_conditioner_id);
     }
 }

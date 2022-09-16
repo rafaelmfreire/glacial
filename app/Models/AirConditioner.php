@@ -42,4 +42,9 @@ class AirConditioner extends Model
     {
         return $this->hasMany(RequisitionItem::class);
     }
+
+    public function airConditionerFiles()
+    {
+        return $this->hasMany(AirConditionerFile::class);
+    }
 }
