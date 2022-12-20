@@ -9,6 +9,9 @@ class AirConditioner extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $casts = [
+        'id' => 'integer',
+    ];
 
     public function brand()
     {
@@ -38,5 +41,10 @@ class AirConditioner extends Model
     public function requisitionItems()
     {
         return $this->hasMany(RequisitionItem::class);
+    }
+
+    public function airConditionerFiles()
+    {
+        return $this->hasMany(AirConditionerFile::class);
     }
 }

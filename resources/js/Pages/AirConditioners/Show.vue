@@ -11,7 +11,6 @@
         <div class="py-2 align-middle flex flex-col-reverse lg:flex-row gap-4 min-w-full sm:px-6 lg:px-8">
           <div class="lg:col-span-2 flex-1 bg-white shadow overflow-hidden sm:rounded-lg">
             <TabsWrapper>
-
               <Tab title="Chamados">
                 <div class="grid grid-cols-1 gap-4">
                   <CompTextarea @keypress.enter.exact.prevent="submitTicket()" :withPadding="false" name="problem" rows="3" v-model="formTicket.problem" :message="errors.problem" @keydown="errors.problem = null">Descreva o problema</CompTextarea>
@@ -37,7 +36,7 @@
                             {{ ticket.informed_by }}
                           </h3>
                           <time class="font-medium text-xs text-blue-700 bg-blue-50 ml-2 px-2 py-1 inline-flex items-center rounded-full">
-                            <CalendarIcon class="h-4 w-4 mr-1 text-blue-400/60 inline"/>
+                            <CalendarIcon class="h-4 w-4 mr-1 text-blue-400/60 inline" />
                             <span>{{ ticket.date_diff }}</span>
                           </time>
                           <time class="text-xs text-white group-hover:text-gray-400">{{ ticket.opened_date }}</time>
@@ -53,7 +52,6 @@
                   </ul>
 
                   <div v-else class="text-slate-500 text-sm">Ainda não foram cadastrados Chamados para este aparelho.</div>
-
                 </div>
               </Tab>
 
@@ -61,7 +59,7 @@
                 <div class="grid grid-cols-1 gap-4">
                   <CompTextarea @keypress.enter.exact.prevent="submitServiceOrder()" :withPadding="false" name="services" rows="3" v-model="formServiceOrder.services" :message="errors.services" @keydown="errors.services = null">Descreva os serviços</CompTextarea>
                   <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    <CompInput @keypress.enter="submitServiceOrder()" :withPadding="false" name="technicians" v-model="formServiceOrder.technicians" :message="errors.technicians" @keydown="errors.technicians = null">Equipe</CompInput>
+                    <CompInput :withPadding="false" name="technicians" v-model="formServiceOrder.technicians" :message="errors.technicians" @keydown="errors.technicians = null">Equipe</CompInput>
                     <CompSelect :withPadding="false" name="status" v-model="formServiceOrder.status" :message="errors.status" @change="errors.status = null" >Status
                       <template #options>
                         <CompOption v-for="(index, item) in statuses" :key="index.toString()" :value="index.toString()">
@@ -92,7 +90,7 @@
                             {{ serviceOrder.technicians }}
                           </h3>
                           <time class="font-medium text-xs text-blue-700 bg-blue-50 ml-2 px-2 py-1 inline-flex items-center rounded-full">
-                            <CalendarIcon class="h-4 w-4 mr-1 text-blue-400/60 inline"/>
+                            <CalendarIcon class="h-4 w-4 mr-1 text-blue-400/60 inline" />
                             <span>{{ serviceOrder.date_diff }}</span>
                           </time>
                           <time class="text-xs text-white group-hover:text-gray-400">{{ serviceOrder.done_date }}</time>
@@ -132,7 +130,7 @@
                     <div v-for="quote in airConditioner.quotes" :key="quote.id" class="space-y-2 py-10 first:pt-6 last:pb-0">
                       <div class="flex items-center justify-between">
                         <h3>
-                          Orçamento Nº: 
+                          Orçamento Nº:
                           <span class="font-bold text-blue-700 hover:text-blue-600 ml-2">
                             <Link :href="route('reports.quotes.quote_items', quote.id)">
                               {{ quote.number }}
@@ -141,13 +139,13 @@
                         </h3>
                         <div class="flex items-center">
                           <div class="text-sm">
-                            Total: 
+                            Total:
                             <span class="font-bold">
                               {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(quote.total) }}
                             </span>
                           </div>
                           <time class="font-medium text-xs text-blue-700 bg-blue-50 ml-2 px-2 py-1 inline-flex items-center rounded-full">
-                            <CalendarIcon class="h-4 w-4 mr-1 text-blue-400/60 inline"/>
+                            <CalendarIcon class="h-4 w-4 mr-1 text-blue-400/60 inline" />
                             <span>{{ quote.date_formatted }}</span>
                           </time>
                         </div>
@@ -156,9 +154,7 @@
                         <table class="min-w-full divide-y divide-gray-200">
                           <thead class="bg-white">
                             <tr class="divide-x">
-
-                              <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                              </th>
+                              <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
                               <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 <span>Item</span>
                               </th>
@@ -251,16 +247,14 @@
                     <div v-for="requisition in airConditioner.requisitions" :key="requisition.id" class="space-y-2 py-10 first:pt-6 last:pb-0">
                       <div class="flex items-center justify-between">
                         <h3>
-                          Requisição Nº: 
+                          Requisição Nº:
                           <span class="font-bold text-blue-700 hover:text-blue-600 ml-2">
-                            <Link :href="route('reports.requisitions.requisition_items', requisition.id)">
-                            {{ requisition.number }}/{{ requisition.year }}
-                            </Link>
+                            <Link :href="route('reports.requisitions.requisition_items', requisition.id)"> {{ requisition.number }}/{{ requisition.year }} </Link>
                           </span>
                         </h3>
                         <div class="flex items-center">
                           <div class="text-sm">
-                            Total: 
+                            Total:
                             <span class="font-bold">
                               {{ new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(requisition.total) }}
                             </span>
@@ -271,9 +265,7 @@
                         <table class="min-w-full divide-y divide-gray-200">
                           <thead class="bg-white">
                             <tr class="divide-x">
-
-                              <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                              </th>
+                              <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
                               <th scope="col" class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 <span>Item</span>
                               </th>
@@ -343,26 +335,36 @@
                   <div v-else class="text-slate-500 text-sm">Ainda não foram cadastradas Requisições para este aparelho.</div>
                 </div>
               </Tab>
-
             </TabsWrapper>
           </div>
 
           <!-- Panel Right -->
-          <div class="bg-white shadow overflow-hidden sm:rounded-lg min-w-[295px]">
+          <div class="bg-white shadow overflow-hidden sm:rounded-lg min-w-[295px] max-w-[295px]">
             <div class="px-4 py-5 sm:px-6">
               <dl>
                 <div class="py-5">
                   <div class="bg-slate-100 p-2 max-w-[250px] border border-gray-300">
                     <dt class="text-sm text-gray-500 sr-only">Tombamento</dt>
                     <dd class="text-2xl rounded-lg text-center border border-blue-800 bg-gradient-to-tr from-slate-200 to-slate-200 via-slate-50 py-4 px-2 font-semibold">
-                      <span v-if="airConditioner.identifier" class="font-mono flex items-center justify-between text-slate-500 tracking-wider after:content-[''] after:w-5 after:h-5 after:rounded-full after:bg-gray-500 after:border-[6px] after:border-gray-300 after:inline-block before:content-[''] before:w-5 before:h-5 before:rounded-full before:bg-gray-500 before:border-[6px] before:border-gray-300 before:inline-block">{{ airConditioner.identifier }}</span>
-                      <span v-else class="font-mono text-sm flex items-center justify-between text-red-400 tracking-wider after:content-[''] after:w-5 after:h-5 after:rounded-full after:bg-gray-500 after:border-[6px] after:border-gray-300 after:inline-block before:content-[''] before:w-5 before:h-5 before:rounded-full before:bg-gray-500 before:border-[6px] before:border-gray-300 before:inline-block">Sem tombamento</span>
+                      <span
+                        v-if="airConditioner.identifier"
+                        class="font-mono flex items-center justify-between text-slate-500 tracking-wider after:content-[''] after:w-5 after:h-5 after:rounded-full after:bg-gray-500 after:border-[6px] after:border-gray-300 after:inline-block before:content-[''] before:w-5 before:h-5 before:rounded-full before:bg-gray-500 before:border-[6px] before:border-gray-300 before:inline-block"
+                        >{{ airConditioner.identifier }}</span
+                      >
+                      <span
+                        v-else
+                        class="font-mono text-sm flex items-center justify-between text-red-400 tracking-wider after:content-[''] after:w-5 after:h-5 after:rounded-full after:bg-gray-500 after:border-[6px] after:border-gray-300 after:inline-block before:content-[''] before:w-5 before:h-5 before:rounded-full before:bg-gray-500 before:border-[6px] before:border-gray-300 before:inline-block"
+                        >Sem tombamento</span
+                      >
                     </dd>
                   </div>
                 </div>
                 <div>
                   <dt class="text-sm text-gray-500 sr-only">Marca e BTU</dt>
-                  <dd class="mt-1 text-gray-900 sm:mt-0 space-x-2"><span class="font-bold uppercase">{{ airConditioner.brand }}</span><span v-if="airConditioner.btu" class="px-3 py-1 font-bold bg-blue-100 rounded-full text-blue-700">{{ airConditioner.btu }} <label class="text-xs font-normal">BTUs</label></span></dd>
+                  <dd class="mt-1 text-gray-900 sm:mt-0 space-x-2">
+                    <span class="font-bold uppercase">{{ airConditioner.brand }}</span
+                    ><span v-if="airConditioner.btu" class="px-3 py-1 font-bold bg-blue-100 rounded-full text-blue-700">{{ airConditioner.btu }} <label class="text-xs font-normal">BTUs</label></span>
+                  </dd>
                 </div>
                 <div v-if="airConditioner.cpf" class="py-5 flex items-center gap-4">
                   <dt class="text-sm text-gray-400">CPF</dt>
@@ -374,6 +376,53 @@
                   <dd class="text-sm text-gray-900 mt-0 whitespace-pre-wrap">{{ airConditioner.observation }}</dd>
                 </div>
               </dl>
+              <div>
+                <h2 class="text-2xl text-gray-500 font-medium mt-4">Anexos</h2>
+
+                <ul class="pt-4 space-y-2">
+                  <li v-for="file in airConditioner.airConditionerFiles" :key="file.id" class="border bg-gray-100 p-2 rounded relative">
+                    <a :href="airConditioner.path + file.path" target="_blank">
+                      <span aria-hidden="true" class="absolute inset-0 rounded bg-white/20 hover:bg-white/0"></span>
+                    </a>
+                    <div class="flex justify-between">
+                      <small class="flex items-center">
+                        <svg v-if="file.extension == 'pdf'" class="h-6 w-6 mr-2 text-blue-600 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                          <path
+                            d="M64 0C28.7 0 0 28.7 0 64V448c0 35.3 28.7 64 64 64H320c35.3 0 64-28.7 64-64V160H256c-17.7 0-32-14.3-32-32V0H64zM256 0V128H384L256 0zM64 224H88c30.9 0 56 25.1 56 56s-25.1 56-56 56H80v32c0 8.8-7.2 16-16 16s-16-7.2-16-16V320 240c0-8.8 7.2-16 16-16zm24 80c13.3 0 24-10.7 24-24s-10.7-24-24-24H80v48h8zm72-64c0-8.8 7.2-16 16-16h24c26.5 0 48 21.5 48 48v64c0 26.5-21.5 48-48 48H176c-8.8 0-16-7.2-16-16V240zm32 112h8c8.8 0 16-7.2 16-16V272c0-8.8-7.2-16-16-16h-8v96zm96-128h48c8.8 0 16 7.2 16 16s-7.2 16-16 16H304v32h32c8.8 0 16 7.2 16 16s-7.2 16-16 16H304v48c0 8.8-7.2 16-16 16s-16-7.2-16-16V304 240c0-8.8 7.2-16 16-16z"
+                          />
+                        </svg>
+                        {{ file.filename }}
+                      </small>
+                      <div class="relative">
+                        <BtnDelete :id="file.id" :route="`/air_conditioner_file/${file.id}`" class="absolute inset-0">
+                          <TrashIcon class="h-5 w-5 text-red-200 hover:text-red-500 cursor-pointer" />
+                        </BtnDelete>
+                      </div>
+                    </div>
+                    <a v-if="file.extension == 'jpg' || file.extension == 'png' || file.enxtension == 'gif'"  :href="airConditioner.path + file.path" target="_blank" class="inline-block mt-2">
+                      <img class="rounded hover:opacity-90" :src="`/images/${file.path}`" />
+                    </a>
+                  </li>
+                </ul>
+
+                <form @submit.prevent="uploadFile" class="mt-4">
+                  <h2 class="font-medium text-gray-700 text-xl pt-4 mb-2">Anexar novo arquivo</h2>
+                  <comp-input name="filename" :withPadding="false" v-model="uploadForm.filename" :message="errors.filename">Descrição</comp-input>
+
+                  <div class="mt-4">
+                    <label class="block text-sm text-gray-500">Arquivo</label>
+                    <div class="mt-1 flex flex-col justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                      <input id="file-upload" name="file-upload" type="file" @input="uploadForm.attachment = $event.target.files[0]" />
+                      <p class="text-xs font-bold mt-2">* Arquivos até 10MB</p>
+                    </div>
+                  </div>
+
+                  <!-- <input type="file" @input="uploadForm.attachment = $event.target.files[0]" /> -->
+                  <progress v-if="uploadForm.progress" :value="uploadForm.progress.percentage" max="100">{{ uploadForm.progress.percentage }}%</progress>
+
+                  <link-button tag="button" class="leading-6 mt-4">Anexar</link-button>
+                </form>
+              </div>
             </div>
           </div>
         </div>
@@ -393,36 +442,40 @@ import CompTextarea from '@/Components/Textarea.vue';
 import BtnDelete from '@/Components/Delete.vue';
 import TabsWrapper from '@/Components/TabsWrapper.vue';
 import Tab from '@/Components/Tab.vue';
-import { CalendarIcon, SpeakerphoneIcon, DocumentTextIcon, TrashIcon  } from '@heroicons/vue/outline';
+import { CalendarIcon, SpeakerphoneIcon, DocumentTextIcon, TrashIcon, ExternalLinkIcon } from '@heroicons/vue/outline';
 import { reactive, computed, onMounted, watch } from 'vue';
 import { Link } from '@inertiajs/inertia-vue3';
 
+const uploadForm = reactive({
+  filename: '',
+  attachment: null,
+});
 const formTicket = reactive({
   problem: null,
-  opened_at: (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate()),
+  opened_at: new Date().getFullYear() + '-' + (new Date().getMonth() + 1).toString().padStart(2, '0') + '-' + new Date().getDate(),
   informed_by: props.user.name,
   identifier: props.airConditioner.identifier,
-  page: 'airConditioner'
+  page: 'airConditioner',
 });
 
 const formServiceOrder = reactive({
   services: null,
-  done_at: (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate()),
+  done_at: new Date().getFullYear() + '-' + (new Date().getMonth() + 1).toString().padStart(2, '0') + '-' + new Date().getDate(),
   done_at_time: '00:00',
   technicians: '',
   status: null,
   identifier: props.airConditioner.identifier,
-  page: 'airConditioner'
+  page: 'airConditioner',
 });
 
 const formQuote = reactive({
   number: null,
-  date: (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate()),
+  date: new Date().getFullYear() + '-' + (new Date().getMonth() + 1).toString().padStart(2, '0') + '-' + new Date().getDate(),
   contract_item_id: '000',
   quantity: 1,
-  service_date: (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate()),
+  service_date: new Date().getFullYear() + '-' + (new Date().getMonth() + 1).toString().padStart(2, '0') + '-' + new Date().getDate(),
   identifier: props.airConditioner.identifier,
-  page: 'airConditioner'
+  page: 'airConditioner',
 });
 
 const formRequisition = reactive({
@@ -432,20 +485,20 @@ const formRequisition = reactive({
   quantity: 1,
   quote_number: null,
   identifier: props.airConditioner.identifier,
-  page: 'airConditioner'
+  page: 'airConditioner',
 });
 
 watch(formQuote, async (newNumber, oldNumber) => {
-  if(parseInt(oldNumber.contract_item_id, 10) != 0 && !isNaN(parseInt(oldNumber.contract_item_id, 10))) {
-    formQuote.contract_item_id = parseInt(oldNumber.contract_item_id, 10).toString().padStart(3, '0')
+  if (parseInt(oldNumber.contract_item_id, 10) != 0 && !isNaN(parseInt(oldNumber.contract_item_id, 10))) {
+    formQuote.contract_item_id = parseInt(oldNumber.contract_item_id, 10).toString().padStart(3, '0');
   }
-})
+});
 
 watch(formRequisition, async (newNumber, oldNumber) => {
-  if(parseInt(oldNumber.contract_item_id, 10) != 0 && !isNaN(parseInt(oldNumber.contract_item_id, 10))) {
-    formRequisition.contract_item_id = parseInt(oldNumber.contract_item_id, 10).toString().padStart(3, '0')
+  if (parseInt(oldNumber.contract_item_id, 10) != 0 && !isNaN(parseInt(oldNumber.contract_item_id, 10))) {
+    formRequisition.contract_item_id = parseInt(oldNumber.contract_item_id, 10).toString().padStart(3, '0');
   }
-})
+});
 
 const props = defineProps({
   user: Object,
@@ -454,53 +507,51 @@ const props = defineProps({
   errors: Object,
 });
 
-async function submitTicket() {
-  this.loading = true;
-  Inertia.post(route('tickets.store'), this.formTicket, {
+async function uploadFile() {
+  Inertia.post(route('air_conditioners.uploadFile', props.airConditioner.id), uploadForm, {
     preserveState: (page) => Object.keys(page.props.errors).length,
   });
-  this.loading = false;
+}
+
+async function submitTicket() {
+  Inertia.post(route('tickets.store'), formTicket, {
+    preserveState: (page) => Object.keys(page.props.errors).length,
+  });
 }
 
 async function submitQuote() {
-  this.loading = true;
-  Inertia.post(route('quotes.store'), this.formQuote, {
+  Inertia.post(route('quotes.store'), formQuote, {
     preserveState: true,
     onSuccess: (page) => {
-      formQuote.date = (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate())
-      formQuote.contract_item_id = null
-      formQuote.quantity = 1
-    }
+      formQuote.date = new Date().getFullYear() + '-' + (new Date().getMonth() + 1).toString().padStart(2, '0') + '-' + new Date().getDate();
+      formQuote.contract_item_id = null;
+      formQuote.quantity = 1;
+    },
   });
-  this.loading = false;
 }
 
 async function submitRequisition() {
-  this.loading = true;
-  Inertia.post(route('requisitions.store'), this.formRequisition, {
+  Inertia.post(route('requisitions.store'), formRequisition, {
     preserveState: true,
     onSuccess: (page) => {
-      formRequisition.year = new Date().getFullYear()
-      formRequisition.contract_item_id = null
-      formRequisition.quantity = 1
-    }
+      formRequisition.year = new Date().getFullYear();
+      formRequisition.contract_item_id = null;
+      formRequisition.quantity = 1;
+    },
   });
-  this.loading = false;
 }
 
 async function submitServiceOrder() {
-  this.loading = true;
-  Inertia.post(route('service_orders.store'), this.formServiceOrder, {
+  Inertia.post(route('service_orders.store'), formServiceOrder, {
     preserveState: true,
     onSuccess: (page) => {
-      formServiceOrder.services = null
-      formServiceOrder.done_at = (new Date().getFullYear()+'-'+(new Date().getMonth() + 1).toString().padStart(2, '0')+'-'+new Date().getDate())
-      formServiceOrder.done_at_time = '00:00'
-      formServiceOrder.technicians = null 
-      formServiceOrder.status = null
-    }
+      formServiceOrder.services = null;
+      formServiceOrder.done_at = new Date().getFullYear() + '-' + (new Date().getMonth() + 1).toString().padStart(2, '0') + '-' + new Date().getDate();
+      formServiceOrder.done_at_time = '00:00';
+      formServiceOrder.technicians = null;
+      formServiceOrder.status = null;
+    },
   });
-  this.loading = false;
 }
 
 function resort(list, property, direction) {
@@ -508,6 +559,6 @@ function resort(list, property, direction) {
 }
 
 onMounted(() => {
-  document.getElementById("problem")?.focus()
-})
+  document.getElementById('problem')?.focus();
+});
 </script>

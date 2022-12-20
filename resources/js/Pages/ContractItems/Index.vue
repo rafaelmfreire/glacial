@@ -175,30 +175,26 @@ const editOffset = ref(-1);
 const edit = {};
 
 async function create() {
-  this.showCreateForm = true;
-  this.form.title = null;
-  this.form.number = null;
-  this.form.item_value = null;
-  this.editOffset = -1;
+  showCreateForm.value = true;
+  form.title = null;
+  form.number = null;
+  form.item_value = null;
+  editOffset.value = -1;
   await nextTick();
   document.getElementById('contract-item-number').focus();
 }
 
 async function submit() {
-  this.loading = true;
-  Inertia.post(route('contract_items.store'), this.form, {
+  Inertia.post(route('contract_items.store'), form, {
     preserveState: (page) => Object.keys(page.props.errors).length,
     onSuccess: (page) => {
-      this.showCreateForm = false;
+      showCreateForm.value = false;
     },
   });
-  this.loading = false;
 }
 
 function update() {
-  this.loading = true;
-  this.form._method = 'PUT';
-  Inertia.post('/contract_items/' + this.edit.id, this.form, {
+  Inertia.put('/contract_items/' + edit.id, form, {
     preserveState: (page) => Object.keys(page.props.errors).length,
     onSuccess: (page) => {
       editOffset.value = -1;
@@ -206,7 +202,6 @@ function update() {
       form.title = null;
     },
   });
-  this.loading = false;
 }
 
 function cancelEditing() {
@@ -216,15 +211,19 @@ function cancelEditing() {
 }
 
 async function showEdit(item, index) {
-  this.showCreateForm = false;
-  console.log(item);
-  this.form = Object.assign({}, item);
-  this.editOffset = index;
-  this.edit = this.contractItemsList[index];
+  showCreateForm.value = false;
+  form.title = item.title;
+  form.number = item.number;
+  form.item_value = item.item_value;
+  editOffset.value = index;
+  edit.id = contractItemsList.value[index].id;
+  edit.title = contractItemsList.value[index].title;
+  edit.number = contractItemsList.value[index].number;
+  edit.item_value = contractItemsList.value[index].item_value;
 
   await nextTick(
     function () {
-      document.getElementById('contract-item-number-' + this.editOffset).focus();
+      document.getElementById('contract-item-number-' + editOffset.value).focus();
     }.bind(this)
   );
 }

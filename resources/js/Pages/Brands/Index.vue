@@ -105,6 +105,7 @@ const props = defineProps({
 });
 
 const form = reactive({
+  id: null,
   name: null,
 });
 const showCreateForm = ref(false);
@@ -115,53 +116,53 @@ const editOffset = ref(-1);
 const editBrand = {};
 
 async function createBrand() {
-  this.showCreateForm = true;
-  this.form.name = null;
-  this.editOffset = -1;
+  showCreateForm.value = true;
+  form.name = null;
+  form.id = null;
+  editOffset.value = -1;
   await nextTick();
   document.getElementById('brand-item').focus();
 }
 
 async function submit() {
-  this.loading = true;
-  Inertia.post(route('brands.store'), this.form, {
+  Inertia.post(route('brands.store'), form, {
     preserveState: (page) => Object.keys(page.props.errors).length,
     onSuccess: (page) => {
-      this.showCreateForm = false;
+      showCreateForm.value = false;
     },
   });
-  this.loading = false;
 }
 
 function update() {
-  this.loading = true;
-  this.form._method = 'PUT';
-  Inertia.post('/brands/' + this.editBrand.id, this.form, {
+  Inertia.put('/brands/' + editBrand.id, form, {
     preserveState: (page) => Object.keys(page.props.errors).length,
     onSuccess: (page) => {
       editOffset.value = -1;
       editBrand.value = {};
       form.name = null;
+      form.id = null;
     }
   });
-  this.loading = false;
 }
 
 function cancelEditing() {
   editOffset.value = -1;
   editBrand.value = {};
   form.name = null;
+  form.id = null;
 }
 
 async function showEdit(item, index) {
-  this.showCreateForm = false;
-  this.form = Object.assign({}, item);
-  this.editOffset = index;
-  this.editBrand = this.brandsList[index];
+  showCreateForm.value = false;
+  form.name = item.name;
+  form.id = item.id;
+  editOffset.value = index;
+  editBrand.id = brandsList.value[index].id;
+  editBrand.name = brandsList.value[index].name;
 
   await nextTick(
     function () {
-      document.getElementById('brand-item-' + this.editOffset).focus();
+      document.getElementById('brand-item-' + editOffset.value).focus();
     }.bind(this)
   );
 }

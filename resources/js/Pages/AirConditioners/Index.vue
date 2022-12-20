@@ -187,14 +187,14 @@ const sortProperty = ref('room');
 const sortDirection = ref('asc');
 
 async function submit() {
-  this.loading = true;
-  Inertia.post(route('contract_items.store'), this.form, {
+  loading.value = true;
+  Inertia.post(route('contract_items.store'), form, {
     preserveState: (page) => Object.keys(page.props.errors).length,
     onSuccess: (page) => {
-      this.showCreateForm = false;
+      showCreateForm.value = false;
     },
   });
-  this.loading = false;
+  loading.value = false;
 }
 
 function sort(property) {

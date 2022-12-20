@@ -20,7 +20,7 @@ const form = reactive({
 });
 
 function submit() {
-  Inertia.post(route('new_user.store'), this.form, {
+  Inertia.post(route('new_user.store'), form, {
     preserveState: (page) => Object.keys(page.props.errors).length,
   });
     // form.post(route('new_user'), {

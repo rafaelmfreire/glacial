@@ -55,7 +55,6 @@ import CompSelect from '@/Components/Select.vue';
 import CompOption from '@/Components/Option.vue';
 import CompTextarea from '@/Components/Textarea.vue';
 
-const loading = ref(false);
 const props = defineProps({
   brands: Object,
   errors: Object,
@@ -75,10 +74,8 @@ onMounted(() => {
 })
 
 function submit() {
-  this.loading = true;
-  Inertia.post(route('air_conditioners.store'), this.form, {
+  Inertia.post(route('air_conditioners.store'), form, {
     preserveState: (page) => Object.keys(page.props.errors).length,
   });
-  this.loading = false;
 }
 </script>

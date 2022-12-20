@@ -79,7 +79,7 @@ watch(form, async (newNumber, oldNumber) => {
 })
 
 function submit() {
-  Inertia.post(route('quotes.store'), this.form, {
+  Inertia.post(route('quotes.store'), form, {
     preserveState: (page) => true,
     onSuccess: (page) => {
       document.getElementById("contract_item_id").focus();

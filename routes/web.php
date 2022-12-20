@@ -54,6 +54,9 @@ Route::middleware(['auth:sanctum', 'verified'])->resource('brands', BrandControl
 Route::middleware(['auth:sanctum', 'verified'])->resource('contract_items', ContractItemController::class);
 Route::middleware(['auth:sanctum', 'verified'])->resource('air_conditioners', AirConditionerController::class);
 
+Route::middleware(['auth:sanctum', 'verified'])->post('/air_conditioners/{air_conditioner}/uploadFile', [AirConditionerController::class, 'uploadFile'])->name('air_conditioners.uploadFile');
+Route::middleware(['auth:sanctum', 'verified'])->delete('/air_conditioner_file/{air_conditioner}', [AirConditionerController::class, 'deleteFile'])->name('air_conditioners.deleteFile');
+
 Route::middleware(['auth:sanctum', 'verified'])->resource('tickets', TicketController::class);
 Route::middleware(['auth:sanctum', 'verified'])->resource('service_orders', ServiceOrderController::class);
 Route::middleware(['auth:sanctum', 'verified'])->resource('quotes', QuoteController::class);
@@ -66,3 +69,11 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/reports/quotes', [ReportC
 Route::middleware(['auth:sanctum', 'verified'])->get('/reports/quotes/{quote}/items', [ReportController::class, 'quote_items'])->name('reports.quotes.quote_items');
 Route::middleware(['auth:sanctum', 'verified'])->get('/reports/requisitions', [ReportController::class, 'requisitions'])->name('reports.requisitions');
 Route::middleware(['auth:sanctum', 'verified'])->get('/reports/requisitions/{requisition}/items', [ReportController::class, 'requisition_items'])->name('reports.requisitions.requisition_items');
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/images/air_conditioner/{file}', [function ($file) {
+    $path = storage_path('app/air_conditioner/'.$file);
+	if (file_exists($path)) {
+        return response()->file($path);
+	}
+	abort(404);
+}]);

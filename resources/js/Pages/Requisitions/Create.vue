@@ -76,7 +76,7 @@ watch(form, async (newNumber, oldNumber) => {
 })
 
 function submit() {
-  Inertia.post(route('requisitions.store'), this.form, {
+  Inertia.post(route('requisitions.store'), form, {
     preserveState: (page) => true,
     onSuccess: (page) => {
       document.getElementById("contract_item_id").focus();
